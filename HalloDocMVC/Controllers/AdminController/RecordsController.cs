@@ -39,10 +39,10 @@ namespace HalloDocMVC.Controllers.AdminController
             RecordsModel rm = await _IRecords.GetSMSLogs(model);
             return View("../AdminPanel/Admin/Records/SMSLogs", rm);
         }
-        public async Task<IActionResult> Try(RecordsModel model)
+        public async Task<IActionResult> BlockedHistory(RecordsModel model)
         {
-            RecordsModel rm = await _IRecords.GetSMSLogs(model);
-            return View("../AdminPanel/Admin/Records/SMSLogs", rm);
+            RecordsModel rm = await _IRecords.GetBlockedHistory(model);
+            return View("../AdminPanel/Admin/Records/BlockedHistory", rm);
         }
     }
 }

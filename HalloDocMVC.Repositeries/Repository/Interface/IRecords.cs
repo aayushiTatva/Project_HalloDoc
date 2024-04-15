@@ -14,5 +14,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         public Task<RecordsModel> GetPatientCases(int UserId, RecordsModel records);
         public Task<RecordsModel> GetEmailLogs(RecordsModel model);
         public Task<RecordsModel> GetSMSLogs(RecordsModel model);
+        public Task<RecordsModel> GetBlockedHistory(RecordsModel model);
     }
 }

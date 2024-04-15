@@ -27,6 +27,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         }
         #endregion Configuration
 
+        #region GetRecords
         public async Task<RecordsModel> GetRecords(RecordsModel model)
         {
             List<SearchRecordsModel> sr = (from r in _context.Requests
@@ -74,7 +75,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return rm;
         }
+        #endregion
 
+        #region GetPatientHistory
         public async Task<RecordsModel> GetPatientHistory(RecordsModel model)
         {
             List<SearchRecordsModel> sr = (from r in _context.Requests
@@ -101,6 +104,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return rm;
         }
+        #endregion
+
+        #region GetPatientCases
         public async Task<RecordsModel> GetPatientCases(int UserId, RecordsModel records)
         {
             List<SearchRecordsModel> sr = (from req in _context.Requests
@@ -130,7 +136,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return rm;
         }
+        #endregion
 
+        #region GetEmailLogs
         public async Task<RecordsModel> GetEmailLogs(RecordsModel model)
         {
             List<EmailLogModel> em = await (from req in _context.Emaillogs
@@ -155,7 +163,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return rm;
         }
+        #endregion
 
+        #region GetSMSLogs
         public async Task<RecordsModel> GetSMSLogs(RecordsModel model)
         {
             List<SMSLogsModel> sm = await (from req in _context.Smslogs
@@ -178,5 +188,38 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return rm;
         }
+        #endregion
+
+        #region GetBlockedHistory
+        public async Task<RecordsModel> GetBlockedHistory(RecordsModel model)
+        {
+            List<BlockRequestModel> data = (from req in _context.Blockrequests
+                                            where (model.StartDate == DateTime.MinValue || req.Createddate.Value.Date == model.StartDate.Date) &&
+                                                  (model.FirstName.IsNullOrEmpty() || _context.Requests.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
+                                                  (model.Email.IsNullOrEmpty() || req.Email.ToLower().Contains(model.Email.ToLower())) &&
+                                                  (model.PhoneNumber.IsNullOrEmpty() || req.Phonenumber.ToLower().Contains(model.PhoneNumber.ToLower()))
+                                            select new BlockRequestModel
+                                            {
+                                                PatientName = _context.Requests.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname,
+                                                Email = req.Email,
+                                                CreatedDate = (DateTime)req.Createddate,
+                                                IsActive = req.Isactive,
+                                                RequestId = Convert.ToInt32(req.Requestid),
+                                                PhoneNumber = req.Phonenumber,
+                                                Reason = req.Reason
+                                            }).ToList();
+            int totalCount = data.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)model.PageSize);
+            List<BlockRequestModel> list = data.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            RecordsModel roles1 = new()
+            {
+                BlockedRequest = list,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages
+            };
+            return roles1;
+        }
+        #endregion
     }
 }
