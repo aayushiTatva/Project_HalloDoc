@@ -1,0 +1,60 @@
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.deps.json
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfo.cs
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\refint\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pct30\source\repos\HalloDocMVC.DBEntity\obj\Debug\net7.0\ref\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.deps.json
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfo.cs
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\refint\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pct30\source\repos\HalloDoc_Final\HalloDocMVC.DBEntity\obj\Debug\net7.0\ref\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.deps.json
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfo.cs
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\refint\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\Downloads\HalloDoc_Final-master k\HalloDoc_Final-master\HalloDocMVC.DBEntity\obj\Debug\net7.0\ref\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.deps.json
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfo.cs
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\refint\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\Downloads\HalloDoc2\HalloDocMVC.DBEntity\obj\Debug\net7.0\ref\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.deps.json
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.AssemblyInfo.cs
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\refint\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\source\repos\aayushiTatva\HalloDoc\HalloDocMVC.DBEntity\obj\Debug\net7.0\ref\HalloDocMVC.DBEntity.dll
