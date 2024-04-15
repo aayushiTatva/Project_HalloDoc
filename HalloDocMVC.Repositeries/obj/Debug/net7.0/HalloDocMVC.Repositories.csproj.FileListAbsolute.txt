@@ -1,0 +1,15 @@
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\bin\Debug\net7.0\HalloDocMVC.Repositories.deps.json
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\bin\Debug\net7.0\HalloDocMVC.Repositories.dll
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\bin\Debug\net7.0\HalloDocMVC.Repositories.pdb
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.csproj.AssemblyReference.cache
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.AssemblyInfoInputs.cache
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.AssemblyInfo.cs
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.csproj.CopyComplete
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.dll
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\refint\HalloDocMVC.Repositories.dll
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\HalloDocMVC.Repositories.pdb
+C:\Users\pct30\source\repos\HalloDocMVC.Repositeries\obj\Debug\net7.0\ref\HalloDocMVC.Repositories.dll
