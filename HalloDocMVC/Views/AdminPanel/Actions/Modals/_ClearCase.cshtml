@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "";
+}
+<div class="modal fade" id="ClearCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display:none;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-3 d-flex align-items-center">
+            <div class="modal-header">
+                <i class="fa-solid fa-circle-exclamation fa-7x p-2 m-2 text-warning border rounded-circle border-warning"></i>
+                <p class="h4 p-2">Confirmation for Clear Case</p>
+            </div>
+            <form asp-controller="Actions"asp-action="ClearCase">
+                <input type="hidden" value="" id="RequestID_Input_ModelClearCase" name="requestid" />
+                <div class="modal-body">
+                    <p class="fs-6" style="text-align: center;">
+                        Are you sure you want to clear this request ? Once you clear this request you are mot able to see this request.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info shadow-none text-white me-2">Clear</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

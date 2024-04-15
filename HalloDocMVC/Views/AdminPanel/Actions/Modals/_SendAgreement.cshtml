@@ -1,0 +1,35 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="SendAgreement" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Send Agreement</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form method="post" asp-controller="Actions" asp-action="SendAgreementMail">
+                <div class="modal-body">
+                    <div class="me-3">
+                        <i class="fa-solid fa-circle fa-xs" style="color:#5fbc61;"></i>
+                        <small class="text-secondary">Patient</small>
+                    </div>
+                    <small class="text-secondary">
+                        To Send Agreement please make sure you are updating the correct contact information below for the responsible party.
+                    </small>
+                    <input type="hidden" name="requestid" id="RequestId_SendAgreement" value="" />
+                    <div class="form-floating my-3">
+                        <input name="PhoneNumber" type="tel" required class="form-control shadow-none" id="PhoneNumber_SendAgreement" placeholder="Enter Phone Number" pattern="^\d{10}$" title="Enter valid Phone number.">
+                        <label for="PhoneNumber_SendAgreement">Phone Number</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="Email" type="email" required class="form-control shadow-none" id="Email_SendAgreement" placeholder="Enter Email" pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email">
+                        <label for="Email_SendAgreement">Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white shadow-none">Send</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

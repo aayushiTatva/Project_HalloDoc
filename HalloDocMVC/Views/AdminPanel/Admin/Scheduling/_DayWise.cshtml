@@ -1,0 +1,160 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.DayWiseScheduling
+@{
+	var now = Model.Date;
+	var dayweek = Model.Date.DayOfWeek.ToString();
+	var currentDay = dayweek + ", " + now.ToString("MMM dd yyyy");
+	<input type="hidden" value="@currentDay" id="currentDay" />
+	var f = 0;
+}
+<div class="table-responsive pb-3">
+	<table class="calendar-table">
+		<tr class="text-white">
+			<th style="width:10rem;">Staff</th>
+			<th>12A</th>
+			<th>1A</th>
+			<th>2A</th>
+			<th>3A</th>
+			<th>4A</th>
+			<th>5A</th>
+			<th>6A</th>
+			<th>7A</th>
+			<th>8A</th>
+			<th>9A</th>
+			<th>10A</th>
+			<th>11A</th>
+			<th>12P</th>
+			<th>1P</th>
+			<th>2P</th>
+			<th>3P</th>
+			<th>4P</th>
+			<th>5P</th>
+			<th>6P</th>
+			<th>7P</th>
+			<th>8P</th>
+			<th>9P</th>
+			<th>10P</th>
+			<th>11P</th>
+		</tr>
+		<tbody id="regionshift">
+			<tr>
+				<td style="width:10rem;">Coverage</td>
+				@for (int i = 0; i < 24; i++)
+				{
+					<td class="dates"></td>
+				}
+			</tr>
+
+			@foreach (var obj in Model.Physicians)
+			{
+				var shift = Model.ShiftDetail.Where(u => u.Shiftdate == now && u.Shift.Physicianid == obj.Physicianid).ToList();
+				<tr>
+					@if (obj.Photo == null)
+					{
+						<td>
+							<span class="d-flex">
+								<i class="fa-solid fa-user me-1 mt-1"></i> @obj.Firstname @obj.Lastname.ElementAt(0).
+							</span>
+						</td>
+					}
+					else
+					{
+						<td>
+
+							<span class="d-flex">
+								<img class="me-1" src="~/Upload/Physician/@obj.Physicianid/@obj.Photo" height="25px" width="25px" /> @obj.Firstname @obj.Lastname.ElementAt(0).
+							</span>
+						</td>
+					}
+					@for (int i = 0; i < 24; i++)
+					{
+						if (shift.Count() > 0)
+						{
+							int flag = 0;
+							foreach (var item in shift)
+							{
+								f = 0;
+								var diff = item.Endtime.Hour - item.Starttime.Hour;
+								if (diff <= 0)
+								{
+									diff = 1;
+								}
+								if (item.Starttime.Hour == i)
+								{
+									var perstart = (item.Starttime.Minute / 60.00) * 100;
+									var perend = ((60.00 - item.Endtime.Minute) / 60.00) * 100;
+									if (item.Endtime.Minute != 0)
+									{
+										diff = diff + 1;
+									}
+									perstart /= diff;
+									perend /= diff;
+									if (item.Endtime.Minute == 0)
+									{
+										perend = 0;
+									}
+									<td id="i_@obj.Physicianid" colspan="@diff" class="p-0">
+										@if (item.Status == 0)
+										{
+											<div class="shiftdisplay shiftmodal d-flex align-items-center justify-content-center" id="@item.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal" style="margin-left:@perstart%;margin-right:@perend%; " data-bs-id="@item.Shiftdetailid">
+												@item.Starttime-@item.Endtime
+											</div>
+										}
+										else
+										{
+											<div class="shiftdisplay2 shiftmodal d-flex align-items-center justify-content-center" id="@item.Shiftdetailid" style="margin-left:@perstart%;margin-right:@perend%;" data-bs-toggle="modal" data-bs-target="#viewShiftModal" data-bs-id="@item.Shiftdetailid">
+												@item.Starttime-@item.Endtime
+											</div>
+										}
+									</td>
+									i += (@diff - 1);
+									flag = 1;
+								}
+							}
+							if (flag == 0)
+							{
+								<td id="i_@obj.Physicianid"></td>
+							}
+						}
+						else
+						{
+							<td id="i_@obj.Physicianid"></td>
+						}
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+	var currentDay = $('#currentDay').val();
+	$('#showDate').text(currentDay);
+
+	$(document).ready(function () {
+		$('.shiftmodal').on('click', function () {
+			var shiftdetailid = $(this).attr('id');
+			$.ajax({
+				url: '/Scheduling/ViewShift',
+				data: { shiftdetailid: shiftdetailid },
+				success: function (response) {
+					$('#shiftmodalRegion').val(response.regionId);
+					$('#shiftmodalPhysician').text(response.physicianName);
+					$('#shiftmodalDate').val(response.modalDate);
+					$('#shiftmodalStart').val(response.startTime);
+					$('#shiftmodalEnd').val(response.endTime);
+					$('#shiftmodalid').val(response.shiftDetailId);
+				},
+				error: function (xhr, status, error) {
+					console.error(error);
+				}
+			});
+		});
+	});
+</script>

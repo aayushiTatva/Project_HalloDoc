@@ -1,0 +1,153 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+﻿﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal;
+@model HalloDocMVC.DBEntity.ViewModels.PatientPanel.ViewDataUserProfileModel;
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserID");
+}
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "/Views/Shared/Patient/_LayoutPatientDashboard.cshtml";
+}
+
+<div class="container">
+    <!--<div class="d-none d-lg-block col-1 dshow">
+        <img src="images/Patient Site 1.png">
+    </div>-->
+    <!--Begin Main div-->
+    <div class="row show">
+        <!--Begin Patient info-->
+        <form method="post" asp-controller="PatientProfile" asp-action="EditProfile" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Userid" />
+            <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                <h4 class=" mb-2">General Information</h4>
+                <div class="form-group-horizontal ">
+                    <div class="row">
+                        <div class="col form-floating  space">
+                            <input asp-for="FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="details">
+                            <label class="ms-2" for="fname"> First Name</label>
+                        </div>
+                        <div class="col form-floating  space">
+                            <input asp-for="LastName" type="text" class="form-control shadow-none" id="lname" placeholder="details">
+                            <label class="ms-2" for="lname">Last Name</label>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col form-floating  space mb-3">
+                            <input asp-for="DateOfBirth" type="date" class="form-control shadow-none " id="dob" placeholder="Date of Birth">
+                            <label class="ms-2" for="dob">Date Of Birth</label>
+                        </div>
+                    </div>
+                </div>
+            </div></br></br>
+            <!--End Patient Info-->
+            <!--Begin Patient Contact Info-->
+            <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                <h4>Patient Contact Information</h4>
+                <div class="form-group-horizontal ">
+                    <div class="row">
+                        <div class="col-4 form-floating  space mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Phone" id="dd">
+                                    <option selected>Mobile</option>
+                                    <option value="1">Phone</option>
+                                    <option value="2">Landline</option>
+                                </select>
+                                <label class="ms-2" for="dd">Type</label>
+                            </div>
+                        </div>
+                        <div class="col-4 form-floating  space">
+                            <input asp-for="PhoneNumber" class="form-control shadow-none" type="tel" id="phone" />
+                            <label class="ms-2" for="tel"></label>
+                        </div>
+                        <div class="col-4 form-floating  space mb-3">
+                            <input asp-for="Email" type="email" class="form-control shadow-none" id="emailid" placeholder="name@example.com">
+                            <label class="ms-2" for="emailid"> Email</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div></br></br>
+            <!--End Patient Contact Info-->
+            <!--Begin Patient Location Info-->
+            <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                <h4>Patient Location</h4>
+                <div class="form-group-horizontal ">
+                    <div class="row">
+                        <div class="col-6 form-floating  space">
+                            <input asp-for="Street" type="text" class="form-control shadow-none" id="street" placeholder="details">
+                            <label class="ms-2" for="street"> Street</label>
+                        </div>
+                        <div class="col-6 form-floating  space">
+                            <input asp-for="City" type="text" class="form-control shadow-none" id="city" placeholder="details">
+                            <label class="ms-2" for="city">City</label>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-6 form-floating  space mb-3">
+                            <input asp-for="State" type="text" class="form-control shadow-none" id="state" placeholder="details">
+                            <label class="ms-2" for="state"> state</label>
+                        </div>
+                        <div class="col-6 form-floating  space mb-3">
+                            <input asp-for="ZipCode" type="text" class="form-control shadow-none " id="zipcode" placeholder="details">
+                            <label class="ms-2" for="zipcode">Zipcode</label>
+                        </div>
+                    </div>
+                </div>
+            </div></br>
+            <!--End Patient Location Info-->
+            <div class="row space mb-1">
+                <div class="d-flex justify-content-end ">
+                    <a id="editprofile" onclick="enable_disable()" class="col-1 btn btn-info text-white rounded p-2">Edit</a>
+                    <input type="submit" id="submit" class=" col-1 bg-info submission text-white rounded p-2" value="Save">
+                </div>
+            </div>
+            <!--End Main div-->
+        </form>
+        <!--<div class="d-none d-lg-block col-1 dshow">
+            <img src="images/Patient Site 1.png">
+        </div>-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("form").submit(function () {
+            var full_number = phoneInput.getNumber(intlTelInputUtils.numberFormat.E164);
+            $("input[name='PhoneNumber']").val(full_number);
+
+        });
+    });
+
+</script>
+<script src="~/js/site.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("input").prop("readonly", true);
+
+        $("select").prop("readonly", true);
+        $("input").css("background-color", "#e9ecef");
+        $("select").css("background-color", "#e9ecef");
+        $("#submit").css("display", "none");
+    });
+
+
+
+</script>
+<script>
+
+    function enable_disable() {
+        $("input").prop("readonly", false);
+
+        $("#submit").prop("readonly", false);
+        $("#submit").css("display", "block");
+        $("#editprofile").css("display", "none");
+        $("input").css("background-color", "transparent");
+        $("select").css("background-color", "transparent");
+    }
+</script>

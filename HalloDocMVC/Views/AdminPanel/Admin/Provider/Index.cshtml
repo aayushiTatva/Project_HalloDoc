@@ -1,0 +1,218 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationProvider
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+
+<partial name="~/Views/AdminPanel/Actions/Modals/_ContactYourProvider.cshtml" />
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-6">
+            <h4><strong>Provider Information</strong></h4>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="card shadow">
+            <div class="card-body border-0">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="search col-lg-3 col-sm-6 col-xs-12 mb-1">
+                            <div class="ms-1">
+                                <i class="fa fa-search"></i>
+                                <select class="form-select" data-allow-clear="true" tabindex="-1" asp-for="region" id="regiondropdown" onchange="getdatabyregion()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                                    <option class="text-secondary w-100 ">All </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 ms-auto d-flex">
+                        <div class="col-md-3">
+                            <form method="post" asp-controller="Providers" asp-action="ChangeNotification" id="saveChangesForm">
+                            <input type="hidden" id="changeValue" name="changedValues"/>
+                                <a class="relogin ms-auto"><button class="contactprovider shadow-none bg-white ms-auto" style="display:none;" id="saveChangesButton">Save Changes</button></a>
+                            </form>
+                        </div>
+                        <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="provideracc shadow-none ">Create Provider Account</button></a>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-responsive mt-3 mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Stop Notifications</th>
+                                <th scope="col">Provider Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">On Call Status</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider" id="providerbody">
+                            @foreach (var item in Model.ProvidersList)
+                            {
+                                <tr>
+                                    <td scope="row">
+                                        @{
+                                            var check = false;
+                                            if (item.Notification != null)
+                                            {
+                                                check = item.Notification[0];
+                                            }
+                                            <input class=" form-check-inputs" id="@item.PhysicianId" type="checkbox" value="" @(check ? "checked" : "")>
+                                        }
+
+                                        <input class="NotificationId" type="hidden" value="@item.PhysicianId">
+                                    </td>
+                                    <td>@item.FirstName  @item.LastName</td>
+                                    <td>@item.RoleName</td>
+                                    <td>@item.Isnondisclosuredoc</td>
+                                    <td>@Enum.GetName(typeof(AdminStatus), item.Status)</td>
+                                    <td>
+                                        <button data-bs-toggle="modal" data-bs-target="#ContactYourProvider" onclick="AssignContact('@item.Email','@item.PhoneNumber')" asp-route-id="@item.Email" class="contactprovider shadow-none document-button mx-1 mb-2">
+                                            Contact
+                                        </button>
+                                        <a asp-action="PhysicianProfile" asp-controller="Providers" asp-route-id="@item.PhysicianId" class="contactprovider shadow-none document-button mx-1 mb-2">
+                                            <button class="contactprovider">
+                                                Edit
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example" id="paginationProvider">
+                    <div class="d-flex justify-content-between mx-2 mt-3">
+                        <div>
+                            @if (Model.TotalPages == 0)
+                            {
+                                Model.CurrentPage = 0;
+                            }
+                            Page @Model.CurrentPage / @Model.TotalPages
+                        </div>
+                        <div>
+                            <ul class="pagination pagination-container">
+                                @{
+                                    int i;
+                                    <form id="paginationform" asp-controller="Providers" asp-action="Index" novalidate="novalidate" class="d-flex">
+                                        <input type="hidden" asp-for="PageSize" />
+                                        <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
+                                        <input type="hidden" asp-for="region" id="region" />
+
+                                        @if (@Model.CurrentPage > 1)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="me-2 page-item">
+                                            <button class="disabled btn">&lt;</button>
+                                        </li>
+                                        }
+                                        @for (i = 1; i <= @Model.TotalPages; i++)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
+                                        </li>
+                                        }
+                                        @if (@Model.TotalPages > @Model.CurrentPage)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="page-item">
+                                            <button class="btn disabled">&gt;</button>
+                                        </li>
+                                        }
+                                    </form>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function AssignEmail(e) {
+        console.log(e);
+        document.getElementById('Email').value=e;
+    }
+    function getdatabyregion() {
+        var region = $("#regiondropdown").val();
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("Index", "Providers")?region=" + region,
+            cache: false,
+            success: function (response) {
+                var data = $(response).find('tbody').html();
+                $('#providerbody').html(data);
+                var data1 = $(response).find('nav').html();
+                $("#paginationProvider").html(data1);
+            },
+            error: function () {
+                alert("Error while Loading data.");
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('#saveChangesButton').click(function () {
+            $('#saveChangesForm').submit();
+        });
+        var initialState = {};
+        $('.form-check-inputs').each(function () {
+            initialState[this.id] = this.checked;
+        });
+        $('.form-check-inputs').change(function () {
+            var changedValues = {};
+            $('.form-check-inputs').each(function () {
+                if (this.checked !== initialState[this.id]) {
+                    changedValues[this.id] = this.checked;
+                }
+            });
+            $('#changeValue').val(JSON.stringify(changedValues));
+            console.log(changedValues);
+            if (Object.keys(changedValues).length > 0) {
+                $('#saveChangesButton').show();
+            } else {
+                $('#saveChangesButton').hide();
+            }
+        });
+    });
+    function setpagenumber(e) {
+        if (e == 'previous') {
+            var cp = @Model.CurrentPage-1;
+            $('#currentpagevalue').val(cp);
+        }
+        else if (e == 'next') {
+            var cp = @Model.CurrentPage + 1;
+            $('#currentpagevalue').val(cp);
+        }
+        else {
+            $('#currentpagevalue').val(e);
+        }
+        $("#region").val($("#regiondropdown").val());
+        $("#paginationform").submit();
+
+        console.log("Hello pagination");
+    }
+
+    function AssignContact(email, contact) {
+        console.log(email);
+        console.log(contact);
+        document.getElementById('Email').value = email;
+        document.getElementById('Contact').value = contact;
+    }
+
+</script>

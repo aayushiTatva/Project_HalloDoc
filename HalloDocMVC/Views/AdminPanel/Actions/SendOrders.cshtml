@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.SendOrderModel
+
+<div class="d-flex justify-content-center bg-light">
+    <div class="d-flex flex-column my-2 col-lg-8 col-md-10">
+        <div class="d-flex justify-content-between px-2">
+            <div>
+                <strong class="fs-4">
+                    Send Order
+                </strong>
+            </div>
+            <div>
+                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+            </div>
+        </div>
+        <div class="shadow bg-white rounded m-2 p-3">
+            <form method="post" asp-controller="Actions" asp-action="SendOrders">
+                <input type="hidden" asp-for="RequestID" value="@Model.RequestID" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select name="ProfessionType" class="form-select form-control shadow-none" id="ProfessionType" required
+                                    asp-items="@(new SelectList(ViewBag.ProfessionType, "HealthProfessionId", "ProfessionName"))" onchange="GetProfession()">
+                                <option>All Profession</option>
+                            </select>
+                            <label for="ProfessionType">Select Profession</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select asp-for="VendorID" class="form-select form-control shadow-none" id="Business" required onchange="GetData()">
+                                <option>Options</option>
+                            </select>
+                            <label for="VendorId">Business</label>
+                            <span asp-validation-for="VendorID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="BusinessContact" type="text" class="form-control shadow-none" id="BusinessContact" placeholder="Enter Business Contact">
+                            <label for="BusinessContact">Business Contact</label>
+                            <span asp-validation-for="BusinessContact" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control shadow-none" id="Email" placeholder="Enter Email">
+                            <label for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="FaxNumber" type="tel" class="form-control shadow-none" id="FaxNumber" placeholder="Enter Fax Number">
+                            <label for="FaxNumber">Fax Number</label>
+                            <span asp-validation-for="FaxNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Prescription" class="form-control shadow-none" placeholder="Leave a comment here" id="Prescription" style="height: 100px"></textarea>
+                            <label for="Prescription">Prescription on order details</label>
+                            <span asp-validation-for="Prescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="NoOfRefill" type="text" class="form-control shadow-none" id="NoOfRefill" placeholder="Enter Number of Refill" />
+                            <label for="Profession">Number of Refill</label>
+                            <span asp-validation-for="NoOfRefill" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white mx-2">Submit</button>
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn border border-info text-info shadow-none">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function GetProfession() {
+        var id = $("#ProfessionType").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProfessionByType", "Actions")?HealthProfessionId=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].vendorId + '">' + response[i].vendorName + '</option>';
+                }
+                $("#Business").html(s);
+            },
+            error: function () {
+                alert("Error while checking Profession Types.");
+            }
+        });
+    }
+    function GetData() {
+        var id = $("#Business").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectProfessionalById", "Actions")?VendorId=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                $("#Email").val(response.email);
+                $("#FaxNumber").val(response.faxnumber);
+                $("#BusinessContact").val(response.businesscontact);
+            },
+            error: function () {
+                alert("Error while checking for data.");
+            }
+        });
+    }
+</script>

@@ -1,0 +1,121 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.SchedulingModel
+
+<div class="modal fade" id="AddShiftModal" tabindex="-1" aria-labelledby="addShiftModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="addShiftModal1Label">Create Shift</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-action="AddShift" asp-controller="Scheduling">
+                <div class="modal-body">
+                    <div class="form-floating my-3">
+                        <select class="form-select mt-3 p-2 shadow-none" required data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="addshiftregion" asp-for="RegionId" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
+                        </select>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select mt-3 p-2 shadow-none" required asp-for="PhysicianId" data-allow-clear="true" tabindex="-1" id="Physician" data-control="select2" data-placeholder="Select Level">
+                        </select>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <input asp-for="ShiftDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control shadow-none" placeholder="Date">
+                        <label for="floatingInput">Shift Date</label>
+                    </div>
+                    <div class="row row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3">
+                        <div class="col mb-3 mb-md-0">
+                            <div class="form-floating">
+                                <input asp-for="StartTime" type="time" class="form-control shadow-none" placeholder="Date" />
+                                <label for="floatingInput">Start</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input asp-for="EndTime" type="time" class="form-control shadow-none" placeholder="Date" />
+                                <label for="floatingInput">End</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check form-switch mt-2 mb-3 ms-1">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Repeat</label>
+                        <input class="form-check-input repeatchk shadow-none" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    </div>
+                    Repeat Days
+                    <div class="checkbox mt-2 d-flex flex-wrap">
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="0" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Sunday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="1" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Monday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="2" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Tuesday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="3" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Wednesday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="4" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Thursday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="5" name="repeatdays" class="form-check-input me-1 disable" disabled />
+                            Every Friday
+                        </div>
+                        <div class="form-check me-1">
+                            <input type="checkbox" value="6" class="form-check-input me-1 disable" name="repeatdays" disabled />
+                            Every Saturday
+                        </div>
+                    </div>
+                    <div class="form-floating mt-3">
+                        <select asp-for="RepeatCount" class="form-select disable shadow-none" id="floatingSelect" aria-label="Floating label select example" disabled>
+                            <option value="1" selected>1-times</option>
+                            <option value="2" selected>2-times</option>
+                            <option value="3" selected>3-times</option>
+                            <option value="4" selected>4-times</option>
+                            <option value="5" selected>5-times</option>
+                        </select>
+                        <label for="floatingSelect" class="text-info">
+                            Repeat End
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white">Save</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction() {
+        var region = $("#region1").val();
+        console.log(region);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetPhysicianByRegion","Scheduling")?regionid=' + region,
+            cache: false,
+            success: function (response) {
+
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].physicianid + '">' + response[i].firstname + ' ' + response[i].lastname + '</option>';
+                }
+                $("#Physician").html(s);
+            },
+            error: function () {
+                alert("Error while fetching Physicians.");
+            }
+        });
+    }
+</script>

@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdminLogin.cshtml";
+}
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Review Agreement</title>
+        <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    </head>
+    <body>
+        <div class="container justify-content-between">
+            <div class="row">
+                <p>To provide best medical service, we cannot determine the cost right away. If you agree to our service, so we will provide care and follow-up until all care is completed. So with this points, if you like us to provide care to you click on 'Agree' and we'll get started immediately. If you do not agree simply click 'Cancel'.</p>
+                <div class="agree d-flex">
+                    <form method="post" asp-controller="SendAgreement" asp-action="accept">
+                    <input type="hidden" name="RequestId" value="@TempData["RequestID"]"/>
+                        <button type="submit" class="btn btn-success">I Agree</button>
+                    </form>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelAgreement">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </body>
+<partial name="~/Views/SendAgreement/SendAgreementModal.cshtml" />
+</html>

@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="modal fade" id="BlockCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Block</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Actions" asp-action="BlockCase" class="needs-validation" novalidate>
+                <input type="hidden" value="" id="RequestID_Input_ModelBlockCase" name="requestid" />
+                <div class="modal-body">
+                    <p class="text-secondary">
+                        Patint Name: <span class="text-info" id="PatientName_ModelBlockCase"> </span>
+                        <span id="PatientName_ModelBlockCase" class="text-info"></span>
+                    </p>
+
+                    <div class="form-floating mb-3">
+                        <textarea id="changenote" rows="4" name="Note" class="input-outline w-100 h-100 fs-6 form-control shadow-none" required type="text"></textarea>
+                        <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Reason For Block Request</label>
+                        <div class="invalid-feedback">
+                            Please enter valid reason!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

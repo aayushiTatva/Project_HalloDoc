@@ -1,0 +1,230 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.MonthWiseScheduling
+@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+<div id="calendar" class="my-3 pb-3">
+    @{
+        // Get the current month and year
+        var now = Model.Date;
+        var currentMonth = now.Month;
+        var currentYear = now.Year;
+        var today = now.Day;
+        var todaydate = DateTime.Now.Date;
+        // Generate the calendar table
+        var currentDate = now.ToString("MMMM yyyy");
+        <input type="hidden" id="currentMonth" value="@currentDate" />
+        var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+        var firstDay = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
+        int x = 5;
+        if (firstDay.ToString() == "Saturday")
+        {
+            x = 6;
+        }
+        if (daysInMonth == 28 && firstDay.ToString() == "Sunday")
+        {
+            x = 4;
+        }
+        var date = 1;
+        //var date = (int)firstDay == 0 ? 7 : (int)firstDay;
+        <div class="table-responsive">
+            <table class="calendar-table">
+                <tr class="text-white">
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+                @{
+
+                    @for (var i = 0; i < x; i++)
+                    {
+
+                        <tr>
+                            @for (var j = 0; j < 7; j++)
+                            {
+                                var shift = Model.ShiftDetail.Where(u => u.Shiftdate.Month == now.Month && u.Shiftdate.Year == now.Year);
+                                var chkbool = 0;
+                                <td class="p-0">
+                                    <table class="w-100">
+                                        <tr>
+                                            @if ((i == 0 && j < (int)firstDay) || date >= daysInMonth + 1)
+                                            {
+                                                <td></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="dates">
+                                                    @(date++)
+                                                </td>
+                                                chkbool = 1;
+                                            }
+                                        </tr>
+                                        @{
+                                            if (chkbool == 1)
+                                            {
+                                                shift = shift.Where(u => u.Shiftdate.Day.ToString() == (date - 1).ToString()).ToList();
+                                            }
+                                        }
+                                        @if (chkbool == 1)
+                                        {
+                                            if (shift.Count() > 5)
+                                            {
+                                                int count = 4;
+                                                @foreach (var obj in shift)
+                                                {
+                                                    if (count > 0)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @if (obj.Status == 0)
+                                                                {
+                                                                    <div class="shiftdisplay shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="shiftdisplay2 shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <tr class="d-none more_@shift.ElementAt(0).Shiftid">
+                                                            <td>
+                                                                @if (obj.Status == 0)
+                                                                {
+                                                                    <div class="shiftdisplay shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="shiftdisplay2 shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    count--;
+                                                }
+                                                <tr>
+                                                    <td class="p-0">
+                                                        <button onclick="monthWiseReadMore('more_@shift.ElementAt(0).Shiftid')" class="btn p-0" id="readmore">Read more</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                int count = 5;
+                                                @foreach (var obj in shift)
+                                                {
+                                                    if (count > 0)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @if (obj.Status == 0)
+                                                                {
+                                                                    <div class="shiftdisplay shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="shiftdisplay2 shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
+                                                                        @obj.Starttime-@obj.Endtime
+                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                    </div>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    count--;
+                                                }
+                                                @while (count > 0)
+                                                {
+                                                    <tr><td></td></tr>
+                                                    count--;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td></td></tr>
+                                            <tr><td></td></tr>
+                                            <tr><td></td></tr>
+                                            <tr><td></td></tr>
+                                            <tr><td></td></tr>
+                                        }
+                                    </table>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    }
+</div>
+<script>
+    $('.removeactive').removeClass('active text-white');
+    $('#Month').addClass('active text-white');
+
+    var currentdate = $('#currentMonth').val();
+    $('#showDate').text(currentdate);
+
+    function monthWiseReadMore(id) {
+        var x = document.getElementById('readmore');
+        if (x.innerHTML == "Read More") {
+            x.innerHTML = "Read Less";
+        }
+        else {
+            x.innerHTML = "Read More";
+        }
+        var ids = document.getElementsByClassName(id);
+        for (var i = 0; i < ids.length; i++) {
+            ids[i].classList.toggle('d-none');
+        }
+    }
+
+    $(document).ready(function () {
+        $('.shiftmodal').on('click', function () {
+            var shiftdetailid = $(this).attr('id');
+            $.ajax({
+                url: '/Scheduling/ViewShift',
+                data: { shiftdetailid: shiftdetailid },
+                success: function (response) {
+                    $('#shiftmodalRegion').val(response.regionId);
+                    $('#shiftmodalPhysician').text(response.physicianName);
+                    $('#shiftmodalDate').val(response.modalDate);
+                    $('#shiftmodalStart').val(response.startTime);
+                    $('#shiftmodalEnd').val(response.endTime);
+                    $('#shiftmodalid').val(response.shiftDetailId);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>

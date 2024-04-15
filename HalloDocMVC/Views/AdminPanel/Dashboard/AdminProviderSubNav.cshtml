@@ -1,0 +1,78 @@
+﻿@{
+    string path = Context.Request.Path;
+}
+<div class="navbar px-3 navbar-expand-sm bg-white mb-3">
+    <div class="container-fluid">
+        <div class="d-flex">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a asp-controller="Dashboard" asp-action="Index" class="nav-link px- text-dark @(path.StartsWith("/Dashboard") || path.StartsWith("/Actions") ? "activeNavItem" : "")" aria-current="page">
+                        <small>Dashboard</small>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="ProviderLocation" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/ProviderLocation") ? "activeNavItem" : "")">
+                        <small>Provider Location</small>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="MyProfile" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/MyProfile") ? "activeNavItem" : "")">
+                        <small>My Profile</small>
+                    </a>
+                </li>
+                <li class="nav-item dropdown navDropdown">
+                    <a class="nav-link  px-3 text-dark @(path.StartsWith("/Providers") ? "activeNavItem" : "")" data-bs-toggle="dropdown">
+                        <small>Providers</small>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-controller="Providers" asp-action="Index" class="dropdown-item" >Provider</a>
+                        <a asp-controller="Scheduling" asp-action="Index" class="dropdown-item">Scheduling</a>
+                        <a asp-controller="Scheduling" asp-action="IndexS" class="dropdown-item">Invoicing</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Partners" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/Partners") ? "activeNavItem" : "")">
+                        <small>Partners</small>
+                    </a>
+                </li>
+                <li class="nav-item dropdown navDropdown">
+                    <a class="nav-link px-3 text-dark @(path.StartsWith("/Access") ? "activeNavItem" : "")" data-bs-toggle="dropdown">
+                        <small>Access</small>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-controller="Access" asp-action="Index" class="dropdown-item">Account Access</a>
+                        <a asp-controller="Access" asp-action="UserAccess" class="dropdown-item">User Access</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown navDropdown">
+                    <a data-bs-toggle="dropdown" class="nav-link px-3 text-dark @(path.StartsWith("/Records") ? "activeNavItem" : "")">
+                        <small>Records</small>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a asp-controller="Records" asp-action="Index" class="dropdown-item">Search Records</a>
+                        <a asp-controller="Records" asp-action="EmailLogs" class="dropdown-item">Email Logs</a>
+                        <a asp-controller="Records" asp-action="SMSLogs" class="dropdown-item">SMS Logs</a>
+                        <a asp-controller="Records" asp-action="PatientHistory" class="dropdown-item">Patient Records</a>
+                        <a asp-controller="Records" asp-action="" class="dropdown-item">Blocked History</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+        // Dropdown toggle
+        $('.dropdown-toggle').click(function () {
+            $(this).next('.dropdown').toggle();
+        });
+
+        $(document).click(function (e) {
+            var target = e.target;
+            if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
+                $('.dropdown').hide();
+            }
+        });
+    });
+</script>

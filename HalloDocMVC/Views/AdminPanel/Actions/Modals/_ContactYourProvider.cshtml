@@ -1,0 +1,51 @@
+﻿<div class="modal fade" id="ContactYourProvider" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Contact Your Provider</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Providers" asp-action="SendMessage">
+                <input type="hidden" name="email" id="Email" />
+                <input type="hidden" name="contact" id="Contact" />
+                <input type="hidden" name="id" id="id" />
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <p class="text-secondary">
+                            Choose communication to send message:
+                        </p>
+                        <div>
+                            <input class="form-check-input" type="radio" id="sms" name="communicate" value="1" />
+                            <label class="form-check-label" for="sms">SMS</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="email" name="communicate" value="2" />
+                            <label class="form-check-label" for="email">Email</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="both" name="communicate" value="both" />
+                            <label class="form-check-label" for="both">Both</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea name="message" class="form-control shadow-none" placeholder="Leave a comment here" id="AdminNotes" style="height: 100px"></textarea>
+                        <label for="AdminNotes">Message</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white shadow-none">Send</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var targetModal = new bootstrap.Modal(document.getElementById('targetModal', {}))
+    targetModal.show();
+
+    var dismissModal = document.getElementById('dismissModal');
+    dismissModal.addEventListener("click", () => {
+        targetModal.hide();
+    })
+</script>

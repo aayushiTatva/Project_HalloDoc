@@ -1,0 +1,200 @@
+﻿@using HalloDocMVC.DBEntity.ViewModels;
+@using HalloDocMVC.Models;
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel;
+<form id="filterForm" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#SearchResult"
+      asp-action="SearchResult" asp-controller="Dashboard" novalidate="novalidate">
+    <div class="mx-sm-1 mx-md-2 mx-xxl-4 mt-0 bg-light">
+        <!--Status of requests-->
+        <div class="row mb-2" style="--bs-gutter-x: 0rem;">
+            <div class="col-md-2 col-sm-4 col-4 ">
+                <button type="submit" name="Status" value="1" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded new ps-2 pt-3 thumbnail " id="new">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-circle-plus mx-2 mt-1"></i>
+                            </div>
+                            NEW
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.NewRequest</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-4 position-relative">
+                <button type="submit" name="Status" value="2" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded pending ps-2 pt-3 thumbnail " id="pending">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-user-clock mx-2 mt-1"></i>
+                            </div>
+                            PENDING
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.PendingRequest</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-4 position-relative">
+                <button type="submit" name="Status" value="4,5" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded active ps-2 pt-3 thumbnail" id="actives">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-circle-check mx-2 mt-1"></i>
+                            </div>
+                            ACTIVE
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.ActiveRequest</span>
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-4 position-relative">
+                <button type="submit" name="Status" value="6" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded conclude ps-1 pt-3 thumbnail" id="conclude">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-clock-rotate-left mx-2 mt-1"></i>
+                            </div>
+                            CONCLUDE
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.ConcludeRequest</span>
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-4 position-relative">
+                <button type="submit" name="Status" value="3,7,8" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded toClose ps-2 pt-3 thumbnail" id="toclose">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-user-xmark mx-2 mt-1"></i>
+                            </div>
+                            TO CLOSE
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.ToCloseRequest</span>
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-4 position-relative">
+                <button type="submit" name="Status" value="9" class="btn text-start shadow-none w-100">
+                    <div class="p-1 rounded unpaid ps-2 pt-3 thumbnail" id="unpaid">
+                        <div class="d-inline-flex fw-bold">
+                            <div class="d-none d-md-block">
+                                <i class="fa-solid fa-circle-dollar-to-slot mx-2 mt-1"></i>
+                            </div>
+                            UNPAID
+                        </div>
+                        <div class="mt-2">
+                            <span class="h4 fw-bold">@Model.UnpaidRequest</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <!--End Status of requests-->
+        <!--Important links-->
+        <div class="d-flex justify-content-between mx-2">
+            <div>
+                <strong class="fs-6">Patients</strong> <small>@TempData["CurrentStatus"]</small>
+            </div>
+            <div>
+                <button class="btn btn-info text-white shadow-none mb-2" data-bs-toggle="modal" data-bs-target="#SendLink">
+                    <small>
+                        <i class="bi bi-send"></i>
+                        <span class="adminIcon">Send Link</span>
+                    </small>
+                </button>
+                <a class="btn btn-info text-white shadow-none mb-2" asp-controller="CreateRequest" asp-action="Index">
+                    <small>
+                        <i class="bi bi-file-earmark-plus"></i>
+                        <span class="adminIcon">Create Requests</span>
+                    </small>
+                </a>
+                <button class="btn btn-info text-white shadow-none mb-2">
+                    <small>
+                        <i class="fa-solid fa-share"></i>
+                        <span class="adminIcon">Export</span>
+                    </small>
+                </button>
+                <button class="btn btn-info text-white shadow-none mb-2">
+                    <small>
+                        <i class="fa-solid fa-share-from-square"></i>
+                        <span class="adminIcon">Export All</span>
+                    </small>
+                </button>
+                <button class="btn btn-info text-white shadow-none mb-2">
+                    <small>
+                        <i class="fa-solid fa-user-nurse"></i>
+                        <span class="adminIcon">Request DIY Support</span>
+                    </small>
+                </button>
+            </div>
+        </div>
+        <!--End Important links-->
+        <!--Filters-->
+        <div class="mt-2 mx-2 bg-white">
+            <div class="searchBar px-2">
+                <div class="py-2 row w-100" style="--bs-gutter-x:0rem;">
+                    <div class="search col-lg-3 col-sm-6 col-xs-12 mb-1">
+                        <div onkeypress="SearchSubmit()">
+                            <i class="fa fa-search"></i>
+                            <input asp-for="SearchInput" id="SearchInput" type="text" class="form-control" placeholder="Search Patients">
+                        </div>
+                    </div>
+                    <div class="search col-lg-3 col-sm-6 col-xs-12 mb-1">
+                        <div class="ms-1">
+                            <i class="fa fa-search"></i>
+                            <select asp-for="RegionId" asp-items="@(new SelectList(ViewBag.ComboBoxRegion, "RegionId", "RegionName"))" onchange="SearchSubmit()" class="form-select shadow-none text-secondary" id="floatingSelectGrid">
+                                <option class="text-secondary w-100">All Regions</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="requestType col-lg-6 col-sm-12 d-flex justify-content-end">
+                        <div class="d-flex align-self-center t-filter">
+                            <button type="submit" name="filter" value="1,2,3,4" class="btn me-2 shadow-none activeFilter">
+                                <small>All</small>
+                            </button>
+                            <button type="submit" name="filter" value="2" class="btn me-2 shadow-none">
+                                <i class="fa-solid fa-circle fa-xs" style="color:#5fbc61;"></i>
+                                <small>Patient</small>
+                            </button>
+                            <button type="submit" name="filter" value="3" class="btn me-2 shadow-none">
+                                <i class="fa-solid fa-circle fa-xs" style="color:#ed9124;"></i>
+                                <small>Family / Friend</small>
+                            </button>
+                            <button type="submit" name="filter" value="1" class="btn me-2 shadow-none">
+                                <i class="fa-solid fa-circle fa-xs" style="color:#cd697b;"></i>
+                                <small>Business</small>
+                            </button>
+                            <button type="submit" name="filter" value="4" class="btn me-2 shadow-none">
+                                <i class="fa-solid fa-circle fa-xs" style="color:#0a7cb9;"></i>
+                                <small>Concierge</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+    </div>
+</form>
+<script>
+    function SearchSubmit() {
+        $('#filterForm').submit();
+    }
+</script>

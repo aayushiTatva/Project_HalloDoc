@@ -1,0 +1,184 @@
+﻿@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.VendorsModel
+
+<div class="d-flex justify-content-center bg-light">
+    <div class="d-flex flex-column my-2 col-lg-8 col-md-10">
+        <div class="d-flex justify-content-between px-2">
+            <div>
+                <strong class="fs-4">
+                    @ViewData["AddEditBusiness"] Order
+                </strong>
+            </div>
+            <div>
+                <a class="relogin ms-auto" asp-controller="Partners" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+            </div>
+        </div>
+        <div class="shadow bg-white rounded m-2 p-3">
+            <form method="post" asp-controller="Partners" asp-action="AddBusiness">
+                <input type="hidden" asp-for="VendorId"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="BusinessName" type="text" class="form-control shadow-none input0" id="BusinessName" placeholder="Enter Business Contact">
+                            <label for="BusinessName">Business Name</label>
+                            <span asp-validation-for="BusinessName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="VendorName" type="text" class="form-control shadow-none input0" id="VendorName" placeholder="Enter Business Contact">
+                            <label for="VendorName">Vendor Name</label>
+                            <span asp-validation-for="VendorName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select asp-for="ProfessionId" class="form-select form-control shadow-none input0" id="ProfessionType" required
+                                    asp-items="@(new SelectList(ViewBag.VendorComboBox, "HealthProfessionId", "ProfessionName"))" onchange="GetProfession()">
+                                <option>Options</option>
+                            </select>
+                            <label for="ProfessionType">Select Profession</label>
+                            <span asp-validation-for="ProfessionId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="FaxNumber" type="text" class="form-control shadow-none input0" id="FaxNumber" placeholder="Enter Fax Number">
+                            <label for="FaxNumber">Fax Number</label>
+                            <span asp-validation-for="FaxNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none input0" id="PhoneNumber" placeholder="Enter Phone Number">
+                            <label for="PhoneNumber">Phone Number</label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control shadow-none input0" id="Email" placeholder="Enter Email">
+                            <label for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="BusinessContact" type="tel" class="form-control shadow-none input0" id="BusinessContact" placeholder="Enter Business Contact">
+                            <label for="BusinessContact">Business Contact</label>
+                            <span asp-validation-for="BusinessContact" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Address" type="text" class="form-control shadow-none input0" id="Address" placeholder="Enter Address" />
+                            <label for="Address">Address</label>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="City" type="tel" class="form-control shadow-none input0" id="City" placeholder="Enter City">
+                            <label for="City">City</label>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="State" type="tel" class="form-control shadow-none input0" id="State" placeholder="Enter State">
+                            <label for="State">State</label>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="ZipCode" type="text" class="form-control shadow-none input0" id="ZipCode" placeholder="Enter ZipCode" />
+                            <label for="ZipCode">ZipCode</label>
+                            <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white mx-2" id="add">Save</button>
+                    <input type="button" value="Edit" id="edit0" class="btn btn-info text-white me-2" onclick="toggleFormElements0()" />
+                    <input type="submit" value="Save" id="save0" class="btn btn-info text-white me-2" asp-controller="Partners" asp-action="EditVendorInfo" />
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn border border-info text-info shadow-none">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function GetProfession() {
+        var id = $("#ProfessionType").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProfessionByType", "Actions")?HealthProfessionId=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                var s = '<option value="-1">Please Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].vendorId + '">' + response[i].vendorName + '</option>';
+                }
+                $("#Business").html(s);
+            },
+            error: function () {
+                alert("Error while checking Profession Types.");
+            }
+        });
+    }
+    function GetData() {
+        var id = $("#Business").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectProfessionalById", "Actions")?VendorId=' + id,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                $("#Email").val(response.email);
+                $("#FaxNumber").val(response.faxnumber);
+                $("#BusinessContact").val(response.businesscontact);
+            },
+            error: function () {
+                alert("Error while checking for data.");
+            }
+        });
+    }
+
+    if ("@ViewData["AddEditBusiness"]" == "Edit") {
+        window.onload = function (e) {
+            toggleFormElements0('true')
+            $(".region-check").prop("disabled", true);
+            $('#add').css("display", "none");
+        }
+    }
+
+    $(document).ready(function () {
+        if ("@ViewData["AddEditBusiness"]" == "Add") {
+            window.onload = function (e) {
+            $('#save0,#edit0').css("display", "none");
+            }
+        }
+    });
+    function toggleFormElements0(bDisabled) {
+        var inputs0 = document.getElementsByClassName("input0");
+        var submit0 = document.getElementById("save0");
+        var editprofile0 = document.getElementById("edit0");
+        for (var i = 0; i < inputs0.length; i++) {
+            inputs0[i].disabled = !inputs0[i].disabled;
+        }
+        if (inputs0[0].disabled) {
+            submit0.style.display = "none";
+            editprofile0.style.display = "block";
+        } else {
+            submit0.style.display = "block";
+            editprofile0.style.display = "none";
+        }
+    }
+</script>

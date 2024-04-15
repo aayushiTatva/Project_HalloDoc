@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Patient/_LayoutPatientLogin.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="  col-sm-4">
+        </div>
+        <div class="col-sm-4 main">
+            <div class="image">
+                <img src="images/Patient Site 1.png">
+            </div>
+            <div class="options">
+                <div>
+                    <a asp-controller="CreateRequest" asp-action="Index">
+                        <button class="request" id="submit">Request A Submit</button>
+                    </a>
+                </div>
+                <div>
+                    <a asp-controller="home" asp-action="AdminIndex"><button class="request" id="registered">User Login</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 ">
+            <button class="change" onclick="myFunction()">
+                <img src="images/moon image.png" class="darkMode">
+            </button>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="#" id="footer">Terms of Condition</a> <a href="" id="footer">I Privacy Policy </a>
+    </div>
+</div>

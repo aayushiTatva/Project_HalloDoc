@@ -1,0 +1,263 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+    string path = Context.Request.Path;
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.AdminProfileModel;
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+@{
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-6">
+              @if (path.StartsWith("/MyProfile"))
+                {
+                    <strong class="fs-4">
+                        My Profile
+                    </strong>
+                }
+                else
+                {
+                    <strong class="fs-4">
+                        Edit Admin Account
+                    </strong>
+                }
+        </div>
+        <div class="col-6 ms-auto">
+            <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+        </div>
+    </div>
+    <div class="row min-vh-100">
+        <div class="card shadow border-0 mb-3">
+            <form method="post" asp-controller="@(path.StartsWith("/MyProfile") ? "MyProfile" : "Access")" asp-action="ResetPassword" asp-route-AdminId="@Model.AdminId">
+                <input type="hidden" asp-for="AdminId"/>
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="UserName" type="text" class="form-control shadow-none" id="uname" placeholder="UserName" disabled>
+                            <label class="ms-2" for="uname"> UserName</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control shadow-none" id="passwd" placeholder="Password" >
+                            <label class="ms-2" for="passwd">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <select class="form-select shadow-none" required asp-for="Status" id="Status" asp-items="@(new SelectList(enumData, "ID", "Name"))" style="height: 60px" disabled>
+                                <option>Active</option>
+                            </select>
+                            <label for="Status">Status</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <select asp-for="RoleId" class="form-select form-control shadow-none" id="Role" asp-items="@(new SelectList(ViewBag.ComboBoxUserRole, "RoleId", "RoleName"))" disabled>
+                                <option>Master Admin</option>
+                            </select>
+                            <label for="Role">Role</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 ms-auto">
+                            <button type="submit" class="relogin"><a class="btn ms-auto shadow-none bg-white" style="color:aqua;" >Reset Password</a></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card shadow border-0 mb-3">
+            <div class="card-header">
+                <h4><strong>Administrator Information</strong></h4>
+            </div>
+            <form method="post" asp-controller="@(path.StartsWith("/MyProfile") ? "MyProfile" : "Access")" asp-action="EditAdministratorInfo" id="AdministratorInfoForm">
+                <input type="hidden" asp-for="AdminId" id="AdminId" />
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="FirstName" type="text" class="form-control shadow-none input" id="fname" placeholder="details">
+                            <label class="ms-2" for="fname"> First Name</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="LastName" type="text" class="form-control shadow-none input" id="lname" placeholder="details">
+                            <label class="ms-2" for="lname">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Email" type="emil" class="form-control shadow-none input" id="email" placeholder="Email">
+                            <label class="ms-2" for="email">Email</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="ConfirmEmail" type="email" class="form-control shadow-none input" id="cemail" placeholder="Confirm Email">
+                            <label class="ms-2" for="cemail">Confirm Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phones" placeholder="Phone Number" />
+                            <label class="ms-2" for="tel">Phone Number</label>
+                        </div>
+                        <input type="hidden" asp-for="RegionsId" id="regionids"/>
+                        <div class="col-md-6 d-flex">
+                            @foreach (var cb in ViewBag.RegionComboBox)
+                            {
+                                @if (Model != null && Model.RegionIds.Count > 0 && Model.RegionIds.Exists(id => id.RegionId == cb.RegionId))
+                                {
+                                    <div class="form-check mx-2">
+                                        <input class="form-check-input input" value="@cb.RegionId" type="checkbox" name="Region" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @cb.RegionName
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check mx-2">
+                                        <input class="form-check-input input" value="@cb.RegionId" type="checkbox" name="Region">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @cb.RegionName
+                                        </label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a id="editings" onclick=" toggleFormElements('true')" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded ">Edit</a>
+                        <input type="button" value="Save" id="savings" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card shadow border-0 mb-3">
+            <div class="card-header">
+                <h4><strong>Mailing and Biling Information</strong></h4>
+            </div>
+            <form method="post" asp-controller="@(path.StartsWith("/MyProfile") ? "MyProfile" : "Access")" asp-action="EditBillingInfo" id="BillingInfoForm">
+                <input type="hidden" asp-for="AdminId" />
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Address1" type="text" class="form-control shadow-none inputs" id="address1" placeholder="Address 1">
+                            <label class="ms-2" for="address1"> Address 1</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Address2" type="text" class="form-control shadow-none inputs" id="address2" placeholder="Address 2">
+                            <label class="ms-2" for="address2">Address 2</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="City" type="text" class="form-control shadow-none inputs" id="city" placeholder="City">
+                            <label class="ms-2" for="city">City</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="State" type="text" class="form-control shadow-none inputs" id="state" placeholder="State">
+                            <label class="ms-2" for="state">State</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="ZipCode" type="text" class="form-control shadow-none inputs" id="zipcode" placeholder="Zipcode">
+                            <label class="ms-2" for="zipcode">Zipcode</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control shadow-none inputs" type="tel" id="phones" placeholder="Phone Number" />
+                            <label class="ms-2" for="tel">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a id="editing" onclick=" mytoggleFormElements('true')" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded ">Edit</a>
+                        <input type="button" value="Save" id="saving" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    
+    window.onload = function (e) {
+        toggleFormElements('true')
+        mytoggleFormElements('true')
+    }
+    function toggleFormElements(bDisabled) {
+        var inputs = document.getElementsByClassName("input");
+        var submit = document.getElementById("savings");
+        var editprofile = document.getElementById("editings");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+        if (inputs[0].disabled) {
+            submit.style.display = "none";
+            editprofile.style.display = "block";
+        } else {
+            submit.style.display = "block";
+            editprofile.style.display = "none";
+        }
+        console.log("Hello Admin");
+    }
+
+    function mytoggleFormElements(bDisabled) {
+        var inputs = document.getElementsByClassName("inputs");
+        var submit = document.getElementById("saving");
+        var editprofile = document.getElementById("editing");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+        if (inputs[0].disabled) {
+            submit.style.display = "none";
+            editprofile.style.display = "block";
+        } else {
+            submit.style.display = "block";
+            editprofile.style.display = "none";
+        }
+        console.log("Hello Mail");
+    }
+
+    $(function () {
+        $('#savings').on('click', function () {
+            let checkboxes = document.querySelectorAll('input[name="Region"]:checked');
+            let regionIds = [];
+            checkboxes.forEach((checkbox) => {
+                regionIds.push(checkbox.value);
+            });
+            document.querySelector('#regionids').value = regionIds.join(',');
+            Swal.fire({
+                title: "Do you want to Edit Information ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#AdministratorInfoForm').submit();
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $('#saving').on('click', function () {
+            Swal.fire({
+                title: "Do you want to Edit Information ?",
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#BillingInfoForm').submit();
+                }
+            });
+        });
+    });
+
+</script>

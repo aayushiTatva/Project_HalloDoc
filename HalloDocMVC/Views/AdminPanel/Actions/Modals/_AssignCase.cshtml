@@ -1,0 +1,74 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="AssignCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Assign Case</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Actions" asp-action="AssignProvider" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <small class="text-secondary">
+                        To assign this request, search and select another Physician
+                    </small>
+                    <input type="hidden" name="requestid" id="RequestID_Input_ModelAssignCase" />
+                    <div class="form-floating my-3">
+                        <select name="region" class="form-select form-control shadow-none" id="regionName" required data-allow-clear="true" tabindex="-1" onchange="assignFunction()" asp-items="@(new SelectList(ViewBag.ComboBoxRegion, "RegionId", "RegionName"))">
+                            
+                        </select>
+                        <label for="regionName">Narrow search by Region</label>
+                        <div class="invalid-feedback">
+                            Please provide a valid state!
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select name="ProviderId" class="form-select form-control shadow-none" id="providerName" required data-allow-clear="true" tabindex="-1">
+                           
+                        </select>
+                        <label for="providerName">Select Physician</label>
+                        <div class="invalid-feedback">
+                            Please provide a valid state!
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea name="Notes" class="form-control shadow-none" placeholder="Leave a comment here" id="Description" style="height: 100px"></textarea>
+                        <label for="Description">Description</label>
+                        <div class="invalid-feedback">
+                            Please enter notes!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white shadow-none">Submit</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function assignFunction() {
+        var region = $("#regionName").val();
+        console.log(region);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProviderbyRegion", "Actions")?Regionid=' + region,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                var s = '';
+                for (var i = 0; i < response.length; i++) {
+                    s += '<option value="' + response[i].physicianid + '">' + response[i].firstname + ' ' + response[i].lastname + '</option>';
+                }
+                $("#providerName").html(s);
+            },
+            error: function () {
+                alert("Error while checking Physician.");
+            }
+        });
+    }
+</script>
+
+
+

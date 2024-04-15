@@ -1,0 +1,212 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Patient/_LayoutCreateRequest.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.PatientPanel.ViewDataPatientRequestModel
+<partial name="~/Views/PatientPanel/Modals/_CreateRequestModal.cshtml" />
+<div class="row">
+    <div class="col float-end">
+        <a class="relogin ms-auto " asp-controller="CreateRequest" asp-action="Index"><button class="relogin shadow-none bg-white float-end">Back</button></a>
+    </div>
+</div>@*
+<div class="card shadow-none">*@
+<form method="post" asp-controller="CreateRequest" asp-action="PatientRequest" enctype="multipart/form-data">
+    <div class="card shadow border-0 mb-3">
+        <div class="card-header">
+            <h4><strong>Patient Information</strong></h4>
+        </div>
+        <div class="card-body border-0">
+            <div class="row">
+                <div class="col form-floating mb-3">
+                    <textarea asp-for="Symptoms" class="form-control shadow-none" id="symptoms" style="height: 100px" placeholder="Enter brief Details of Symptoms (Optional)"></textarea>
+                    <label class="ms-2" for="symptoms">Enter brief Details of Symptoms (Optional)</label>
+                    <span asp-validation-for="Symptoms" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="FirstName" type="text" class="form-control shadow-none input" id="fname" placeholder="details">
+                    <label class="ms-2" for="fname"> First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="LastName" type="text" class="form-control shadow-none input" id="lname" placeholder="details">
+                    <label class="ms-2" for="lname">Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="DateOfBirth" type="date" class="form-control shadow-none input" id="dob" placeholder="Date of Birth">
+                    <label class="ms-2" for="dob">Date Of Birth</label>
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow border-0 mb-3">
+        <div class="card-header">
+            <h4><strong>Patient Contact Information</strong></h4>
+        </div>
+        <div class="card-body border-0">
+            <div class="row">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="Email" type="email" class="form-control shadow-none input" id="email" placeholder="details">
+                    <label class="ms-2" for="email"> Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phones" placeholder="(201) 555-0123" />
+                    <label class="ms-2" for="tel">Phone Number</label>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-floating mb-3" id="password" style="display:none;">
+                    <input asp-for="PassWord" type="password" class="form-control shadow-none" placeholder="PassWord">
+                    <label class="ms-2" for="pass"> PassWord</label>
+                    <span asp-validation-for="PassWord" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-floating mb-3" id="ConfirmPassword" style="display:none;">
+                    <input asp-for="ConfirmPassword" class="form-control shadow-none" type="password" />
+                    <label class="ms-2" for="cpass">Confirm Password</label>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow border-0 mb-3">
+        <div class="card-header">
+            <h4><strong>Patient Location</strong></h4>
+        </div>
+        <div class="card-body border-0">
+            <div class="row ">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="Street" type="text" class="form-control shadow-none input" id="street" placeholder="details">
+                    <label class="ms-2" for="street"> Street</label>
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="City" class="form-control shadow-none input" type="text" id="city" placeholder="(201) 555-0123" />
+                    <label class="ms-2" for="city">City</label>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="State" type="text" class="form-control shadow-none input" id="state" placeholder="details">
+                    <label class="ms-2" for="state"> State</label>
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="ZipCode" class="form-control shadow-none input" type="text" id="zipcode" placeholder="Zipcode" />
+                    <label class="ms-2" for="zipcode">Zipcode</label>
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-floating mb-3">
+                    <input asp-for="RoomSuite" type="text" class="form-control shadow-none input" id="room" placeholder="details">
+                    <label class="ms-2" for="room"> Room # / Suite (Optional)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card shadow border-0 mb-3">
+        <div class="card-header">
+            <h4><strong>(Optional) Upload Photo or Document</strong></h4>
+        </div>
+        <div class="card-body border-0">
+            <div class="row ">
+                <div class="col-12 border rounded ">
+                    <div class="d-flex justify-content-between">
+                        <span id="choosenfile" class="p-3">No file choosen</span>
+                        <a class="btn bg-info btn btn-lg" onclick="document.getElementById('files').click()">
+                            <span for="files" class="btn text-white">
+                                <i class="fa fa-cloud-upload"></i>Upload
+                            </span>
+                        </a>
+                        <input asp-for="UploadFile" id="files" type="file" class="d-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row ">
+        <div class="d-flex justify-content-end mb-3">
+            <input type="submit" class="btn bg-info border border-info text-white ">
+            <a asp-controller="CreateRequest" asp-action="Index" class="btn border border-info ms-1 text-info">Cancel</a>
+        </div>
+    </div>
+</form>
+@*</div>*@
+<script type="text/javascript">
+    $(function () {
+        $("#email").focusout(function () {
+            var email = $("#email").val();
+            console.log(email);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckEmail", "CreateRequest")?email=' + email,
+                cache: false,
+                success: function (response) {
+                    var flag = response.isAspnetuser;
+                    if (flag) {
+                        // Show username and password fields
+                        $("#ConfirmPassword").show();
+                        $("#password").show();
+                    } else {
+                        $("#ConfirmPassword").hide();
+                        $("#password").hide();
+                    }
+                },
+                error: function () {
+                    alert("Error while checking email.");
+                }
+            });
+        });
+    });
+
+</script>
+<script>
+    $("#files").change(function () {
+        filename = this.files[0].name;
+        console.log(filename);
+        $("#choosenfile").text(filename);
+    });
+    function fileValidation() {
+        var fileInput =
+            document.getElementById('file');
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        else {
+
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '"/>';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    }
+</script>

@@ -1,0 +1,230 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "ViewDocuments";
+    Layout = "~/Views/Shared/Patient/_LayoutPatientDashboard.cshtml";
+}
+﻿﻿@using HalloDocMVC.DBEntity.ViewModels;
+@using static HalloDocMVC.DBEntity.DataModels.Aspnetuser;
+<div class="container">
+    <div class="row">
+        <div class="row ">
+            <div class="row">
+                <a class="relogin" asp-controller="PatientDashboard" asp-action="Index">
+                    <button class="relogin shadow-none" style="float: right;margin-top: 20px;border-radius: 5px;border-color: aqua;color: aqua;">
+                        Back
+                    </button>
+                </a>
+            </div>
+        </div><br /><br />
+        <div class="main">
+            <h2>Documents</h2>
+            <div class="profile">
+                <h5 style="color:aqua;">Patient Name</h5>
+                <div>
+                    <strong class="text-info">@CV.UserName()</strong>
+                </div>
+                <div>
+                    <p>Check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
+                </div>
+            </div>
+            <div>
+                @foreach (var item in ViewBag.requestinfo)
+                {
+                    <form method="post" asp-controller="PatientDashboard" asp-action="UploadDoc" enctype="multipart/form-data">
+                        <div class="d-flex justify-content-between bg-light border border-secondary rounded">
+                            <button type="button" id="choosenfile" class="col btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                                Select File
+                            </button>
+                            <input id="files" type="file" class="d-none form-control doc_uploder" name="UploadFile" accept="image/x-png,image/gif,image/jpeg">
+                            <input name="Requestid" value="@item.Requestid" class="d-none" />
+                            <a href="#">
+                                <button type="submit" class="btn btn-info text-white py-2">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    Upload
+                                </button>
+                            </a>
+                        </div>
+                    </form>
+                }
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="mt-2">
+                    <h3>Documents</h3>
+                </div>
+                <div class="text-end">
+                    <a class="d-block d-sm-none btn border border-info text-info">
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                    </a>
+                    <a class="d-none d-sm-block btn border border-info text-info" onclick="downloadAll()">
+                        Download All
+                    </a>
+                </div>
+            </div>
+            <div class="d-none d-sm-block table-responsive mt-3 mb-0">
+                <table class="table mb-0">
+                    <thead class="border-0">
+                        <tr class="table-secondary">
+                            <th scope="col" class="table-text-header px-3">
+                                <div class="form-check">
+                                    <input class="form-check-input " type="checkbox" id="selectall" onchange="select_Desectall()">
+                                </div>
+                            </th>
+                            <th scope="col" class="table-text-header px-3">Document Name</th>@*
+                            <th scope="col" class="table-text-header px-3">Uploader</th>*@
+                            <th scope="col" class="table-text-header">Upload date</th>
+                            <th scope="col" class="table-text-header">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item2 in ViewBag.DocList)
+                        {
+                            <tr>
+                                <td class="table-text px-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input doc-checkbox" type="checkbox" value="" onclick="statusselectall()">
+                                    </div>
+                                </td>
+                                <td class="table-text px-3 text-secondary">@item2.Filename</td>
+                                <td class="table-text px-3 text-secondary">@item2.Createddate</td>
+                                <td class="table-text text-center">
+                                    <a class="btn btn-sm download-link btn-outline-info document-button" download href="~/Upload/@item2.Filename">
+                                        <i class="fa fa-cloud-download"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#email").focusout(function () {
+            var email = $("#email").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckEmail")?email=' + email,
+                cache: false,
+                success: function (response) {
+                    var flag = response.isAspnetuser;
+                    if (flag) {
+                        // Show username and password fields
+                        $("#username").show();
+                        $("#password").show();
+                    } else {
+                        $("#username").hide();
+                        $("#password").hide();
+                    }
+                },
+                error: function () {
+                    alert("Error while checking email.");
+                }
+            });
+        });
+    });
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    $("#files").change(function () {
+        filename = this.files[0].name;
+        console.log(filename);
+        $("#choosenfile").text(filename);
+    });
+
+    $('.filename').each(function () {
+        var fileName = $(this).text().trim();
+        if (fileName.endsWith('.pdf')) {
+            $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
+        } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+            $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
+        } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif') || fileName.endsWith('.svg')) {
+            $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
+        } else {
+            $(this).prepend(' <i class="fa-solid fa-file" > </i>');
+        }
+
+    });
+
+    $("#fileUploadBtn").click(function (e) {
+        e.preventDefault();
+        if ($('#files')[0].files[0] == undefined) {
+            swal.fire({
+                title: "Oops..",
+                text: "Oops! Please Select One File ",
+                icon: "error",
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "Okay",
+                cancelButtonColor: "#01BBE7",
+            })
+            return;
+        } else {
+            $('#myForm').submit();
+        }
+    });
+
+    $('#downloadAll').click(function () {
+        $('tbody tr').each(function () {
+            if ($(this).find('.form-check-input').prop('checked')) {
+                var downloadLink = $(this).find('.document-button').attr('href');
+                var hiddenLink = document.createElement('a');
+                hiddenLink.href = downloadLink;
+                hiddenLink.target = '_blank';
+                hiddenLink.download = '';
+                document.body.appendChild(hiddenLink);
+                hiddenLink.click();
+                document.body.removeChild(hiddenLink);
+            }
+        });
+        $('.t-tab > .border-bottom').each(function () {
+            if ($(this).find('.form-check-input').prop('checked')) {
+                var downloadLink = $(this).find('.document-button').attr('href');
+                var hiddenLink = document.createElement('a');
+                hiddenLink.href = downloadLink;
+                hiddenLink.target = '_blank';
+                hiddenLink.download = '';
+                document.body.appendChild(hiddenLink);
+                hiddenLink.click();
+                document.body.removeChild(hiddenLink);
+            }
+        });
+    });
+
+    $('#topflexCheckDefault').change(function () {
+        $('.table tbody input[type="checkbox"]').prop('checked', $(this).is(':checked'));
+    });
+
+    // Uncheck main checkbox in header when any checkbox in table body is unchecked
+    $('.table tbody input[type="checkbox"]').change(function () {
+        if (!$(this).is(':checked')) {
+            $('#topflexCheckDefault').prop('checked', false);
+        }
+    });
+
+    // Check main checkbox in header when all checkboxes in table body are checked
+    $('.table tbody input[type="checkbox"]').change(function () {
+        var allChecked = true;
+        $('.table tbody input[type="checkbox"]').each(function () {
+            if (!$(this).is(':checked')) {
+                allChecked = false;
+                return false;
+            }
+        });
+
+        if (allChecked) {
+            $('#topflexCheckDefault').prop('checked', true);
+        }
+    });
+</script>
+<script>
+    function myFunction() {
+        let element = document.body;
+        element.classList.toggle("dark");
+    }
+</script>

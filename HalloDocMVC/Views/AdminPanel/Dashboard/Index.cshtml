@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+<div class="mx-sm-1 mx-md-2 mx-xxl-3 mt-0 ">
+    <div id="PartialViewContainer">
+        <partial name="DashboardSubPart.cshtml" />
+    </div>
+    <div id="SearchResult" style="padding-bottom: 10px;">
+
+    </div>
+    <partial name="../Actions/Modals/_CancelCase.cshtml" />
+    <partial name="../Actions/Modals/_BlockCase.cshtml" />
+    <partial name="../Actions/Modals/_AssignCase.cshtml" />
+    <partial name="../Actions/Modals/_TransferRequest.cshtml" />
+    <partial name="../Actions/Modals/_ClearCase.cshtml" />
+    <partial name="../Actions/Modals/_SendAgreement.cshtml" />
+    <partial name="../Actions/Modals/_SendLink.cshtml" />
+</div>
+
+<script>
+    $(function () {
+        $("#filterForm").submit();
+    });
+</script>
+<script src="~/js/adminDashboard.js"></script>
+<script>
+    $("#newrequest").click(function () {
+        $("#news").show();
+    });
+    $("#pendingrequest").click(function () {
+        $("#pendings").show();
+    });
+    $("#activerequest").click(function () {
+        $("#active").show();
+    });
+    $("#concluderequest").click(function () {
+        $("#concludes").show();
+    });
+    $("#tocloserequest").click(function () {
+        $("#tocloses").show();
+    });
+    $("#unpaidrequest").click(function () {
+        $("#unpaids").show();
+    });
+</script>
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

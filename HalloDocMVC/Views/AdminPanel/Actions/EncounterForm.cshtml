@@ -1,0 +1,273 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.EncounterModel
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-6">
+            <h4><strong>Encounter Form</strong></h4>
+        </div>
+        <div class="col-6 ms-auto">
+            <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+        </div>
+    </div>
+    <div class="row min-vh-100">
+        <div class="card">
+            <div class="card-header align-self-center border-0">
+                <h3><strong class="text-info">Medical Report-Confidential</strong></h3>
+            </div>
+            <div class="card-body border-0">
+                <form method="post" asp-controller="Actions" asp-action="EditEncounterData">
+                    <input type="hidden" asp-for="RequesId" />
+                    <input type="hidden" asp-for="RequesClientId" />
+                    <input type="hidden" asp-for="EncounterId" />
+                    <div class="row">
+                        <div class="col-md-6 form-floating  space">
+                            <input asp-for="FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="First Name" disabled/> 
+                            <label class="ms-2" for="fname"> First Name</label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-floating  space">
+                            <input asp-for="LastName" type="text" class="form-control shadow-none " id="lname" placeholder="Last Name" disabled/>
+                            <label class="ms-2" for="lname">Last Name</label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col form-floating">
+                            <input asp-for="Location" type="text" class="form-control shadow-none" id="location" placeholder="Location" disabled/>
+                            <label class="ms-2" for="location">Location</label>
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6 form-floating  space">
+                            <input asp-for="DateOfBirth" type="date" class="form-control shadow-none" id="dob" placeholder="Date Of Birth" disabled/>
+                            <label class="ms-2" for="dob">Date Of Birth</label>
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-floating  space">
+                            <input asp-for="Date" type="date" class="form-control shadow-none" id="currentDate" placeholder="Date" disabled/>
+                            <label class="ms-2" for="currentDate">Date</label>
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="d-flex form-floating  space" style="height:100%;">
+                                <input asp-for="PhoneNumber" class="form-control shadow-none inputs" type="tel" id="phones" placeholder="(201) 555-0123" disabled />
+                                <label class="ms-2" for="tel">Phone Number</label>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-floating  space">
+                            <input asp-for="Email" type="email" class="form-control shadow-none inputs" id="email" placeholder="Email" disabled/>
+                            <label class="ms-2" for="emailid"> Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="HistoryOfIllness"class="form-control shadow-none" id="history" style="height: 100px" placeholder="History Of Present Illness or Injury"></textarea>
+                                <label for="history">History Of Present Illness or Injury</label>
+                                <span asp-validation-for="HistoryOfIllness" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="HistoryOfMedical" class="form-control shadow-none" id="medicalHistory" style="height: 100px" placeholder="Mdeical History"></textarea>
+                                <label for="medicalHistory">Medical History</label>
+                                <span asp-validation-for="HistoryOfMedical" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Medications" class="form-control shadow-none" id="medications" style="height: 100px" placeholder="Medications"></textarea>
+                                <label for="medications">Medications</label>
+                                <span asp-validation-for="Medications" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Allergies" class="form-control shadow-none" id="allergies" style="height: 100px" placeholder="Allergies"></textarea>
+                                <label for="allergies">Allergies</label>
+                                <span asp-validation-for="Allergies" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-4 form-floating ">
+                            <div class="d-flex form-floating" style="height:100%;">
+                                <input asp-for="Temp" class="form-control shadow-none" id="temp" placeholder="Temp" />
+                                <label class="ms-2" for="temp">Temp</label>
+                                <span asp-validation-for="Temp" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-floating">
+                            <input asp-for ="Hr" class="form-control shadow-none" id="hr" placeholder="HR">
+                            <label class="ms-2" for="hr"> HR</label>
+                            <span asp-validation-for="Hr" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-floating">
+                            <input asp-for="Rr" class="form-control shadow-none" id="rr" placeholder="RR">
+                            <label class="ms-2" for="rr"> RR</label>
+                            <span asp-validation-for="Rr" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-2 form-floating ">
+                            <div class="form-floating" style="height:100%;">
+                                <input asp-for="BloodPressureS" class="form-control shadow-none" id="bpS" placeholder="Blood Pressure(S..)" />
+                                <label class="ms-2" for="bpS">Blood Pressure(S..)</label>
+                                <span asp-validation-for="BloodPressureS" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 form-floating ">
+                            <div class="form-floating" style="height:100%;">
+                                <input asp-for="BloodPressureD" class="form-control shadow-none" id="bpD" placeholder="Blood Pressure(D..)" />
+                                <label class="ms-2" for="bpD">Blood Pressure(D..)</label>
+                                <span asp-validation-for="BloodPressureD" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-floating">
+                            <input asp-for="O2" class="form-control shadow-none" id="oxygen" placeholder="O2">
+                            <label class="ms-2" for="oxygen"> O2</label>
+                            <span asp-validation-for="O2" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-floating">
+                            <input asp-for="Pain" class="form-control shadow-none" id="pain" placeholder="Pain">
+                            <label class="ms-2" for="pain"> Pain</label>
+                            <span asp-validation-for="Pain" class="text-danger"></span>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Heent" class="form-control shadow-none" id="heent" style="height: 100px" placeholder="Heent"></textarea>
+                                <label for="heent">Heent</label>
+                                <span asp-validation-for="Heent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="CV" class="form-control shadow-none" id="cv" style="height: 100px" placeholder="CV"></textarea>
+                                <label for="cv">CV</label>
+                                <span asp-validation-for="CV" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Chest" class="form-control shadow-none" id="chest" style="height: 100px" placeholder="Chest"></textarea>
+                                <label for="chest">Chest</label>
+                                <span asp-validation-for="Chest" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="ABD" class="form-control shadow-none" id="abd" style="height: 100px" placeholder="ABD"></textarea>
+                                <label for="abd">ABD</label>
+                                <span asp-validation-for="ABD" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Extr" class="form-control shadow-none" id="extr" style="height: 100px" placeholder="Extr"></textarea>
+                                <label for="extr">Extr</label>
+                                <span asp-validation-for="Extr" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Skin" class="form-control shadow-none" id="skin" style="height: 100px" placeholder="Skin"></textarea>
+                                <label for="skin">Skin</label>
+                                <span asp-validation-for="Skin" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Neuro" class="form-control shadow-none" id="neuro" style="height: 100px" placeholder="Neuro"></textarea>
+                                <label for="neuro">Neuro</label>
+                                <span asp-validation-for="Neuro" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Other" class="form-control shadow-none" id="other" style="height: 100px" placeholder="Other"></textarea>
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Diagnosis" class="form-control shadow-none" id="diagnosis" style="height: 100px" placeholder="Diagnosis"></textarea>
+                                <label for="diagnosis">Diagnosis</label>
+                                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Treatment" class="form-control shadow-none" id="treatment" style="height: 100px" placeholder="Treatment Plan"></textarea>
+                                <label for="treatment">Treatment Plan</label>
+                                <span asp-validation-for="Treatment" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="MedicationsDispensed" class="form-control shadow-none" id="medicDispensed" style="height: 100px" placeholder="Medications Dispensed"></textarea>
+                                <label for="medicDispensed">Medications Dispensed</label>
+                                <span asp-validation-for="MedicationsDispensed" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Procedures" class="form-control shadow-none" id="other" style="height: 100px" placeholder="Procedures"></textarea>
+                                <label for="Procedures">Procedures</label>
+                                <span asp-validation-for="Procedures" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="Followup" class="form-control shadow-none" id="followup" style="height: 100px" placeholder="Follow Up"></textarea>
+                                <label for="followup">Follow Up</label>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="d-flex justify-content-end">
+                            @*<input type="submit" class="bg-info border border-outline-info text-white rounded-2 submission text-white"  value="Save Changes">
+                            <a asp-controller="actions" asp-action="ViewNotes" class="btn text-white rounded-2 text-white ms-2" id="finalize">Finalize</a>
+                            <a asp-controller="dashboard" asp-action="Index" class="btn bg-white border border-info rounded-2 text-info ms-2">Cancel</a>*@
+                            <button type="submit" class="btn btn-info text-white shadow-none me-2">Save Changes</button>
+                            @{
+                                if (Model.Isfinalize == false)
+                                {
+                                    <button type="submit" value="Finalize" asp-action="Finalize" asp-controller="SubmitForm" class="btn btn-danger btn-cancel me-2" style="background-color:#9c27b0">Finalize</button>
+                                }
+                            }
+                            <a asp-controller="Dashboard" asp-action="Index" class="btn border border-info text-info shadow-none">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

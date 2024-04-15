@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="modal fade" id="createNewRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create New Request</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary">Here, I want to create new request for ... </p>
+                <div class="d-flex justify-content-center">
+                    <a id="btnMe" class="btn border-info text-info me-2">Me</a>
+                    <a id="btnElse" class="btn border-info text-info">Someone Else</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnContinue" type="button" class="btn btn-info text-white shadow-none">Continue</button>
+                <button type="button" class="btn border-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Required Scripts-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/css/bootstrap.min.css"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    let metemp = false;
+    let elsetemp = false;
+
+    $('#btnMe').on('click', function () {
+        metemp = true;
+        elsetemp = false;
+        var element1 = document.getElementById("btnMe");
+        element1.classList.remove("border-info");
+        element1.classList.remove("text-info");
+        element1.classList.add("bg-info");
+        element1.classList.add("text-white");
+        var element2 = document.getElementById("btnElse");
+        element2.classList.remove("bg-info");
+        element2.classList.remove("text-white");
+        element2.classList.add("border-info");
+        element2.classList.add("text-info");
+    })
+    $('#btnElse').on('click', function () {
+        elsetemp = true;
+        metemp = false;
+        var element1 = document.getElementById("btnMe");
+        element1.classList.remove("bg-info");
+        element1.classList.remove("text-white");
+        element1.classList.add("border-info");
+        element1.classList.add("text-info");
+        var element2 = document.getElementById("btnElse");
+        element2.classList.remove("border-info");
+        element2.classList.remove("text-info");
+        element2.classList.add("bg-info");
+        element2.classList.add("text-white");
+    })
+    $('#btnContinue').on('click', function () {
+        if (metemp == true) {
+            window.location.href = "/PatientDashboard/RequestForMe";
+        }
+        else if (elsetemp == true) {
+            window.location.href = "/PatientDashboard/RequestForSomeoneElse";
+        }
+    })
+</script>
+

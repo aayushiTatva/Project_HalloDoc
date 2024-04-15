@@ -1,0 +1,155 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.AdminProfileModel;
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+@{
+    var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-6">
+            <h4><strong>My Profile</strong></h4>
+        </div>
+        <div class="col-6 ms-auto">
+            <a class="relogin ms-auto" asp-controller="Access" asp-action="UserAccess"><button class="relogin shadow-none bg-white">Back</button></a>
+        </div>
+    </div>
+    <div class="row min-vh-100">
+        <form method="post" asp-controller="Access" asp-action="AdminAdd">
+            <div class="card shadow border-0 mb-3">
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-4 form-floating mb-3">
+                            <input asp-for="UserName" type="text" class="form-control shadow-none" id="uname" placeholder="UserName" >
+                            <label class="ms-2" for="uname"> UserName</label>
+                        </div>
+                        <div class="col-md-4 form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control shadow-none" id="passwd" placeholder="Password">
+                            <label class="ms-2" for="passwd">Password</label>
+                        </div>
+                        <div class="col-md-4 form-floating mb-3">
+                            <select asp-for="RoleId" class="form-select form-control shadow-none" id="Role">
+                                <option>Master Admin</option>
+                            </select>
+                            <label for="Role">Role</label>
+                        </div>
+                    </div>
+                        
+                </div>
+            </div>
+            <div class="card shadow border-0 mb-3">
+                <div class="card-header">
+                    <h4><strong>Administrator Information</strong></h4>
+                </div>
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="FirstName" type="text" class="form-control shadow-none " id="fname" placeholder="details">
+                            <label class="ms-2" for="fname"> First Name</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="LastName" type="text" class="form-control shadow-none " id="lname" placeholder="details">
+                            <label class="ms-2" for="lname">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Email" type="emil" class="form-control shadow-none " id="email" placeholder="Email">
+                            <label class="ms-2" for="email">Email</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="ConfirmEmail" type="email" class="form-control shadow-none " id="cemail" placeholder="Confirm Email">
+                            <label class="ms-2" for="cemail">Confirm Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control shadow-none " type="tel" id="phones" placeholder="Phone Number" />
+                            <label class="ms-2" for="tel">Phone Number</label>
+                        </div>
+                        <input type="hidden" asp-for="RegionsId" id="regionidlist" />
+                        <div class="col-md-6 d-flex">
+                            @foreach (var cb in ViewBag.RegionComboBox)
+                            {
+                                <div class="form-check mx-2">
+                                    <input class="form-check-input " value="@cb.RegionId" type="checkbox" name="Region">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        @cb.RegionName
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow border-0 mb-3">
+                <div class="card-header">
+                    <h4><strong>Mailing and Biling Information</strong></h4>
+                </div>
+                <div class="card-body border-0">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Address1" type="text" class="form-control shadow-none inputs" id="address1" placeholder="Address 1">
+                            <label class="ms-2" for="address1"> Address 1</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="Address2" type="text" class="form-control shadow-none inputs" id="address2" placeholder="Address 2">
+                            <label class="ms-2" for="address2">Address 2</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="City" type="text" class="form-control shadow-none inputs" id="city" placeholder="City">
+                            <label class="ms-2" for="city">City</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            @*<select class="form-select shadow-none inputs" asp-for="State" id="floatingSelectGrid" style="height: 60px" placeholder="State">
+                            <option selected class="text-secondary">State</option>
+                            <option value="1">Virginia</option>
+                            </select>*@
+                            <select class="form-select shadow-none inputs" asp-for="State" style="height: 60px">
+                            </select>
+                            <label for="State">State</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="ZipCode" type="text" class="form-control shadow-none inputs" id="zipcode" placeholder="Zipcode">
+                            <label class="ms-2" for="zipcode">Zipcode</label>
+                        </div>
+                        <div class="col-md-6 form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control shadow-none inputs" type="tel" id="phones" placeholder="Phone Number" />
+                            <label class="ms-2" for="tel">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <input type="submit" value="Save" id="save" class="btn btn-info text-white me-2" />
+                        <a asp-controller="Access" asp-action="UserAccess" class="btn border border-info bg-light rounded">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#save').on('click', function () {
+            let checkboxes = document.querySelectorAll('input[name="Region"]:checked');
+            let regionIds = [];
+            checkboxes.forEach((checkbox) => {
+                regionIds.push(checkbox.value);
+            });
+            document.querySelector('#regionidlist').value = regionIds.join(',');
+        });
+    });
+
+</script>

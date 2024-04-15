@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.CloseCaseModel
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+<div class="container shadow-none">
+    <div class="row mt-5" style="border: none;">
+        <div class="header  d-flex" style="border: none;">
+            <div class="col-6  d-flex">
+                <div><h3><b>Close Case</b></h3></div>
+            </div>
+            <div class="col-6 d-flex">
+                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index" ><button class="relogin shadow-none bg-white">Back</button></a>
+            </div>
+        </div>
+        <div class="card shadow">
+            <div class="card-body bg-white rounded shadow-none">
+                <div class="row d-flex">
+                    <div class="col-md-6">
+                        <small class="pt-3">Patient Name</small>
+                        <h5 class="text-info">@Model.FirstName @Model.LastName</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="relogin ms-auto " asp-controller="" asp-action=""><button class="relogin shadow-none bg-white">Create Invoice through quickbooks</button></a>
+                    </div>
+                </div><br/>
+                <div class="heading">
+                    <h4>Documents</h4>
+                </div>
+                <div class="d-none d-sm-block table-responsive mt-3 mb-0">
+                    <table class="table">
+                        <thead class="border-0">
+                            <tr class="table-secondary">
+                                <th scope="col" class="table-text-header px-3">Documents</th>
+                                <th scope="col" class="table-text-header  px-3">Upload Date</th>
+                                <th scope="col" class="table-text-header">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model.documents.Count == 0)
+                            {
+                                <tr>
+                                    <td class="text-center" colspan="3">
+                                        No documents to show !!
+                                    </td>
+                                </tr>
+                            }
+                            @foreach (var item in @Model.documents)
+                            {
+                                <tr>
+                                    <td class="table-text px-3">@item.filename</td>
+                                    <td class="table-text px-3">@item.CreatedDate</td>
+                                    <td class="table-text">
+                                        <a class="btn btn-sm download-link border border-info text-info document-button me-2" download href="@item.filename.Replace("~","")">
+                                            <i class="fa fa-cloud-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="details">
+                    <form method="post" asp-controller="Actions" asp-action="EditCloseCase" asp-route-RequestID="@Model.RequestID">
+                        <input type="hidden" asp-for="RequestID" class="inputs" />
+                        <div class="row">
+                            <div class="col form-floating  space">
+                                <input asp-for="RC_FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="details">
+                                <label class="ms-2" for="fname"> First Name</label>
+                            </div>
+                            <div class="col form-floating  space">
+                                <input asp-for="RC_LastName" type="text" class="form-control shadow-none " id="lname" placeholder="details">
+                                <label class="ms-2" for="lname">Last Name</label>
+                            </div>
+                        </div><br />
+                        <div class="row">
+                            <div class="col-6 form-floating  space">
+                                <input asp-for="RC_DateOfBirth" type="date" class="form-control shadow-none" id="dob" placeholder="Date of Birth">
+                                <label class="ms-2" for="dob">Date Of Birth</label>
+                            </div>
+                            <div class="col-6 ">
+                                <div class="d-flex form-floating  space" style="height:100%;">
+                                    <input asp-for="RC_PhoneNumber" class="form-control shadow-none inputs" type="tel" id="phones" placeholder="(201) 555-0123" />
+                                    <label class="ms-2" for="tel">Phone Number</label>
+                                    <span asp-validation-for="RC_PhoneNumber" class="text-danger"></span>
+
+                                    <button class="btn border border-info text-info mx-2 ">
+                                        <i class="bi bi-telephone-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="row">
+                            <div class="col-6 form-floating  space">
+                                <input asp-for="RC_Email" type="email" class="form-control shadow-none inputs" id="email" placeholder="details">
+                                <label class="ms-2" for="emailid"> Email</label>
+                                <span asp-validation-for="RC_Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex justify-content-end">
+                                <span id="edit" onclick=" toggleFormElements('true')" class="btn btn-info text-white rounded me-2">Edit</span>
+                                <input type="submit" value="Save" id="save" class="btn btn-info text-white rounded me-2">
+                            </div>
+                        </div>
+                    </form>
+                    <form asp-controller="Actions" asp-action="CloseCaseUnpaid" asp-route-id="@Model.RequestID">
+                        <input type="hidden" name="RequestID" value="@Model.RequestID" class="inputs" />
+                        <input type="submit" value="Close Case" class="btn btn-info text-white rounded me-2">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    window.onload = function (e) {
+        toggleFormElements('true')
+    }
+    function toggleFormElements(bDisabled) {
+        var inputs = document.getElementsByClassName("inputs");
+        var submit = document.getElementById("save");
+        var editprofile = document.getElementById("edit");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+        if (inputs[0].disabled) {
+            submit.style.display = "none";
+            editprofile.style.display = "block";
+        } else {
+            submit.style.display = "block";
+            editprofile.style.display = "none";
+        }
+        document.getElementById("fname").disabled=(1==1);
+        document.getElementById("lname").disabled = (1 == 1);
+        document.getElementById("dob").disabled = (1 == 1);
+    }
+</script>

@@ -1,0 +1,360 @@
+﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel
+    ;
+    @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
+
+    <!--Desktop Screen View of table-->
+    <div class="table-responsive m-2 d-none d-sm-block">
+        <table class="w-100">
+            <thead style="height:50px;">
+                <tr>
+                    <th scope="col">
+                        <small>Name</small>
+                    </th>
+                    <th></th>
+                    <th scope="col">
+                        <small>Date Of Birth</small>
+                    </th>
+                    <th scope="col">
+                        <small>Requestor</small>
+                    </th>
+                    <th scope="col">
+                        <small>Physician Name</small>
+                    </th>
+                    <th scope="col">
+                        <small>Date of Service</small>
+                    </th>
+                    <th scope="col">
+                        <small>Phone</small>
+                    </th>
+                    <th scope="col">
+                        <small>Address</small>
+                    </th>
+                    <th scope="col">
+                        <small>Notes</small>
+                    </th>
+                    <th scope="col">
+                        <small>Chat With</small>
+                    </th>
+                    <th scope="col">
+                        <small>Actions</small>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white mb-5">
+            @if (Model.list.Count == 0)
+            {
+                <tr class="text-center border-bottom border-dark ">
+                    <td colspan="11">
+                        <strong class="fs-4 text-danger">No Data to show !!</strong>
+                    </td>
+                </tr>
+            }
+            @foreach (var item in Model.list)
+            {
+                <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white">
+                    <td><small>@item.PatientName</small></td>
+                    <td>
+                        <button class="btn border-white text-white">
+                            <i class="fa-regular fa-envelope"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
+                    </td>
+                    <td><small>@item.Requestor</small></td>
+                    <td>
+                        <small>@item.ProviderName</small>
+                    </td>
+                    <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    <td>
+                        <button class="btn border border-white text-white mt-2">
+                            <i class="fa-solid fa-phone pe-2"></i>
+                            <small>@item.PatientPhoneNumber</small>
+                        </button>
+                        <div>
+                            <small>(Patient)</small>
+                        </div>
+
+                        @if (item.RequestTypeId != 2)
+                        {
+                        <button class="btn border border-white text-white mt-2">
+                            <i class="fa-solid fa-phone pe-2"></i>
+                            <small>@item.RequestorPhoneNumber</small>
+                        </button>
+                        <div>
+                            <small>
+                                (@Enum.GetName(typeof(RequestType), item.RequestTypeId))
+                            </small>
+                        </div>
+                        }
+                    </td>
+                    <td><small>@item.Address</small></td>
+                    <td><small>Admin transferred to Dr. AGOLA</small></td>
+                    <td>
+                        <button class="btn border border-white text-white my-2">
+                            <small>Patient</small>
+                        </button>
+                        <button class="btn border border-white text-white my-2">
+                            <small>Provider</small>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn border border-white text-white my-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <small>Actions</small>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a asp-controller="Actions" asp-action="ViewCase" class="dropdown-item" asp-route-id="@item.RequestId">
+                                    <i class="fa-solid fa-file-pen me-1"></i>
+                                    View Case
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Actions" asp-action="ViewDocuments" class="dropdown-item" asp-route-id="@item.RequestId">
+                                    <i class="fa-solid fa-file-arrow-up me-2"></i>
+                                    View Uploads
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Actions" asp-action="ViewNotes" asp-route-id="@item.RequestId" class="dropdown-item">
+                                    <i class="fa-regular fa-file-lines me-2"></i>
+                                    View Notes
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="dropdown-item">
+                                    <i class="fa-solid fa-file-circle-check me-1"></i>
+                                    Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa-solid fa-receipt me-2"></i>
+                                    Doctors Note
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
+                                    <i class="fa-solid fa-receipt me-2"></i>
+                                    Encounter
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <!--End Desktop Screen View of table-->
+    <!--Mobile Screen View of table-->
+    <div class="accordion mt-3 d-block d-sm-none" id="accordionExample">
+        <div class="dBlock">
+        @foreach (var (item, index) in Model.list.Select((item, index) => (item, index)))
+        {
+            <div class="accordion-item btn-i text-secondary">
+                <h2 class="accordion-header" id="flush-heading-@item.RequestId">
+                    <div class="h5 p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestId" aria-expanded="false" aria-controls="collapse_@item.RequestId">
+                        <div class="row w-100">
+                            <div class="col-6 mb-3 h4">
+                                <small>@item.PatientName</small>
+                            </div>
+                            <div class="col-6 mb-3 text-end">
+                                <small>@Enum.GetName(typeof(RequestType), item.RequestTypeId)</small>
+                                <i class="fa-solid fa-circle fa-xs ms-2 txt-@Enum.GetName(typeof(RequestType), item.RequestTypeId)"></i>
+                                <span class="rounded-circle @Enum.GetName(typeof(RequestType), item.RequestTypeId)"></span>
+                            </div>
+                            <div class="col-6 h6">
+                                @item.Address
+                            </div>
+                            <div class="col-6  text-end">
+                                <button class="btn btn-sm btn-white border-info text-info rounded-pill 2px">
+                                    <small>Map Location</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </h2>
+                <div id="flush-@item.RequestId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                    <div class="accordion-body container-fluid">
+                        <div class="d-flex justify-content-end me-2">
+                            <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" class="btn btn-sm border-primary text-primary rounded-pill 2px">
+                                <small>View Case</small>
+                            </a>
+                        </div>
+                        <p>
+                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                            Date of Birth: @item.DateOfBirth
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i>
+                            Email : @item.Email
+                        </p>
+                        <p>
+                            <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i>
+                            Patient : @item.PatientPhoneNumber
+                        </p>
+                        <p>
+                            <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
+                            Transfer Notes : @item.Notes
+                        </p>
+                        <p>
+                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                            Date of Service: @item.RequestedDate
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-user-doctor border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                            Physician:
+                        </p>
+                        <p>
+                            <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
+                            Requestor : @item.Requestor
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-user border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                            Requestor: @item.RequestedDate
+                        </p>
+
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <a asp-controller ="Actions" asp-action="ViewNotes" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                    <small>View Notes</small>
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #145545;">
+                                    <small>Doctors Note</small>
+                                </button>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                    <small>View Uploads</small>
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                    <small>Encounter</small>
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
+                                    <small>Orders</small>
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#SendAgreement" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                    <small>Email</small>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-end d-md-flex justify-content-md-end">
+                            <span>Chat With:</span>
+                            <button class="btn btn-white border-info text-info me-md-2 mb-2" type="button">
+                                <i class="fa-regular fa-user me-1"></i>
+                                Patient
+                            </button>
+                            <button class="btn btn-white border-info text-info mb-2" type="button">
+                                <i class="fa-solid fa-user-doctor me-1"></i>
+                                Provider
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        </div>
+    </div>
+    <!--End Mobile Screen View of table-->
+<nav aria-label="Page navigation example">
+    <div class="d-flex justify-content-between mx-2 mt-3">
+        <div>
+            @if (Model.TotalPages == 0)
+            {
+                Model.CurrentPage = 0;
+            }
+            Page @Model.CurrentPage / @Model.TotalPages
+        </div>
+        <div>
+            <ul class="pagination pagination-container">
+                @{
+                    int i;
+                    <form id="paginationform" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#SearchResult"
+                          asp-action="SearchResult" asp-controller="Dashboard" novalidate="novalidate" class="d-flex">
+                        <input type="hidden" asp-for="RegionId" />
+                        <input type="hidden" asp-for="RequestType" />
+                        <input type="hidden" asp-for="SearchInput" />
+                        <input type="hidden" asp-for="PageSize" />
+                        <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
+
+                        @if (@Model.CurrentPage > 1)
+                        {
+                        <li class="page-item me-2">
+                            <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="me-2 page-item">
+                            <button class="disabled btn">&lt;</button>
+                        </li>
+                        }
+                        @for (i = 1; i <= @Model.TotalPages; i++)
+                        {
+                        <li class="page-item me-2">
+                            <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
+                        </li>
+                        }
+                        @if (@Model.TotalPages > @Model.CurrentPage)
+                        {
+                        <li class="page-item me-2">
+                            <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="page-item">
+                            <button class="btn disabled">&gt;</button>
+                        </li>
+                        }
+                    </form>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+<script>
+    function modal_Case(id) {
+        var modeldata = @Html.Raw(Json.Serialize(Model))
+        document.getElementById("RequestId_SendAgreement").value = modeldata.list[id].requestId;
+        document.getElementById("PhoneNumber_SendAgreement").value = modeldata.list[id].patientPhoneNumber;
+        document.getElementById("Email_SendAgreement").value = modeldata.list[id].email;
+    }
+    function pagination(i) {
+        $.ajax({
+            url: "@Url.Action("SearchResult", "Dashboard")",
+            type: "GET",
+            success: function (data) {
+                $("#SearchResult").html(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+    function setpagenumber(e) {
+        if (e == 'previous') {
+            var cp = @Model.CurrentPage-1;
+            $('#currentpagevalue').val(cp);
+        }
+        else if (e == 'next') {
+            var cp = @Model.CurrentPage + 1;
+            $('#currentpagevalue').val(cp);
+        }
+        else {
+            $('#currentpagevalue').val(e);
+        }
+        $("#paginationform").submit();
+    }
+    console.log("Hello setpagenumber");
+</script>

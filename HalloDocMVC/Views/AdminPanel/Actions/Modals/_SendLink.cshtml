@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="SendLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLongTitle">Send mail to patient for submitting request</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form method="post" asp-controller="Actions" asp-action="SendLink" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input name="FirstName" type="text" class="form-control shadow-none" id="FirstName" placeholder="Enter First Name" autocomplete="off">
+                        <label for="FirstName">First Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="LastName" type="text" class="form-control shadow-none" id="LastName" placeholder="Enter Last Name" autocomplete="off">
+                        <label for="LastName">Last Name</label>
+                    </div>
+                    <div class="form-floating mb-3 h-100 phone">
+                        <input name="PhoneNumber" type="tel" class="form-control shadow-none" id="phone" autocomplete="off">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="Email" type="email" id="email" class="form-control shadow-none" placeholder="name@example.com" autocomplete="off">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-white shadow-none">Send</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.16/build/js/intlTelInput.min.js"></script>
+
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

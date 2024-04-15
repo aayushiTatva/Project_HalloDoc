@@ -1,0 +1,102 @@
+﻿ @*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.RoleByMenuModel
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+@{
+    var enumData = from AccountType e in Enum.GetValues(typeof(AccountType))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
+}
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <div class="d-flex align-self-center">
+            <h4><strong>@ViewData["RolesAddEdit"] Account Role</strong></h4>
+        </div>
+        <a asp-controller="Access" asp-action="Index" class="btn border border-info bg-light rounded mt-3 mb-1">
+            <span class="text-info">
+                <i class="fa fa-angle-left align-middle"></i>
+                <b>&nbsp;&nbsp;Back</b>
+            </span>
+        </a>
+    </div>
+    <div class="bg-white rounded shadow mt-3">
+        <div class="d-flex justify-content-start align-self-center p-3">
+            <h5><strong>Details</strong></h5>
+        </div>
+        <form asp-action="PostRoleMenu" asp-controller="Access" id="resetpass" class="row g-3 mx-2 mb-3 ">
+            <div class="col-xl-12">
+                <div class="row pb-4">
+                    <div class="col-md-6 pb-3">
+                        <div class="form-floating">
+                            <input type="text" asp-for="RoleName" class="form-control shadow-none" id="Name" placeholder="First Name" />
+                            <label for="Name">Role Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pb-3">
+                        <div class="form-floating">
+                            <select class="form-select" required asp-for="AccountType" id="Accounttype" data-allow-clear="true" tabindex="-1" onchange="accounttype()" asp-items="@(new SelectList(enumData, "ID", "Name"))" data-control="select2" data-placeholder="Select Level">
+                            </select>
+                            <label for="Accounttype">Status</label>
+                        </div>
+                    </div>
+                    <input name="Menusid" type="hidden" id="menusid" />
+                    <input asp-for="RoleId" type="hidden" id="roleid" />
+                    <div class="col-md-12">
+                        <div id="menu" class="d-flex row">
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mb-3">
+                    <input type="submit" class="text-end btn btn-info text-white me-2" id="submitresetpass" value="Save" />
+                    <button class="text-end btn btn-outline-info " id="submitresetpass">cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function accounttype() {
+        var Accounttype = $("#Accounttype").val();
+        var roleid = $("#roleid").val();
+        console.log(Accounttype);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetMenuByAccount", "Access")?Accounttype=' + Accounttype + '&&roleid=' + roleid,
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                // Clear previous content
+                $('#menu').empty();
+                // Append checkboxes to the menu div
+                response.forEach(function (menuItem) {
+                    $('#menu').append('<div class="col-md-3 my-1" ><div class="form-check ms-3"><input ' + menuItem.checked + ' id = "' + menuItem.menuid + '" onchange="menubox()" class="form-check-input menubox" type="checkbox" name="' + menuItem.name + '" value="' + menuItem.menuid + '">  <label class="form-check-label" for= "' + menuItem.menuid + '" >' + menuItem.name + '</label></div></div>');
+                });
+                menubox();
+            },
+            error: function () {
+                alert("Error while checking email.");
+            }
+        });
+    }
+    window.onload = function () {
+        accounttype();
+    };
+    function menubox() {
+        event.preventDefault();
+        let checkboxes = document.querySelectorAll('.menubox:checked');
+        let regionIds = [];
+        checkboxes.forEach((checkbox) => {
+            regionIds.push(checkbox.value);
+        });
+        document.querySelector('#menusid').value = regionIds.join(',');
+        console.log(document.querySelector('#menusid').value);
+    };
+</script>

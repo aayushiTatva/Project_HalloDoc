@@ -1,0 +1,152 @@
+﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.ViewNotesModel
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+
+<div class="container mb-5">
+    <div class="card bg-light border-0">
+        <div class="card-header  border-0  bg-light text-end">
+            <div class="text-start d-flex justify-content-between">
+                <div>
+                    <h4 class="form-title fw-bold mt-2 mx-2">Notes</h4>
+                </div>
+                <div class="col-6 d-flex">
+                    <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index" ><button class="relogin shadow-none bg-white">Back</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!--Transfer Notes-->
+                @if (Model.transfernotes.Count > 0)
+                {
+                    <div class="col-sm-6 col-xs-12 mb-3">
+                        <div class="d-flex p-2 bg-white shadow">
+                            <div class="p-2">
+                                <i class="fa-solid fa-right-left"></i>
+                            </div>
+                            <div class="ms-2 d-flex flex-column p-2">
+                                <strong class="fs-6">Transfer Notes</strong>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var item in Model.transfernotes)
+                                {
+                                    <p>
+                                        <b>(@i)</b>
+                                        @Html.Raw(System.Web.HttpUtility.HtmlDecode(item.TransferNotes))
+                                    </p>
+                                    i = i + 1;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--Physician Notes-->
+                <div class="col-sm-6 col-xs-12 mb-3" id="PhysicianNotes">
+                    <div class="d-flex p-2 bg-white shadow">
+                        <div class="p-2">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <div class="ms-2 d-flex flex-column p-2">
+                            <strong class="fs-6">Physician Notes</strong>
+                            <p id="PhysicianTxt">@Model.PhysicianNotes</p>
+                        </div>
+                    </div>
+                </div>
+                <!--Admin Notes-->
+                <div class="col-sm-6 col-xs-12 mb-3" id="AdminNotes">
+                    <div class="d-flex p-2 bg-white shadow">
+                        <div class="p-2">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="ms-2 d-flex flex-column p-2">
+                            <strong class="fs-6">Admin Notes</strong>
+                            <p id="AdminTxt">@Model.AdminNotes</p>
+                        </div>
+                    </div>
+                </div>
+                <!--Patient Notes-->
+                <div class="col-sm-6 col-xs-12 mb-3">
+                    <div class="d-flex p-2 bg-white shadow">
+                        <div class="p-2">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="ms-2 d-flex flex-column p-2">
+                            <strong class="fs-6">Patient Notes</strong>
+                            <p>@Model.PatientNotes</p>
+                        </div>
+                    </div>
+                </div>
+                <!--Cancellation Notes-->
+                @foreach (var item in Model.cancel)
+                {
+                    <div class="col-sm-6 col-xs-12 mb-3">
+                        <div class="d-flex p-2 bg-white shadow">
+                            <div class="p-2">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="ms-2 d-flex flex-column p-2">
+                                <strong class="fs-6">@Enum.GetName(typeof(Status), item.Status)</strong>
+                                <p>@item.Notes</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--Physician Cancellation Notes-->
+                @foreach (var item in Model.cancelbyphysician)
+                {
+                    <div class="col-sm-6 col-xs-12 mb-3">
+                        <div class="d-flex p-2 bg-white shadow">
+                            <div class="p-2">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="ms-2 d-flex flex-column p-2">
+                                <strong class="fs-6">Cancel By Physician Notes</strong>
+                                <p>@item.Notes</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="bg-white shadow p-2">
+                        <form method="post" asp-controller="Actions" asp-action="EditViewNotes">
+                            <input type="hidden" name="RequestId" value="@Model.RequestId" />
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control shadow-none" placeholder="Leave a comment here" id="ChangeNotes" style="height: 100px"></textarea>
+                                    <label id="DataNote" for="ChangeNotes">Admin Notes</label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-info text-white shadow-none">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#PhysicianNotes").click(function () {
+            var text = $('#PhysicianTxt').html().trim();
+            $("#ChangeNotes").val(text);
+            $("#ChangeNotes").attr("name", "physiciannotes");
+            $("#DataNote").html("Physician Note");
+        })
+        $("#AdminNotes").click(function () {
+            var text = $('#AdminTxt').html().trim();
+            console.log(text);
+            $("#ChangeNotes").val(text);
+            $("#ChangeNotes").attr("name", "adminnotes");
+            $("#DataNote").html("Admin Note");
+        })
+    });
+</script>

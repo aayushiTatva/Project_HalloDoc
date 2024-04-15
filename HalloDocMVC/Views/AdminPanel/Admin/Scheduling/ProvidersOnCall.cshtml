@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<HalloDocMVC.DBEntity.ViewModels.AdminPanel.ProviderModel>
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "MDs On Call";
+}
+<div class="container pb-2">
+    <div class="d-flex justify-content-between">
+        <div class="d-flex align-self-center">
+            <h4><strong>MDs On Call</strong></h4>
+        </div>
+        <a class="relogin ms-auto" asp-controller="Scheduling" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+    </div>
+
+    <div class="mt-3">
+        <div class="mt-3 d-flex justify-content-between">
+            <div class="search m-1 col-3">
+                <a id="regionicon">
+                    <i class="fa fa-search"></i>
+                </a>
+                <select class="form-select" data-allow-clear="true" tabindex="-1" id="ProvidersOnCall" onchange="ChangeRegion()" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" style="padding-left:15px">
+                    <option value="-1">All Region</option>
+                </select>
+            </div>
+            <div class="btns">
+                <a asp-controller="Scheduling" asp-action="RequestedShift" type="button" class="btn provideracc text-white shadow-none ms-2">Shifts For Review</a>
+                <a asp-controller="Scheduling" asp-action="Index" class="btn provideracc text-white shadow-none ms-2">Calender View</a>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow py-2 mb-5 mx-3 mt-3 rounded">
+        <div class="p-3 ">
+            <h4 class="fw-bold">MD's On Call</h4>
+            <div class="container-fluid">
+                <div class="row my-4 oncall">
+                    @foreach (var item in Model)
+                    {
+                        @if (item.OnCallStatus == 1)
+                        {
+                            <div class="col-md-4 my-2">
+                                @if (item.Photo != null)
+                                {
+                                    <img src="/Upload/Physician/@item.PhysicianId/@item.Photo" style="height: 100px;">
+                                }
+                                else
+                                {
+                                    <img src="/Upload/Physician/Provider.png" style="height: 100px;">
+                                }
+                                <span> @item.FirstName @item.LastName</span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="p-3 ">
+            <h4 class="fw-bold">Physicians off Duty</h4>
+            <div class="container-fluid">
+                <div class="row my-4 offcall">
+                    @foreach (var item in Model)
+                    {
+                        @if (item.OnCallStatus == 0)
+                        {
+                            <div class="col-md-4 my-2">
+                                @if (item.Photo != null)
+                                {
+                                    <img src="/Upload/Physician/@item.PhysicianId/@item.Photo" style="height: 100px;">
+                                }
+                                else
+                                {
+                                    <img src="/Upload/Physician/Provider.png" style="height: 100px;">
+                                }
+                                @item.FirstName @item.LastName
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+@section Scripts {
+    <script>
+        function ChangeRegion() {
+            var region = $("#ProvidersOnCall").val();
+            if (region == '-1') {
+                region = null;
+                location.reload();
+            }
+            console.log(region);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ProvidersOnCall", "Scheduling")?regionId=' + region,
+                cache: false,
+                success: function (response) {
+                    console.log(response);
+                    $(".oncall").empty();
+                    $(".offcall").empty();
+                    response.forEach(function (item) {
+                        var div = document.createElement('div');
+                        div.className = 'col-md-4 my-2';
+                        var img = document.createElement('img');
+                        if (item.photo) {
+                            img.src = '/Upload/Physician/' + item.physicianId + '/' + item.photo;
+                        } else {
+                            img.src = '/Upload/Physician/Provider.png';
+                        }
+
+                        img.style.height = '100px';
+                        var span = document.createElement('span');
+                        span.textContent = item.firstName + ' ' + item.lastName;
+                        div.appendChild(img);
+                        div.appendChild(span);
+                        if (item.onCallStatus === 1) {
+                            $(".oncall").append(div);
+                        } else if (item.onCallStatus === 0) {
+                            $(".offcall").append(div);
+                        }
+                    });
+                },
+                error: function () {
+                    alert("Error while checking region.");
+                }
+            });
+        }
+    </script>
+}

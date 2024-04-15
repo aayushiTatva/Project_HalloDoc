@@ -1,0 +1,49 @@
+﻿
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css" />
+    <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/stylePatientSubmitRequestPage.css" rel="stylesheet">
+    <link href="~/css/stylePatientCreateRequestPage.css" rel="stylesheet">
+    <link href="~/css/styleDarkMode.css" rel="stylesheet">
+    <title></title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="halloDoc col-6">
+                <a asp-controller="home" asp-action="Index"><img src="../images/Patient Site 1.png"></a>
+            </div>
+            <div class="image col-6">
+                <a class="change" onclick="myFunction()">
+                    <img src="../images/moon_image.png" class="darkMode">
+                </a>
+            </div>
+        </div>
+        <div class="wrapper container-md">
+            @RenderBody()
+        </div>
+        <div class="footer">
+            <a href="#" id="footer">Terms of Condition</a> <a href="" id="footer">I Privacy Policy &nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <script src="~/js/custom.js"></script>
+    <script>
+        function myFunction() {
+            let element = document.body;
+            element.classList.toggle("dark");
+        }
+    </script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-ajax/jquery.unobtrusive-ajax.js")"></script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/plugins/mvc-jquery-validate/jquery.validate.unobtrusive.js")"></script>
+</body>
+</html>

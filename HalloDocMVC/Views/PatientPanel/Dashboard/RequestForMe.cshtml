@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "RequestDemo";
+    Layout = "~/Views/Shared/Patient/_LayoutPatientDashboard.cshtml";
+}
+@model HalloDocMVC.DBEntity.ViewModels.PatientPanel.ViewDataPatientRequestModel
+@* <partial name="../Shared/View"> *@
+    <div class="container">
+        <div class="row min-vh-100 ">
+            <!--<div class="d-none d-lg-block col-1 dshow">
+                <img src="images/Patient Site 1.png">
+            </div>-->
+            <!--Begin Main div-->
+            <div class="col show">
+                <div class="row">
+                    <a class="relogin" asp-controller="PatientDashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+                </div><br /><br />
+                <!--Begin Patient info-->
+            <form method="post" asp-controller="PatientDashboard" asp-action="PostMe" enctype="multipart/form-data">
+                    <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                        <h4>Patient Information</h4>
+                        <div class="form-group-horizontal ">
+                            <div class=" row">
+                                <div class="col form-floating  space">
+                                    <textarea asp-for="Symptoms" class="form-control shadow-none " id="symptons" placeholder="details"></textarea>
+                                    <label for="symptons"> Enter Brief Details of Symptons(Optional)</label>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col form-floating  space">
+                                    <input asp-for="FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="details">
+                                    <label for="fname"> First Name</label>
+                                </div>
+                                <div class="col form-floating  space">
+                                    <input asp-for="LastName" type="text" class="form-control shadow-none" id="lname" placeholder="details">
+                                    <label for="lname">Last Name</label>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col form-floating  space">
+                                    <input asp-for="DateOfBirth" type="date" class="form-control shadow-none" id="dob" placeholder="Date of Birth">
+                                    <label for="dob">Date Of Birth</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br /><br />
+                    <!--End Patient Info-->
+                    <!--Begin Patient Contact Info-->
+                    <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                        <h4>Patient Contact Information</h4>
+                        <div class="form-group-horizontal ">
+                            <div class="row">
+                                <div class="col form-floating  space">
+                                    <input asp-for="Email" type="email" class="form-control shadow-none" id="email" placeholder="details">
+                                    <label for="emailid"> Email</label>
+                                </div>
+                                <div class="col-6 form-floating  space">
+                                    <input asp-for="PhoneNumber" class="form-control shadow-none" type="tel" id="phone" />
+                                    <label for="tel"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br /><br />
+                    <!--End Patient Contact Info-->
+                    <!--Begin Patient Location Info-->
+                    <div class="row" style="box-shadow:  3px 5px 6px #ccc">
+                        <h4>Patient Location</h4>
+                        <div class="form-group-horizontal ">
+                            <div class="row">
+                                <div class="col-6 form-floating  space">
+                                    <input asp-for="Street" type="text" class="form-control shadow-none" id="street" placeholder="details">
+                                    <label for="street"> Street</label>
+                                </div>
+                                <div class="col-6 form-floating  space">
+                                    <input asp-for="City" type="text" class="form-control shadow-none" id="city" placeholder="details">
+                                    <label for="city">City</label>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-6 form-floating  space">
+                                    <input asp-for="State" type="text" class="form-control shadow-none" id="state" placeholder="details">
+                                    <label for="state"> state</label>
+                                </div>
+                                <div class="col-6 form-floating  space">
+                                    <input asp-for="ZipCode" type="text" class="form-control shadow-none " id="zipcode" placeholder="details">
+                                    <label for="zipcode">Zipcode</label>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-6 form-floating space">
+                                    <input asp-for="RoomSuite" type="text" class="form-control shadow-none " id="room" placeholder="details">
+                                    <label for="room"> Room # I Suite (Optional)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br /><br />
+                    <!--End Patient Location Info-->
+                    <!--Begin Patient Upload Info-->
+                    <div class="row space" style="box-shadow:  3px 5px 6px #ccc">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>(Optional) Upload Photo or Document</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 border rounded ">
+                                <div class="d-flex justify-content-between">
+                                    <span id="choosenfile" class="p-3">No file choosen</span>
+                                    <a class="btn bg-info btn btn-lg" onclick="document.getElementById('files').click()">
+                                        <span for="files" class="btn text-white">
+                                            <i class="fa fa-cloud-upload"></i>Upload
+                                        </span>
+                                    </a>
+                                    <input asp-for="UploadFile" id="files" type="file" class="d-none" accept=".png">
+                                </div>
+                            </div>
+                        </div>
+                    </div><br /><br />
+                    <!--End Patient Upload Info-->
+                    <div class="row space">
+                        <div class="d-flex justify-content-end ">
+                            <input type="submit" class="bg-info submission text-white">
+                            <a href="#"><button class="bg-light submission">Cancel</button></a>
+                        </div>
+                    </div>
+                    <!--End Main div-->
+                </form>
+                <!--<div class="d-none d-lg-block col-1 dshow">
+                    <img src="images/Patient Site 1.png">
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+
