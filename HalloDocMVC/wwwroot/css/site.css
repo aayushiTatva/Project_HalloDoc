@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Patient Login Page and Reset Password Page*/
+i.fa.fa-eye-slash {
+    display: block;
+}
+
+i.fa.fa-eye {
+    display: none;
+    height: 16px;
+    width: 16px;
+}
+
+.eyehide::-ms-reveal, .eyehide::-ms-clear {
+    display: none;
+}
+
+.password button, .email button, .username button {
+    position: absolute;
+    right: 0.8rem;
+    top: 1rem;
+    padding: 4px;
+    padding-right: 4px;
+    border: 0;
+}
+
+.wrapper {
+    background-image: url('../images/11116016_415.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#rightDiv {
+    backdrop-filter: blur(3px) saturate(180%);
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(209,213,219,0.3);
+}
+
+/* Submit Request Page */
+
+#whoAmI {
+    align-items: center;
+}
+
+.backbtn {
+    position: absolute;
+    right: 0.5vw;
+    margin-right: 1vw;
+}
+
+.footer {
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+
+#halloDocLogo {
+    height: 100px;
+    width: 200px;
+}
+
+.btnPatient {
+    width: 280px;
+    background-color: #B6B5D8;
+    border-color: #9867C5;
+    color: #4C2882;
+}
+
+    .btnPatient:hover {
+        background-color: #9867C5;
+        color: #320377;
+    }
+
+.btnFamilyFriend {
+    width: 280px;
+    background-color: #D8F9FF;
+    border-color: #8AECFF;
+    color: #3CDFFF;
+}
+
+    .btnFamilyFriend:hover {
+        background-color: #8AECFF;
+        color: #18859b;
+    }
+
+.btnConcierge {
+    width: 280px;
+    background-color: #D0F0C0;
+    border-color: #90EE90;
+    color: #2E8B57;
+}
+
+    .btnConcierge:hover {
+        background-color: #90EE90;
+        color: #2E8B57;
+    }
+
+.btnBusinessParteners {
+    width: 280px;
+    background-color: #FEC5E5;
+    border-color: #F699CD;
+    color: #E11584;
+}
+
+    .btnBusinessParteners:hover {
+        background-color: #F699CD;
+        color: #E11584;
+    }
+
+@media (min-width:768px) {
+    .btnPatient, .btnFamilyFriend, .btnConcierge, .btnBusinessParteners, .btnPatient:hover, .btnFamilyFriend:hover, .btnConcierge:hover, .btnBusinessParteners:hover {
+        width: 400px;
+    }
+}
+
+@media (max-width:576px) {
+    #footer {
+        display: none;
+    }
+
+    #whoAmI {
+        margin: 90px;
+    }
+}
+
+/* Request Pages */
+
+.form-floating .form-control:focus ~ label {
+    color: #0dcaf0;
+}
+
+.form-floating input:focus, .form-floating textarea:focus, .form-floating select:focus {
+    border: 2px solid #0dcaf0 !important;
+}
+
+.iti {
+    display: block;
+    width: 100%;
+}
+
+.phone .form-control {
+    line-height: 2.5;
+}
+
+/* Patient Dashboard */
+.TabItem {
+    border: none !important;
+}
+
+.TabItem:hover {
+    border-bottom: 2px solid #0DCAF0 !important;
+    color: #0DCAF0;
+}

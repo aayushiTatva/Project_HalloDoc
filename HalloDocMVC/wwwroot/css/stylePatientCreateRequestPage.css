@@ -1,0 +1,70 @@
+/*.container-fluid {
+    position: relative;
+    overflow: scroll;
+}*/
+
+.header {
+    border-bottom: 2px solid grey;
+}
+
+.darkMode {
+    margin:40px;
+    float: right;
+}.show {
+    font-family: 'Poppins', sans-serif;
+}
+.container{
+    overflow: scroll;
+}
+
+.patientInfo {
+    font-size: 10px;
+}
+
+.relogin {
+    float: right;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-color: aqua;
+    color: aqua;
+}
+
+
+.submission {
+    border-color: aqua;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+a{
+    text-decoration:none;
+}
+
+#phone {
+    margin-top: 20px;
+    width: 220%;
+    height:100%;
+}
+@media only screen and (max-width:1400px){
+    #phone{
+        width:200%;
+    }
+}
+@media only screen and (max-width:1200px) {
+    #phone {
+        width: 140%;
+    }
+}
+@media only screen and (max-width:992px) {
+    #phone {
+        width: 100%;
+    }
+}
+.footer {
+    background-color: black;
+}
+
+#footer {
+    color: grey;
+    text-decoration: none;
+}

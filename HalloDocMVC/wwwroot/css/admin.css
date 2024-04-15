@@ -1,0 +1,286 @@
+﻿/* Admin Dashboard */
+/* Sweet Alert */
+@import "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css";
+.activeNavItem {
+    color: #0DCAF0 !important;
+    font-weight: 600;
+    border-bottom: 2px solid #0DCAF0;
+}
+.navDropdown{
+    display:block !important;
+}
+.activeNavItemOffcanvas {
+    color: #0DCAF0 !important;
+    font-weight: 600;
+}
+.activeFilter {
+    border: 2px solid #0dcaf0;
+}
+#new {
+    background-color: #55649D;
+    border: 2px solid #E9EAEF;
+    color: #E9EAEF;
+    text-align: left;
+    height: 100px;
+}
+
+#pending {
+    background-color: #E5F2F8;
+    border: 2px solid #41B8D5;
+    color: #41B8D5;
+    text-align: left;
+    height: 100px;
+}
+
+#actives {
+    background-color: #E9F0E8;
+    border: 2px solid #4E8150;
+    color: #4E8150;
+    text-align: left;
+    height: 100px;
+}
+
+#conclude {
+    background-color: #F7E6EE;
+    border: 2px solid #A64676;
+    color: #A64676;
+    text-align: left;
+    height: 100px;
+}
+
+#toclose {
+    background-color: #E6EDF5;
+    border: 2px solid #4A7DA5;
+    color: #4A7DA5;
+    height: 100px;
+}
+
+#unpaid {
+    background-color: #EFEEF4;
+    border: 2px solid #9D80BF;
+    color: #9D80BF;
+    height: 100px;
+}
+
+.img_2 {
+    display: none;
+}
+
+.thumbnail:hover .img_1 {
+    display: none;
+}
+
+.thumbnail:hover .img_2 {
+    display: block;
+}
+
+.search {
+    position: relative;
+    box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+}
+
+    .search input, .search select {
+        height: 50px;
+        text-indent: 25px;
+        border: 2px solid #d6d4d4;
+    }
+
+    .search select {
+        min-width: 230px;
+    }
+
+        .search input:focus, .search select:focus {
+            box-shadow: none;
+            border: 2px solid #0dcaf0;
+        }
+
+    .search .fa-search {
+        position: absolute;
+        top: 20px;
+        left: 16px;
+    }
+
+.searchBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchPatientRegion {
+    display: inline-flex;
+}
+
+.requestType {
+    display: inline-flex;
+    align-items: center;
+}
+
+.Patient {
+    background-color: #5fbc61;
+}
+
+.Business {
+    background-color: #cd697b;
+}
+
+.Family {
+    background-color: #ed9124;
+}
+
+.Concierge {
+    background-color: #0a7cb9;
+}
+
+.txt-Patient {
+    color: #5fbc61;
+}
+
+.txt-Business {
+    color: #cd697b;
+}
+
+.txt-Family {
+    color: #ed9124;
+}
+
+.txt-Concierge {
+    color: #0a7cb9;
+}
+
+.btn-i {
+    background-color: #e1f4fa;
+}
+
+.requestTypeIcon {
+    height: 25px;
+    width: 25px;
+}
+
+.navbar {
+    display: block;
+}
+
+#offCanvasIcon {
+    display: none;
+}
+
+@media (max-width : 776px) {
+    .navbar {
+        display: none;
+    }
+
+    #offCanvasIcon {
+        display: block;
+    }
+}
+
+
+@media (max-width : 925px) {
+    .searchBar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .requestType {
+        display: flex;
+        justify-content: start;
+    }
+
+    .adminIcon {
+        display: none;
+    }
+}
+
+@media (max-width : 425px) {
+    .searchPatientRegion {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.relogin {
+    float: right;
+    border-radius: 5px;
+    border-color: aqua;
+    color: aqua;
+}
+a.relogin:hover {
+    color: aqua;
+}
+#finalize {
+    background-color: #9C27B0;
+    border-color: #9C27B0;
+}
+.provideracc {
+    float: right;
+    border-radius: 5px;
+    border-color: aqua;
+    color: white;
+    background-color:aqua;
+}
+a.provideracc:hover {
+    color: white;
+}
+.contactprovider {
+    border-radius: 5px;
+    border-color: aqua;
+    color: aqua;
+    background-color:white;
+}
+.sched {
+    float: right;
+    border-radius: 5px;
+    border-color: aqua;
+    color: aqua;
+    background-color: white;
+}
+
+a.sched:hover {
+    color: white;
+    background-color: aqua;
+    border-color: aqua;
+}
+
+.calendar-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.calendar-table th,
+.calendar-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.calendar-table th {
+    background-color: grey;
+}
+
+.calendar-table td {
+    cursor: pointer;
+}
+
+.dates {
+    background-color: #efabd2;
+}
+
+.shiftdisplay {
+    background-color: lightpink;
+}
+
+.shiftdisplay2 {
+    background-color: #73cd9b;
+}
+
+.calendar-table td.today {
+    background-color: lightgreen;
+}
+
+.calendar-table td table tr {
+    height: 45px
+}
+
+td {
+    vertical-align: top;
+}

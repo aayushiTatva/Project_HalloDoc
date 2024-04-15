@@ -1,0 +1,85 @@
+
+.container-fluid {
+    position: relative;
+}
+
+.imgdiv{
+    height:100%;
+    width:100%;
+}
+
+.darkModeLogin {
+    float: right;
+}
+
+.poster {
+    height: 100%;
+    width: 100%;
+}
+
+.maindiv {
+    text-align: center;
+}
+
+.centerdiv {
+    display: inline-block;
+    margin-top: 20%;
+}
+
+.usernamelogin {
+    width: 380px;
+}
+
+.passwordlogin {
+    width: 380px;
+}
+
+.userLogin {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 160px;
+}
+                                                                                       
+.logInBtnLogin {
+    width: 380px;
+    height: 49px;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(1,188,233);
+    border-color: rgb(1,188,233);
+    box-shadow: none;
+}
+
+.backToLogLogin {
+    margin-top: 30px;
+}
+
+#reLoginLogin {
+    width: 380px;
+    margin-left: 120px;
+    color: rgb(1,188,233);
+    text-decoration: none;
+}
+
+.forgotPasswdLogin {
+    margin-top: 30px;
+}
+
+#forgotLogin {
+    width: 380px;
+    margin-left: 70px;
+    color: rgb(1,188,233);
+    text-decoration: none;
+}
+
+.tandcLogin {
+    display: flex;
+    position: absolute;
+    top: 90%;
+    left: 20%;
+}
+
+#tocLogin {
+    text-decoration: none;
+    color: grey;
+}

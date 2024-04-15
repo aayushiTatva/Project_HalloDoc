@@ -1,0 +1,45 @@
+﻿.mainLanding {
+    text-align: center;
+    display:flex;
+}
+
+.options {
+    margin-top: 50%;
+}
+
+.request {
+    width: 60%;
+    border-radius: 10px;
+    height: 49px;
+}
+
+#submit {
+    background-color: rgba(1,188,233);
+    border-color: rgba(1,188,233);
+    color: white;
+}
+
+#registered {
+    margin-top: 20px;
+    background-color: rgb(14,21,85);
+    border-color: rgb(14,21,85);
+    color: white;
+}
+
+.darkModeLanding {
+    margin-top: 10px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-left: -40px;
+}
+
+#footer {
+    color: grey;
+    text-decoration: none;
+}

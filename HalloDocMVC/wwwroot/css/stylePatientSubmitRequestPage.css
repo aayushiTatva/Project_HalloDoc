@@ -1,0 +1,56 @@
+.header{
+    border-bottom:2px solid grey;
+}
+
+.options {
+    text-align: center;
+}
+.client{
+    width:20%;
+    margin:20px;
+    text-align:left;
+    padding-bottom:30px;
+    border-radius:10px;
+}
+
+.customer {
+    border-radius: 10px;
+    width: 40%;
+    text-align: left;
+    margin-top: 20px;
+}
+.information {
+    margin-left: -10px;
+}
+
+.relogin{
+    border-radius:10px;
+    margin:20px;
+    color:aqua;
+    border-color:aqua;
+    
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    text-align: right;
+}
+
+#footer {
+    color: grey;
+    text-decoration:none;
+}
+
+.customer{
+    width:40%;
+}
+@media only screen and (max-width:600px){
+    .customer{
+        width:90%; 
+    }
+}
+
+

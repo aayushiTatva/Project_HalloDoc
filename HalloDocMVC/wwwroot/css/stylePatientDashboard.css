@@ -1,0 +1,73 @@
+﻿.header {
+    border-bottom: 2px solid grey;
+    justify-content:space-between;
+    margin-top:-20px;
+}
+.welcome {
+    margin: 5px;
+}
+
+.darkMode {
+    margin: 5px;
+}
+
+.logOut {
+    margin: 5px;
+    border-radius: 10px;
+    color: aqua;
+    border-color: aqua;
+}
+
+.relogin {
+    float: right;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-color: aqua;/*
+    color: aqua;*/
+}
+
+.dash {
+    color: darkturquoise;
+    border-bottom: 2px solid black;
+}
+
+.a {
+    text-decoration: none;
+}
+/*
+.nav-tabs > .active > a {
+    color: green;
+} */
+.submission {
+    border-color: aqua;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    text-align: right;
+}
+
+#footer {
+    color: grey;
+    text-decoration: none;
+}
+
+/* Define the style of the tabs */
+/*.tab {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+}*/
+
+/* Define the style of the active tab */
+/*.active {
+    color: white;
+    background-color: aqua;
+}*/

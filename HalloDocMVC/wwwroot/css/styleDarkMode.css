@@ -1,0 +1,11 @@
+﻿
+.dark {
+    background-color: #222;
+    color: /*#e6e6e6*/ black;
+    border-color:white;
+}
+.change{
+    border:none;
+    background-color:white;
+}
+
