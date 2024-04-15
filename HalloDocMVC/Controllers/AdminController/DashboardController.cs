@@ -75,9 +75,11 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             return View("~/Views/AdminPanel/Dashboard/Login.cshtml");
         }
-        public async Task<IActionResult> ResetPassword()
+        public async Task<IActionResult> ForgotPassword()
         {
-            return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
+            return View("~/Views/AdminPanel/Dashboard/ForgotPassword.cshtml");
         }
+
+        
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HalloDocMVC.Repositories.Admin.Repository
@@ -61,5 +62,21 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             }
         }
         #endregion CheckAccessLogin
+
+        #region CheckRegisterEmail
+        public async Task<bool> CheckRegisterEmail(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            if(!string.IsNullOrEmpty(email) && Regex.IsMatch(email, pattern))
+            {
+                var user = _context.Aspnetusers.FirstOrDefault(m => m.Email == email);
+                if(user != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }

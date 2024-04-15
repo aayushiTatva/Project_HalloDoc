@@ -11,5 +11,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
     public interface ILogin
     {
         Task<UserInformation> CheckAccessLogin(Aspnetuser aspNetUser);
+        Task<bool> CheckRegisterEmail(string email);
     }
 }
