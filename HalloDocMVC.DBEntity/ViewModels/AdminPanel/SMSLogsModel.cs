@@ -22,6 +22,6 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public DateTime SentDate { get; set; }
         public BitArray? IsSMSSent { get; set; }
         public int? SentTries { get; set; }
-        public string? Action { get; set; }
+        public int? Action { get; set; }
     }
 }

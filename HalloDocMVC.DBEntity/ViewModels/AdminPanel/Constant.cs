@@ -54,5 +54,22 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
             Physician,
             Patient
         }
+        public enum EmailAction
+        {
+            Sendorder = 1,
+            Request,
+            SendLink,
+            SendAgreement,
+            Forgot,
+            NewRegistration,
+            contact
+
+        }
+
+        public enum SMSAction
+        {
+            ProviderContact = 1,
+            PatientContact
+        }
     }
 }

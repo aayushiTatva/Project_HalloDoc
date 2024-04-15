@@ -41,7 +41,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                  on r.Requestid equals rn.Requestid into reqNotesGroup
                                                  from rng in reqNotesGroup.DefaultIfEmpty()
                                                  where r.Isdeleted == new BitArray(1) && 
-                                                 (model.Status == null || r.Status == model.Status) &&
+                                                 (model.Status == null || model.Status == -1 || model.Status == 0 || r.Status == model.Status) &&
                                                  (model.FirstName == null || r.Firstname.Contains(model.FirstName)) && 
                                                  (model.RequestType == null || model.RequestType == 0 || r.Requesttypeid == model.RequestType) &&
                                                  (model.StartDate == DateTime.MinValue || r.Createddate.Date == model.StartDate.Date) &&
@@ -69,14 +69,38 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                      PatientNotes = rcg.Notes
 
                                                  }).ToList();
-            RecordsModel rm = new RecordsModel
+            int totalCount = sr.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)model.PageSize);
+            List<SearchRecordsModel> list = sr.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            RecordsModel roles1 = new()
             {
-                SearchRecords = sr
+                SearchRecords = list,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages
             };
-            return rm;
+            return roles1;
         }
         #endregion
-
+        #region DeleteRequest
+        public bool DeleteRequest(int? RequestId)
+        {
+            try
+            {
+                var data = _context.Requests.FirstOrDefault(v => v.Requestid == RequestId);
+                data.Isdeleted = new BitArray(1);
+                data.Isdeleted[0] = true;
+                data.Modifieddate = DateTime.Now;
+                _context.Requests.Update(data);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion DeleteRequest
         #region GetPatientHistory
         public async Task<RecordsModel> GetPatientHistory(RecordsModel model)
         {
@@ -98,11 +122,17 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                Address = rcg.Street + " " + rcg.Address + " " + rcg.City,
                                                UserId = (int)r.Userid
                                            }).ToList();
-            RecordsModel rm = new RecordsModel
+            int totalCount = sr.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)model.PageSize);
+            List<SearchRecordsModel> list = sr.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            RecordsModel roles1 = new()
             {
-                SearchRecords = sr
+                SearchRecords = list,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages
             };
-            return rm;
+            return roles1;
         }
         #endregion
 
@@ -130,11 +160,17 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                PhysicianName = p.Firstname + " " + p.Lastname,
 
                                            }).ToList();
-            RecordsModel rm = new RecordsModel
+            int totalCount = sr.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)records.PageSize);
+            List<SearchRecordsModel> list = sr.Skip((records.CurrentPage - 1) * records.PageSize).Take(records.PageSize).ToList();
+
+            RecordsModel roles1 = new()
             {
-                SearchRecords = sr
+                SearchRecords = list,
+                CurrentPage = records.CurrentPage,
+                TotalPages = totalPages
             };
-            return rm;
+            return roles1;
         }
         #endregion
 
@@ -142,7 +178,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         public async Task<RecordsModel> GetEmailLogs(RecordsModel model)
         {
             List<EmailLogModel> em = await (from req in _context.Emaillogs
-                                            where req.Emailid != null && (model.AccountType == null || model.AccountType == 0 || req.Roleid == model.AccountType) &&
+                                            where req.Emailid != null && (model.AccountType == null || model.AccountType == -1 || req.Roleid == model.AccountType) &&
                                            (model.ReceiverName == null || _context.Requestclients.FirstOrDefault(e => e.Email == req.Emailid).Firstname.Contains(model.ReceiverName)) &&
                                            (model.StartDate.Date == DateTime.MinValue || req.Createdate.Date == model.StartDate.Date) &&
                                            (model.SentDate.Date == DateTime.MinValue || req.Sentdate.Value.Date == model.SentDate.Date) &&
@@ -154,14 +190,21 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                   EmailId = req.Emailid,
                                                   CreatedDate = req.Createdate,
                                                   SentDate = (DateTime)req.Sentdate,
-
+                                                  RoleId = req.Roleid,
+                                                  Action = req.Action
                                               }).ToListAsync();
 
-            RecordsModel rm = new RecordsModel
+            int totalCount = em.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)model.PageSize);
+            List<EmailLogModel> list = em.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            RecordsModel roles1 = new()
             {
-                EmailLog = em
+                EmailLog = list,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages
             };
-            return rm;
+            return roles1;
         }
         #endregion
 
@@ -169,7 +212,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         public async Task<RecordsModel> GetSMSLogs(RecordsModel model)
         {
             List<SMSLogsModel> sm = await (from req in _context.Smslogs
-                                           where req.Mobilenumber != null && (model.AccountType == null || model.AccountType == 0 || req.Roleid == model.AccountType) &&
+                                           where (model.AccountType == null || model.AccountType == -1 || req.Roleid == model.AccountType) &&
                                            (model.ReceiverName == null || _context.Requestclients.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Firstname.Contains(model.ReceiverName)) &&
                                            (model.StartDate.Date == DateTime.MinValue || req.Createdate.Date == model.StartDate.Date) &&
                                            (model.SentDate.Date == DateTime.MinValue || req.Sentdate.Value.Date == model.SentDate.Date) &&
@@ -180,13 +223,21 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                Recipient = _context.Requestclients.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Firstname ?? null,
                                                PhoneNumber = req.Mobilenumber,
                                                CreatedDate = req.Createdate,
-                                               SentDate = (DateTime)req.Sentdate
+                                               SentDate = (DateTime)req.Sentdate,
+                                               Action = req.Action,
+                                               RoleId = req.Roleid
                                            }).ToListAsync();
-            RecordsModel rm = new RecordsModel
+            int totalCount = sm.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)model.PageSize);
+            List<SMSLogsModel> list = sm.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            RecordsModel roles1 = new()
             {
-                SMSLog = sm
+                SMSLog = list,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages
             };
-            return rm;
+            return roles1;
         }
         #endregion
 
@@ -221,5 +272,42 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return roles1;
         }
         #endregion
+
+        #region Unblock
+        public bool Unblock(int RequestId, string id)
+        {
+            try
+            {
+                Blockrequest block = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestId.ToString());
+                block.Isactive = new BitArray(1);
+                block.Isactive[0] = true;
+                _context.Blockrequests.Update(block);
+                _context.SaveChanges();
+
+                DBEntity.DataModels.Request request = _context.Requests.FirstOrDefault(e => e.Requestid == RequestId);
+                request.Status = 1;
+                request.Modifieddate = DateTime.Now;
+                _context.Requests.Update(request);
+                _context.SaveChanges();
+
+                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+                Requeststatuslog rs = new()
+                {
+                    Status = 1,
+                    Requestid = RequestId,
+                    Adminid = admindata.Adminid,
+                    Createddate = DateTime.Now
+                };
+                _context.Requeststatuslogs.Add(rs);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion Unblock
     }
 }

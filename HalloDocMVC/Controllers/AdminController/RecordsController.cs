@@ -1,4 +1,6 @@
-﻿using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HalloDocMVC.DBEntity.ViewModels;
+using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +10,33 @@ namespace HalloDocMVC.Controllers.AdminController
     {
         private readonly IComboBox _IComboBox;
         private readonly IRecords _IRecords;
+        private readonly INotyfService _INotyfService;
 
-        public RecordsController(IComboBox iComboBox, IRecords iRecords)
+        public RecordsController(IComboBox iComboBox, IRecords iRecords, INotyfService iNotyfService)
         {
             _IComboBox = iComboBox;
             _IRecords = iRecords;
+            _INotyfService = iNotyfService;
         }
         public async Task<IActionResult> Index(RecordsModel model)
         {
             RecordsModel rm = await _IRecords.GetRecords(model);
             return View("../AdminPanel/Admin/Records/Index", rm);
         }
+        #region DeleteRequestSearchRecords
+        public IActionResult DeleteRequest(int? RequestId)
+        {
+            if (_IRecords.DeleteRequest(RequestId))
+            {
+                _INotyfService.Success("Request Deleted Successfully.");
+            }
+            else
+            {
+                _INotyfService.Error("Request not deleted");
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion DeleteRequestSearchRecords
         public async Task<IActionResult> PatientHistory(RecordsModel model)
         {
             RecordsModel rm = await _IRecords.GetPatientHistory(model);
@@ -44,5 +62,20 @@ namespace HalloDocMVC.Controllers.AdminController
             RecordsModel rm = await _IRecords.GetBlockedHistory(model);
             return View("../AdminPanel/Admin/Records/BlockedHistory", rm);
         }
+        #region Unblock
+        public IActionResult Unblock(int RequestId)
+        {
+            if (_IRecords.Unblock(RequestId, CV.ID()))
+            {
+                _INotyfService.Success("Case Unblocked Successfully.");
+            }
+            else
+            {
+                _INotyfService.Error("Case remains blocked.");
+            }
+
+            return RedirectToAction("BlockedHistory");
+        }
+        #endregion Unblock
     }
 }

@@ -29,5 +29,6 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public DateTime ModifiedDate { get; set; }
         public IFormFile? FinalReport { get; set; }
         public int UserId { get; set; }
+        public int VendorId { get; set; }
     }
 }

@@ -45,7 +45,7 @@
                             <label class="ms-2" for="email"> Email</label>
                         </div>
                         <div class="form-floating col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none input" id="PhoneNumber" placeholder="PhoneNumber">
+                            <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none" id="PhoneNumber" placeholder="PhoneNumber">
                             <label class="ms-2" for="PhoneNumber">PhoneNumber</label>
                         </div>
                         <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12 d-flex mt-1 justify-content-end">
@@ -65,6 +65,7 @@
                                 <th scope="col">Notes</th>
                                 <th scope="col">Is Active</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider" id="BlockedHistory">
@@ -79,9 +80,30 @@
                                     <td>@item.CreatedDate</td>
                                     <td>@item.Reason</td>
                                     <td>
-                                        <a @* asp-action="ExplorePatientCases" asp-controller="Records" *@ class="contactprovider shadow-none document-button mx-1 mb-2">
+                                        @{
+                                            var check = false;
+                                            if (item.IsActive != null)
+                                            {
+                                                check = item.IsActive[0];
+                                            }
+                                            <input class="form-check-input form-check-inputs" readonly type="checkbox" onclick="return false;" value="" @(check ? "checked" : "")>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Unblock" asp-controller="Records" asp-route-RequestId="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
                                             <button class="contactprovider">
-                                                Explore
+                                                Unblock
+                                                @{
+                                                    var box = false;
+                                                    if (item.IsActive != null && box == item.IsActive[0])
+                                                    {
+                                                        <td>Blocked</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Unblocked</td>
+                                                    }
+                                                }
                                             </button>
                                         </a>
                                     </td>
@@ -155,7 +177,7 @@
     const submit = document.getElementById("Submit");
 
     clear.addEventListener("click", function () {
-        const inputs = document.querySelectorAll("#FilterForm input[type='text'], #FilterForm input[type='email'], #FilterForm input[type='tel'], #FilterForm input[type='data']",);
+        const inputs = document.querySelectorAll("#FilterForm input[type='text'], #FilterForm input[type='email'], #FilterForm input[type='tel'], #FilterForm input[type='date']",);
         inputs.forEach(input => {
             input.value = "";
         });

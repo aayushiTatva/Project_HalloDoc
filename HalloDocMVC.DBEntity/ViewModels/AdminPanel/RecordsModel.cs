@@ -31,7 +31,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public List<User>? Users { get; set; }
         public int TotalPages { get; set; } = 1;
         public int CurrentPage { get; set; } = 1;
-        public int PageSize { get; set; } = 2;
+        public int PageSize { get; set; } = 4;
 
     }
 }

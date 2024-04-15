@@ -21,6 +21,13 @@
                             ID = (int)e,
                             Name = e.ToString()
                         };
+
+    var data = from EmailAction e in Enum.GetValues(typeof(EmailAction))
+                   select new
+                   {
+                       ID = (int)e,
+                       Name = e.ToString()
+                   };
 }
 <div class="container-fluid mt-4">
     <div class="row">
@@ -83,12 +90,12 @@
                                     <td scope="row">
                                         @item.Recipient
                                     </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>@Enum.GetName(typeof(EmailAction), item.Action)</td>
+                                    <td>@Enum.GetName(typeof(AccountType), item.RoleId)</td>
                                     <td>@item.EmailId</td>
                                     <td>@item.CreatedDate.ToString("MMM d yyyy")</td>
                                     <td>@item.SentDate.ToString("MMM d yyyy")</td>
-                                    <td scope="row"></td>
+                                    <td scope="row">Yes</td>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -96,59 +103,59 @@
                         </tbody>
                     </table>
                 </div>
-                @*<nav aria-label="Page navigation example" id="paginationVendors">
-                <div class="d-flex justify-content-between mx-2 mt-3">
-                <div>
-                @if (Model.TotalPages == 0)
-                {
-                Model.CurrentPage = 0;
-                }
-                Page @Model.CurrentPage / @Model.TotalPages
-                </div>
-                <div>
-                <ul class="pagination pagination-container">
-                @{
-                int i;
-                <form id="paginationform" asp-controller="Partners" asp-action="Index" novalidate="novalidate" class="d-flex">
-                <input type="hidden" asp-for="PageSize" />
-                <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
+                <nav aria-label="Page navigation example" id="paginationEmailLogs">
+                    <div class="d-flex justify-content-between mx-2 mt-3">
+                        <div>
+                            @if (Model.TotalPages == 0)
+                            {
+                                Model.CurrentPage = 0;
+                            }
+                            Page @Model.CurrentPage / @Model.TotalPages
+                        </div>
+                        <div>
+                            <ul class="pagination pagination-container">
+                                @{
+                                    int i;
+                                    <form id="paginationform" asp-controller="Records" asp-action="EmailLogs" novalidate="novalidate" class="d-flex">
+                                        <input type="hidden" asp-for="PageSize" />
+                                        <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
 
-                @if (@Model.CurrentPage > 1)
-                {
-                <li class="page-item me-2">
-                <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
-                </li>
-                }
-                else
-                {
-                <li class="me-2 page-item">
-                <button class="disabled btn">&lt;</button>
-                </li>
-                }
-                @for (i = 1; i <= @Model.TotalPages; i++)
-                {
-                <li class="page-item me-2">
-                <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
-                </li>
-                }
-                @if (@Model.TotalPages > @Model.CurrentPage)
-                {
-                <li class="page-item me-2">
-                <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
-                </li>
-                }
-                else
-                {
-                <li class="page-item">
-                <button class="btn disabled">&gt;</button>
-                </li>
-                }
-                </form>
-                }
-                </ul>
-                </div>
-                </div>
-                </nav>*@
+                                        @if (@Model.CurrentPage > 1)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="me-2 page-item">
+                                            <button class="disabled btn">&lt;</button>
+                                        </li>
+                                        }
+                                        @for (i = 1; i <= @Model.TotalPages; i++)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
+                                        </li>
+                                        }
+                                        @if (@Model.TotalPages > @Model.CurrentPage)
+                                        {
+                                        <li class="page-item me-2">
+                                            <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="page-item">
+                                            <button class="btn disabled">&gt;</button>
+                                        </li>
+                                        }
+                                    </form>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>
@@ -180,11 +187,29 @@
                 success: function (response) {
                     console.log(response);
                     var bodyContent = $(response).find('tbody').html();
+                    var pagination = $(response).find('nav').html();
                     $('#EmailLogs').html(bodyContent);
+                    $('#paginationEmailLogs').html(pagination);
                 }
             });
         });
     });
 
+    function setpagenumber(e) {
+        if (e == 'previous') {
+            var cp = @Model.CurrentPage-1;
+            $('#currentpagevalue').val(cp);
+        }
+        else if (e == 'next') {
+            var cp = @Model.CurrentPage + 1;
+            $('#currentpagevalue').val(cp);
+        }
+        else {
+            $('#currentpagevalue').val(e);
+        }
+        $("#role").val($("#roledropdown").val());
+        $("#paginationform").submit();
 
+        console.log("Hello pagination");
+    }
 </script>
