@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZtZQYIdgLUBLSUE/F8/SABEUoNYOUFIkQESw4P56hg15EfOatdEgR4zlCNZRuHIAjmPXj0JSqco1hTRbLrULAw==",
+  "dgSpecHash": "qOba/PDA27at3cPFt+hpeRlT4H6jgX0H8Wc1b7iex4FBe/UCF6U2s3gxm64IN0yqNKYlDm5asPrB385egzEmlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
+  "projectFilePath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pce116\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pce116\\.nuget\\packages\\bouncycastle.cryptography\\2.3.0\\bouncycastle.cryptography.2.3.0.nupkg.sha512",

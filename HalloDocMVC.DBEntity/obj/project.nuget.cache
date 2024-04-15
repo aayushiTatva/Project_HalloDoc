@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zk5FtUuSHlRAUX3jmjUDIkm/fC0NGdSRw+ztc51N2bYwhQLAdxO4ZWz2LiPth9bhuQYz+zvNcl9Ax91riSvnIg==",
+  "dgSpecHash": "9thLdoTOZTbJeHs8l0eOegRqVz7R798oNCgzXHVqL90plYRh2S8TE5Wl0ccaT5xHQLS4+Tr+WNsamnolcXyyiQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
+  "projectFilePath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pce116\\.nuget\\packages\\bouncycastle.cryptography\\2.3.0\\bouncycastle.cryptography.2.3.0.nupkg.sha512",
     "C:\\Users\\pce116\\.nuget\\packages\\mailkit\\4.4.0\\mailkit.4.4.0.nupkg.sha512",

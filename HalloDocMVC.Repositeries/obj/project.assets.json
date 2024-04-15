@@ -3329,11 +3329,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
+      "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
       "projectName": "HalloDocMVC.Repositories.Admin",
-      "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
+      "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
       "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositeries\\obj\\",
+      "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3350,8 +3350,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
-              "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj"
+            "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
+              "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj"
             }
           }
         }

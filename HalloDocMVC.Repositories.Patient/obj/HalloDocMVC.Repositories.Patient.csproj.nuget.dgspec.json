@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {}
+    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
+    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
+        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
         "projectName": "HalloDocMVC.DBEntity",
-        "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
+        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
         "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\obj\\",
+        "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -85,14 +85,14 @@
         }
       }
     },
-    "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
+    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
+        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
         "projectName": "HalloDocMVC.Repositories.Patient",
-        "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
+        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
         "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.Repositories.Patient\\obj\\",
+        "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -109,8 +109,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
-                "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj"
+              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
+                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj"
               }
             }
           }

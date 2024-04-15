@@ -38,6 +38,11 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             RecordsModel rm = await _IRecords.GetSMSLogs(model);
             return View("../AdminPanel/Admin/Records/SMSLogs", rm);
-        } 
+        }
+        public async Task<IActionResult> Try(RecordsModel model)
+        {
+            RecordsModel rm = await _IRecords.GetSMSLogs(model);
+            return View("../AdminPanel/Admin/Records/SMSLogs", rm);
+        }
     }
 }

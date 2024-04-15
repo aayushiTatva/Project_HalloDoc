@@ -3260,11 +3260,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
+      "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
       "projectName": "HalloDocMVC.DBEntity",
-      "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
+      "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj",
       "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.DBEntity\\obj\\",
+      "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",

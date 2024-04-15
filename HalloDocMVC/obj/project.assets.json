@@ -11723,11 +11723,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
+      "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
       "projectName": "HalloDocMVC",
-      "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
+      "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\HalloDocMVC.csproj",
       "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC\\obj\\",
+      "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11745,11 +11745,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj": {
-              "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj"
+            "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj": {
+              "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj"
             },
-            "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
-              "projectPath": "C:\\Users\\pce116\\source\\repos\\aayushiTatva\\HalloDoc_Email\\HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj"
+            "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
+              "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj"
             }
           }
         }
