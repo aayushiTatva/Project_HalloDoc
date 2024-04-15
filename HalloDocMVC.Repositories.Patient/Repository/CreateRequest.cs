@@ -20,9 +20,11 @@ namespace HalloDocMVC.Repositories.Patient.Repository
     {
         #region Configuration
         private readonly HalloDocContext _context;
-        public CreateRequest(HalloDocContext context)
+        private readonly IConfirmationNumber _confirmationNumber;
+        public CreateRequest(HalloDocContext context, IConfirmationNumber iConfirmationNumber)
         {
             _context = context;
+            _confirmationNumber = iConfirmationNumber;
         }
         #endregion
 
@@ -41,7 +43,7 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                     // Aspnetuser
                     Guid g = Guid.NewGuid();
                     Aspnetuser.Id = g.ToString();
-                    Aspnetuser.Username = viewDataPatientRequest.FirstName;
+                    Aspnetuser.Username = viewDataPatientRequest.Email;
                     Aspnetuser.Passwordhash = viewDataPatientRequest.PassWord;
                     Aspnetuser.CreatedDate = DateTime.Now;
                     Aspnetuser.Email = viewDataPatientRequest.Email;
@@ -81,7 +83,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 Request.Lastname = viewDataPatientRequest.LastName;
                 Request.Email = viewDataPatientRequest.Email;
                 Request.Phonenumber = viewDataPatientRequest.PhoneNumber;
-                Request.Isurgentemailsent = new BitArray(1);
+            Request.Confirmationnumber = _confirmationNumber.GetConfirmationNumber(viewDataPatientRequest.State, viewDataPatientRequest.FirstName, viewDataPatientRequest.LastName);
+            Request.Isurgentemailsent = new BitArray(1);
                 Request.Createddate = DateTime.Now;
                 _context.Requests.Add(Request);
                 await _context.SaveChangesAsync();

@@ -51,8 +51,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                                    FirstName = r.Firstname,
                                    LastName = r.Lastname,
                                    Email = r.Email,
-                                   PhoneNumber = r.Mobile,/*
-                                   DateOfBirth = new DateTime((int)r.Intyear, DateTime.ParseExact(r.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)r.Intdate)*/
+                                   PhoneNumber = r.Mobile,
+                                   DateOfBirth = new DateTime((int)r.Intyear, DateTime.ParseExact(r.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)r.Intdate)
                                })
                                .FirstOrDefault();
             return patientRequest;

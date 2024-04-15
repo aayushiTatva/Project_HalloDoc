@@ -42,8 +42,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                                     Street = r.Street,
                                     State = r.State,
                                     City = r.City,
-                                    ZipCode = r.Zipcode,/*
-                                    DateOfBirth = new DateTime((int)r.Intyear, DateTime.ParseExact(r.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)r.Intdate)*/
+                                    ZipCode = r.Zipcode,
+                                    DateOfBirth = new DateTime((int)r.Intyear, DateTime.ParseExact(r.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)r.Intdate)
                                 })
                                 .FirstOrDefault();
 

@@ -1,20 +1,20 @@
 ﻿﻿﻿@{
     string path = Context.Request.Path;
 }
-<nav class="navbar navbar-expand-md bg-white  shadow:none justify-content-lg-start">
+<nav class="navbar navbar-expand-md bg-white  shadow:none justify-content-lg-start mb-3">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav list-inline mb-2 justify-content-lg-start">
             <li class="nav-item px-4">
-                <a class=" nav-link text-dark currentpage @(path.StartsWith("/Dashboard") ? "active" : "")" aria-current="page" asp-action="Index" asp-controller="PatientDashboard">
-                    <small>Dashboard</small>
+                <a class=" nav-link text-dark currentpage @(path.StartsWith("/Dashboard") ? "active" : "") " aria-current="page" asp-action="Index" asp-controller="PatientDashboard">
+                    <small style="font-size: 20px;">Dashboard</small>
                 </a>
             </li>
             <li class="nav-item px-4">
-                <a class="nav-link px-3 text-dark @(path.StartsWith("/Profile") ? "active" : "")" asp-action="Index" asp-controller="PatientProfile">
-                    <small>Profile</small>
+                <a class="nav-link text-dark @(path.StartsWith("/Profile") ? "active" : "")" asp-action="Index" asp-controller="PatientProfile">
+                    <small style="font-size: 20px;">Profile</small>
                 </a>
             </li>
         </ul>

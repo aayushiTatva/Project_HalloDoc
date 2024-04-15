@@ -37,7 +37,6 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active welcome ms-auto">
@@ -52,24 +51,18 @@
                             <a class="change" onclick="myFunction()">
                                 <img src="~/images/moon image.png">
                             </a>
-
                         </li>
                     </ul>
                 </div>
             </nav>
         </div>
         <partial name="~/Views/PatientPanel/Dashboard/PatientDashboardSubNav.cshtml" />
-        <!--Header end-->
-        <!--Main begin-->
-        <div class="conatiner">
+        <div class="container">
             @RenderBody()
         </div>
-        <!--Main end-->
-        <!--Footer begin-->
         <div class="footer" style="position: fixed;left: 0; bottom: 0; width: 100%;background-color: black; text-align: right;">
             <a href="#" id="footer" style="color: grey;text-decoration: none;">Terms of Condition</a> <a href="" id="footer" style="color: grey;text-decoration: none;">I Privacy Policy &nbsp;&nbsp;</a>
         </div>
-        <!--Footer end-->
     </div>
     <script src="../js/custom.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
