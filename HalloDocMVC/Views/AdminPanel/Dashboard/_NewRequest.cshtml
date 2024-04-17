@@ -1,4 +1,5 @@
 ﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel ;
+@using HalloDocMVC.DBEntity.ViewModels;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 
 <!--Desktop Screen View of table-->
@@ -10,27 +11,33 @@
                     <small>Name</small>
                 </th>
                 <th></th>
-                <th scope="col">
-                    <small>Date Of Birth</small>
-                </th>
-                <th scope="col">
-                    <small>Requestor</small>
-                </th>
-                <th scope="col">
-                    <small>Requested Date</small>
-                </th>
+                @if (CV.role() == "Admin")
+                {
+                    <th scope="col">
+                        <small>Date Of Birth</small>
+                    </th>
+                    <th scope="col">
+                        <small>Requestor</small>
+                    </th>
+                    <th scope="col">
+                        <small>Requested Date</small>
+                    </th>
+                 }
                 <th scope="col">
                     <small>Phone</small>
                 </th>
                 <th scope="col">
                     <small>Address</small>
                 </th>
-                <th scope="col">
-                    <small>Notes</small>
-                </th>
-                <th scope="col">
-                    <small>Chat With</small>
-                </th>
+                @if (CV.role() == "Admin")
+                 {
+                    <th scope="col">
+                        <small>Notes</small>
+                    </th>
+                    <th scope="col">
+                        <small>Chat With</small>
+                    </th>
+                 }
                 <th scope="col">
                     <small>Actions</small>
                 </th>
@@ -54,12 +61,15 @@
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </td>
-                    <td>
-                        <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
-                    </td>
-                    <td><small>@item.Requestor</small></td>@*
+                    @if (CV.role() == "Admin")
+                    {
+                        <td>
+                            <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
+                        </td>
+                        <td><small>@item.Requestor</small></td>@*
                     <td><small>@item.RequestId</small></td>*@
-                    <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                        <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    }
                     <td>
                         <button class="btn border border-white text-white mt-2">
                             <i class="fa-solid fa-phone pe-2"></i>
@@ -83,29 +93,44 @@
                         }
                     </td>
                     <td><small>@item.Address</small></td>
-                    <td><small>@item.Notes</small></td>
-                    <td>
-                        <button class="btn border border-white text-white my-2">
-                            <small>Provider</small>
-                        </button>
-                    </td>
+                    @if (CV.role() == "Admin")
+                    {
+                        <td><small>@item.Notes</small></td>
+                        <td>
+                            <button class="btn border border-white text-white my-2">
+                                <small>Provider</small>
+                            </button>
+                        </td>
+                    }
                     <td>
                         <button class="btn border border-white text-white my-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <small>Actions</small>
                         </button>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AssignCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
-                                    <i class="fa-solid fa-file-circle-check me-1"></i>
-                                    Assign Case
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item " onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#CancelCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
-                                    <i class="fa-regular fa-circle-xmark me-1"></i>
-                                    Cancel Case
-                                </a>
-                            </li>
+                            @if (CV.role() == "Admin")
+                            {
+                                <li>
+                                    <a class="dropdown-item" onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AssignCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
+                                        <i class="fa-solid fa-file-circle-check me-1"></i>
+                                        Assign Case
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#CancelCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
+                                        <i class="fa-regular fa-circle-xmark me-1"></i>
+                                        Cancel Case
+                                    </a>
+                                </li>
+                            }
+                            @if (CV.role() == "Provider")
+                            {
+                                <li>
+                                    <a class="dropdown-item" onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AcceptCase" data-bs-requestid="@item.RequestId" id="AcceptCase_@item.RequestId">
+                                        <i class="fa-solid fa-file-circle-check me-1"></i>
+                                        Accept
+                                    </a>
+                                </li>
+                            }
                             <li>
                                 <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" class="dropdown-item">
                                     <i class="fa-solid fa-file-pen me-1"></i>
@@ -118,12 +143,15 @@
                                     View Notes
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item " onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
-                                    <i class="bi bi-ban me-1"></i>
-                                    Block Patient
-                                </a>
-                            </li>
+                            @if (CV.role() == "Admin")
+                            {
+                                <li>
+                                    <a class="dropdown-item " onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName">
+                                        <i class="bi bi-ban me-1"></i>
+                                        Block Patient
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </td>
                 </tr>
@@ -292,6 +320,7 @@
         document.getElementById('RequestID_Input_ModelAssignCase').value = modeldata.list[id].requestId;
         document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata.list[id].requestId;
         document.getElementById('PatientName_ModelBlockCase').innerText = modeldata.list[id].patientName;
+        document.getElementById('RequestID_Input_ModelAcceptCase').value = modeldata.list[id].requestId;
     }
     function pagination(i) {
         $.ajax({

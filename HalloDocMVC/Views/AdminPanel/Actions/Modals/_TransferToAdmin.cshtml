@@ -1,0 +1,27 @@
+﻿<div class="modal fade" id="TransToAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Transfer</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Actions" asp-action="TransferToAdmin" class="needs-validation" novalidate>
+                <input type="hidden" value="" id="RequestID_Input_ModelTranstoadminCase" name="RequestId" />
+                <div class="modal-body">
+                    <p>This request will be transferred to admin.</p>
+                    <div class="form-floating mb-3">
+                        <textarea id="changenote" rows="4" name="Note" required class="input-outline w-100 h-100 fs-6 form-control shadow-none" type="text"></textarea>
+                        <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Description</label>
+                        <div class="invalid-feedback">
+                            Please Enter a valid Transfer Reason.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Confirm</button>
+                    <a class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ using Twilio.Rest.Api.V2010.Account;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
-    [CheckProviderAccess("Admin")]
+    [CheckProviderAccess("Admin,Provider")]
     public class ProvidersController : Controller
     {
         #region Configuration
@@ -108,6 +108,8 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion
 
+        [Route("Provider/Profile")]
+        [Route("Admin/Profile")]
         #region PhysicianProfile
         public async Task<IActionResult> PhysicianProfile(int? Id)
         {
@@ -141,6 +143,21 @@ namespace HalloDocMVC.Controllers.AdminController
                 _INotyfService.Error("Account Information not Changed Successfully..!");
             }
             return RedirectToAction("PhysicianProfile", new { id = data.PhysicianId });
+        }
+        #endregion
+
+        #region ResetPassword
+        public async Task<IActionResult> ResetPassword(string password, int PhysicianId)
+        {
+            if(await _IContactYourProvider.ResetPassword(password, PhysicianId))
+            {
+                _INotyfService.Success("Password Updated Successfully");
+            }
+            else
+            {
+                _INotyfService.Error("Password Not Updated");
+            }
+            return RedirectToAction("PhysicianProfile", new { id = PhysicianId });
         }
         #endregion
         #region EditPhysicianInfo
@@ -190,6 +207,7 @@ namespace HalloDocMVC.Controllers.AdminController
             }
         }
         #endregion
+
         #region EditProviderOnbording
         public async Task<IActionResult> EditProviderOnboarding(ProviderModel data)
         {

@@ -35,5 +35,6 @@
         public string? SearchInput { get; set; }
         public int? RegionId { get; set; }
         public int? RequestType { get; set; }
+        public int TotalItemCount { get; set; } = 1;
     }
 }

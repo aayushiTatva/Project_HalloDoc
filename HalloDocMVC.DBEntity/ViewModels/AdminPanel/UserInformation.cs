@@ -14,5 +14,6 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public string UserName { get; set; }
         public string Role { get; set; }
         public string AspNetUserId { get; set; }
+        public int RoleId { get; set; }
     }
 }

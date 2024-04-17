@@ -69,7 +69,7 @@ namespace HalloDocMVC.Controllers.AdminController
                 }
                 if(u.Role == "Provider")
                 {
-                    return RedirectToAction("Index", "ProviderDashboard");
+                    return Redirect("~/Provider/Dashboard");
                 }
                 return RedirectToAction("Index", "Dashboard");
             }

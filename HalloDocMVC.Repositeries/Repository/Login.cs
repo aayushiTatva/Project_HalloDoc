@@ -43,6 +43,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                 {
                     var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
                     admin.UserId = admindata.Adminid;
+                    admin.RoleId = (int)admindata.Roleid;
                 }
                 else if (admin.Role == "Patient")
                 {
@@ -53,6 +54,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                 {
                     var admindata = _context.Physicians.FirstOrDefault(u => u.Aspnetuserid == user.Id);
                     admin.UserId = admindata.Physicianid;
+                    admin.RoleId = (int)admindata.Roleid;
                 }
                 return admin;
             }
@@ -78,5 +80,14 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return false;
         }
         #endregion
+
+        #region IsAccessGranted
+        public bool IsAccessGranted(int roleId, string menuName)
+        {
+            IQueryable<int> menuIds = _context.Rolemenus.Where(e => e.Roleid == roleId).Select(e => e.Menuid);
+            bool accessGranted = _context.Menus.Any(e => menuIds.Contains(e.Menuid) && e.Name == menuName);
+            return accessGranted;
+        }
+        #endregion IsAccessGranted
     }
 }

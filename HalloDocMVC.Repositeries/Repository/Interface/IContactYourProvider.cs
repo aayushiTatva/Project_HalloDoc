@@ -16,6 +16,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         Task<bool> AddPhysician(ProviderModel physiciandata, string AdminId);
         Task<bool> EditPhysicianInfo(ProviderModel vm);
         Task<bool> EditAccountInfo(ProviderModel vm);
+        Task<bool> ResetPassword(string Password, int PhysicianId);
         Task<bool> EditMailBillingInfo(ProviderModel vm, string AdminId);
         Task<bool> EditProviderProfile(ProviderModel vm, string AdminId);
         Task<bool> EditProviderOnbording(ProviderModel vm, string AdminId);

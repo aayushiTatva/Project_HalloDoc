@@ -361,6 +361,35 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion
 
-        
+        #region AcceptRequest
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AcceptRequest(int RequestId, string Note)
+        {
+            if (await _IActions.AcceptPhysician(RequestId, Note, Convert.ToInt32(CV.UserID())))
+            {
+                _INotyfService.Success("Case Accepted.");
+            }
+            else
+            {
+                _INotyfService.Success("Case Not Accepted.");
+            }
+            return Redirect("~/Provider/Dashboard");
+        }
+        #endregion AcceptRequest
+
+        #region TransferToAdmin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TransferToAdmin(int RequestID, string Note)
+        {
+            if (await _IActions.TransfertoAdmin(RequestID, Note, Convert.ToInt32(CV.UserID())))
+            {
+                _INotyfService.Success("Request Successfully transferred to admin.");
+            }
+
+            return Redirect("~/Provider/Dashboard");
+        }
+        #endregion TransferToAdmin
     }
 }

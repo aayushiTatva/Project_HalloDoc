@@ -1,4 +1,5 @@
-﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel
+﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel;
+@using HalloDocMVC.DBEntity.ViewModels;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 
 <!--Desktop Screen View of table-->
@@ -10,30 +11,36 @@
                     <small>Name</small>
                 </th>
                 <th></th>
-                <th scope="col">
-                    <small>Date Of Birth</small>
-                </th>
-                <th scope="col">
-                    <small>Requestor</small>
-                </th>
-                <th scope="col">
-                    <small>Physician Name</small>
-                </th>
-                <th scope="col">
-                    <small>Date of Service</small>
-                </th>
+                @if (CV.role() == "Admin")
+                {
+                    <th scope="col">
+                        <small>Date Of Birth</small>
+                    </th>
+                    <th scope="col">
+                        <small>Requestor</small>
+                    </th>
+                    <th scope="col">
+                        <small>Physician Name</small>
+                    </th>
+                    <th scope="col">
+                        <small>Date of Service</small>
+                    </th>
+                }
                 <th scope="col">
                     <small>Phone</small>
                 </th>
                 <th scope="col">
                     <small>Address</small>
                 </th>
-                <th scope="col">
-                    <small>Notes</small>
-                </th>
-                <th scope="col">
-                    <small>Chat With</small>
-                </th>
+                @if (CV.role() == "Admin")
+                {
+                    <th scope="col">
+                        <small>Notes</small>
+                    </th>
+                    <th scope="col">
+                        <small>Chat With</small>
+                    </th>
+                }
                 <th scope="col">
                     <small>Actions</small>
                 </th>
@@ -57,14 +64,17 @@
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </td>
-                    <td>
-                        <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
-                    </td>
-                    <td><small>@item.Requestor</small></td>
-                    <td>
-                        <small>@item.ProviderName</small>
-                    </td>
-                    <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    @if (CV.role() == "Admin")
+                    {
+                        <td>
+                            <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
+                        </td>
+                        <td><small>@item.Requestor</small></td>
+                        <td>
+                            <small>@item.ProviderName</small>
+                        </td>
+                        <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    }
                     <td>
                         <button class="btn border border-white text-white mt-2">
                             <i class="fa-solid fa-phone pe-2"></i>
@@ -88,17 +98,20 @@
                         }
                     </td>
                     <td><small>@item.Address</small></td>
-                    <td><small>@item.Notes</small></td>
-                    <td>
-                        <button class="btn border border-white text-white my-2">
-                            <i class="fa-solid fa-user me-1"></i>
-                            <small>Patient</small>
-                        </button>
-                        <button class="btn border border-white text-white my-2">
-                            <i class="fa-solid fa-user-doctor me-1"></i>
-                            <small>Provider</small>
-                        </button>
-                    </td>
+                    @if (CV.role() == "Admin")
+                    {
+                        <td><small>@item.Notes</small></td>
+                        <td>
+                            <button class="btn border border-white text-white my-2">
+                                <i class="fa-solid fa-user me-1"></i>
+                                <small>Patient</small>
+                            </button>
+                            <button class="btn border border-white text-white my-2">
+                                <i class="fa-solid fa-user-doctor me-1"></i>
+                                <small>Provider</small>
+                            </button>
+                        </td>
+                    }
                     <td>
                         <button class="btn border border-white text-white my-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <small>Actions</small>
@@ -123,17 +136,20 @@
                                 </a>
                             </li>
                             <li>
-                                <button onclick="modal_Case(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransferRequest" data-bs-requestid="@item.RequestId">
+                                <button onclick="model_Pending(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransToAdmin" data-bs-requestid="@item.RequestId">
                                     <i class="fa-regular fa-rectangle-list me-1"></i>
                                     Transfer
                                 </button>
                             </li>
-                            <li>
-                                <button onclick="modal_Case(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ClearCase">
-                                    <i class="fa-regular fa-circle-xmark me-1"></i>
-                                    Clear Case
-                                </button>
-                            </li>
+                            @if (CV.role() == "Admin")
+                            {
+                                <li>
+                                    <button onclick="modal_Case(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ClearCase">
+                                        <i class="fa-regular fa-circle-xmark me-1"></i>
+                                        Clear Case
+                                    </button>
+                                </li>
+                            }
                             <li>
                                 <button onclick="modal_Case(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#SendAgreement">
                                     <i class="fa-regular fa-pen-to-square me-1"></i>

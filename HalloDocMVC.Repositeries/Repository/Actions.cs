@@ -4,20 +4,9 @@ using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections;
-using System.IO;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing.Constraints;
 using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.ViewUploadModel;
-using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Ocsp;
-using HalloDocMVC.DBEntity.ViewModels;
-using System.Security.Cryptography;
 
 namespace HalloDocMVC.Repositories.Admin.Repository
 {
@@ -880,6 +869,56 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return true;
         }
         #endregion
+
+        #region AcceptPhysician
+        public async Task<bool> AcceptPhysician(int requestid, string note, int ProviderId)
+        {
+
+            var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == requestid);
+            request.Status = 2;
+            request.Accepteddate = DateTime.Now;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new()
+            {
+                Requestid = requestid,
+                Createddate = DateTime.Now,
+                Status = 2,
+                Notes = note,
+                Transtophysicianid = ProviderId
+            };
+            _context.Requeststatuslogs.Update(rsl);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion AcceptPhysician
+
+        #region TransfertoAdmin
+        public async Task<bool> TransfertoAdmin(int RequestID, string Note, int ProviderId)
+        {
+            var request = await _context.Requests.FirstOrDefaultAsync(req => req.Requestid == RequestID);
+            request.Status = 1;
+            request.Physicianid = null;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new()
+            {
+                Requestid = RequestID,
+                Notes = Note,
+                Createddate = DateTime.Now,
+                Status = 1,
+
+                Physicianid = ProviderId,
+                Transtoadmin = new BitArray(1)
+            };
+            rsl.Transtoadmin[0] = true;
+            _context.Requeststatuslogs.Update(rsl);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion TransfertoAdmin
     }
 
 }

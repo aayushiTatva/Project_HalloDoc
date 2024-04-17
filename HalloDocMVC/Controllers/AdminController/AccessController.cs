@@ -205,6 +205,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("UserAccess");
         }
         #endregion
+
         #region ResetPassword
         public async Task<IActionResult> ResetPassword(string Password, int AdminId)
         {

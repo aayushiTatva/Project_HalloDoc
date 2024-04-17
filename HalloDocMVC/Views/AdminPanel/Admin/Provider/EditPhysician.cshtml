@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
     string path = Context.Request.Path;
 }
+@using HalloDocMVC.DBEntity.ViewModels;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.ProviderModel
 @{
@@ -20,9 +21,18 @@
         <div class="col-6">
             <h3><strong>@ViewData["PhysicianAccount"] Physician Account</strong></h3>
         </div>
-        <div class="col-6 ms-auto">
-            <a class="relogin ms-auto" asp-controller="Providers" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
-        </div>
+         @if(CV.role() == "Admin")
+            {
+                <div class="col-6 ms-auto">
+                    <a class="relogin ms-auto" asp-controller="Providers" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+                </div>
+            }
+        @if (CV.role() == "Provider")
+        {
+            <div class="col-6 ms-auto">
+                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+            </div>
+        }
     </div>
     <div class="row min-vh-100 mt-3">
         <form method="post" asp-controller="Providers" asp-action="AddPhysician" id="addedit" enctype="multipart/form-data">
@@ -38,31 +48,37 @@
                             <label class="ms-2" for="uname"> UserName</label>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
-                            <input asp-for="Password" type="password" class="form-control shadow-none input0" id="passwd" placeholder="Password">
+                            <input asp-for="Password" type="password" class="form-control shadow-none" id="passwd" placeholder="Password">
                             <label class="ms-2" for="passwd">Password</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-floating mb-3">
-                            <select class="form-select shadow-none AccInput" required asp-for="Status" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))">
-                            </select>
-                            <label for="Status">Status</label>
-                        </div>
-                        <div class="col-md-6 form-floating mb-3">
-                            <select asp-for="RoleId" class="form-select form-control shadow-none input0" id="Role" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
-                                
-                            </select>
-                            <label class="ms-2" for="Role">Role</label>
-                            @*<select class="form-select shadow-none AccInput" required asp-for="RoleId" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-floating mb-3">
+                                <select class="form-select shadow-none AccInput input0" required asp-for="Status" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(enumData, "ID", "Name"))">
+                                </select>
+                                <label for="Status">Status</label>
+                            </div>
+                            <div class="col-md-6 form-floating mb-3">
+                                <select asp-for="RoleId" class="form-select form-control shadow-none input0" id="Role" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
+
+                                </select>
+                                <label class="ms-2" for="Role">Role</label>
+                                @*<select class="form-select shadow-none AccInput" required asp-for="RoleId" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
                             </select>
                             <label for="Roleid">Role</label>*@
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="row">
                         <div class="d-flex justify-content-end">
-                            <input type="button" value="Edit" id="edit0" class="btn btn-info text-white me-2" onclick="toggleFormElements0()" />
-                            <input type="submit" value="Save" id="save0" class="btn btn-info text-white me-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditAccountInfo" />
-                            <input type="submit" value="Reset Password" id="resetpassbtn" class="btn border border-info text-info" />
+                            @if(CV.role() == "Admin")
+                            {
+                                <input type="button" value="Edit" id="edit0" class="btn btn-info text-white me-2" onclick="toggleFormElements0()" />
+                                <input type="submit" value="Save" id="save0" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditAccountInfo" class="btn btn-info text-white me-2" />
+                            }
+                            <input type="submit" value="Reset Password" id="resetpassbtn" asp-controller="Providers" asp-action="ResetPassword" asp-route-id="@Model.PhysicianId"class="btn border border-info text-info" />
                         </div>
                     </div>
                 </div>
@@ -104,10 +120,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 form-floating mb-3">
-                            <input asp-for="Syncmailaddredss" class="form-control shadow-none input1" type="text" id="phones" placeholder="Phone Number" />
-                            <label class="ms-2" for="tel">Synchronization Email Address</label>
-                        </div>
+                        @if(CV.role() == "Admin")
+                        {
+                            <div class="col-md-6 form-floating mb-3">
+                                <input asp-for="Syncmailaddredss" class="form-control shadow-none input1" type="text" id="phones" placeholder="Phone Number" />
+                                <label class="ms-2" for="tel">Synchronization Email Address</label>
+                            </div>
+                        }
                         <input type="hidden" asp-for="RegionsId" id="regionids" />
                         <div class="col-md-6 d-flex">
                             @foreach (var cb in ViewBag.RegionComboBox)
@@ -133,12 +152,15 @@
                             }
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-end mt-1">
-                            <input type="button" value="Edit" id="edit1" class="btn btn-info text-white" onclick="toggleFormElements1()" />
-                            <input type="submit" value="Save" id="save1" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditPhysicianInfo" id="AdmSave" />
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="d-flex justify-content-end mt-1">
+                                <input type="button" value="Edit" id="edit1" class="btn btn-info text-white" onclick="toggleFormElements1()" />
+                                <input type="submit" value="Save" id="save1" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditPhysicianInfo" id="AdmSave" />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="card shadow border-0 mb-3">
@@ -179,12 +201,15 @@
                             <label class="ms-2" for="tel">Phone Number</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-end mt-1">
-                            <input type="button" value="Edit" id="edit2" class="btn btn-info text-white" onclick="toggleFormElements2()" />
-                            <input type="submit" value="Save" id="save2" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditMailingInfo" itemid="MailSave" />
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="d-flex justify-content-end mt-1">
+                                <input type="button" value="Edit" id="edit2" class="btn btn-info text-white" onclick="toggleFormElements2()" />
+                                <input type="submit" value="Save" id="save2" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditMailingInfo" itemid="MailSave" />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="card shadow border-0 mb-3">
@@ -249,18 +274,21 @@
                             }
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 form-floating mb-3">
-                            <textarea asp-for="AdminNotes" class="form-control shadow-none input3" id="AdminNotes" style="height: 100px" placeholder="Enter brief Details of Symptoms (Optional)"></textarea>
-                            <label class="ms-2" for="AdminNotes">Admin Notes</label>
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="col-12 form-floating mb-3">
+                                <textarea asp-for="AdminNotes" class="form-control shadow-none input3" id="AdminNotes" style="height: 100px" placeholder="Enter brief Details of Symptoms (Optional)"></textarea>
+                                <label class="ms-2" for="AdminNotes">Admin Notes</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-end mt-1">
-                            <input type="button" value="Edit" id="edit3" class="btn btn-info text-white" onclick="toggleFormElements3()" />
-                            <input type="submit" value="Save" id="save3" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderProfile" id="ProfileSave" />
+                        <div class="row">
+                            <div class="d-flex justify-content-end mt-1">
+                                <input type="button" value="Edit" id="edit3" class="btn btn-info text-white" onclick="toggleFormElements3()" />
+                                <input type="submit" value="Save" id="save3" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderProfile" id="ProfileSave" />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="card shadow border-0 mb-3">
@@ -268,68 +296,72 @@
                     <h4><strong>Onboarding</strong></h4>
                 </div>
                 <div class="card-body border-0">
-                    <div class="row">
-                        <div class="col-md form-check d-flex mb-3">
-                            <div class="col-md-3 form-check mx-2 my-2">
-                                <input class="form-check-input agreement-checkbox" asp-for="Isagreementdoc" name="Isagreementdoc" type="checkbox" disabled>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Independent Contractor Agreement
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <div>
+                        <div class="row">
+                            <div class="col-md form-check d-flex mb-3">
+                                <div class="col-md-3 form-check mx-2 my-2">
+                                    <input class="form-check-input agreement-checkbox" asp-for="Isagreementdoc" name="Isagreementdoc" type="checkbox" disabled>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Independent Contractor Agreement
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div>
                                     @{
                                         var isChecked = Model != null ? Model.Isagreementdoc : false;
                                     }
-
-                                    <input id="filebtn1" type="file" class="d-none form-control doc_uploder file " asp-for="Agreementdoc">
-                                    <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn1').click()">
-                                        <span class="d-none d-sm-inline">Upload</span>
-                                    </button>
-
-                                    @{
-                                        if (Model != null && Model.Isagreementdoc)
-                                        {
-                                            <a href="~/Upload/Physician/@Model.PhysicianId/Agreementdoc.pdf" target="_blank" class="btn bg-info mx-2 text-white ">View</a>
-                                        }
+                                    @if (CV.role() == "Admin")
+                                    {
+                                        <input id="filebtn1" type="file" class="d-none form-control doc_uploder file " asp-for="Agreementdoc">
+                                        <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn1').click()">
+                                            <span class="d-none d-sm-inline">Upload</span>
+                                        </button>
                                     }
-                                </div>
-                                <div class="file-details" style="display:none;">
-                                    <p><span class="file-name"></span></p>
+                                    @{
+                                            if (Model != null && Model.Isagreementdoc)
+                                            {
+                                                <a href="~/Upload/Physician/@Model.PhysicianId/Agreementdoc.pdf" target="_blank" class="btn bg-info mx-2 text-white ">View</a>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="file-details" style="display:none;">
+                                        <p><span class="file-name"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md form-check d-flex mb-3">
-                            <div class="col-md-3 form-check mx-2 my-2">
-                                <input class="form-check-input agreement-checkbox" asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" disabled>
-                                <label class="form-check-label" for="Isbackgrounddoc">
-                                    Background Check
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <div>
-                                    @{
-                                        isChecked = Model != null ? Model.Isbackgrounddoc : false;
-                                    }
-                                    <input id="filebtn2" type="file" class="d-none form-control doc_uploder file" asp-for="BackGrounddoc">
-                                    <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn2').click()">
-                                        <span class="d-none d-sm-inline">Upload</span>
-                                    </button>
-                                    @{
-                                        if (Model != null && Model.Isbackgrounddoc)
-                                        {
-                                            <a href="~/Upload/Physician/@Model.PhysicianId/BackGrounddoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
-                                        }
-                                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="col-md form-check d-flex mb-3">
+                                <div class="col-md-3 form-check mx-2 my-2">
+                                    <input class="form-check-input agreement-checkbox" asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" disabled>
+                                    <label class="form-check-label" for="Isbackgrounddoc">
+                                        Background Check
+                                    </label>
                                 </div>
-                                <div class="file-details" style="display:none;">
-                                    <p><span class="file-name"></span></p>
+                                <div class="col-md-3">
+                                    <div>
+                                        @{
+                                            isChecked = Model != null ? Model.Isbackgrounddoc : false;
+                                        }
+                                        <input id="filebtn2" type="file" class="d-none form-control doc_uploder file" asp-for="BackGrounddoc">
+                                        <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn2').click()">
+                                            <span class="d-none d-sm-inline">Upload</span>
+                                        </button>
+                                        @{
+                                            if (Model != null && Model.Isbackgrounddoc)
+                                            {
+                                                <a href="~/Upload/Physician/@Model.PhysicianId/BackGrounddoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="file-details" style="display:none;">
+                                        <p><span class="file-name"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div class="row">
                         <div class="col-md form-check d-flex mb-3">
                             <div class="col-md-3 form-check mx-2 my-2">
@@ -341,13 +373,15 @@
                             <div class="col-md-3">
                                 <div>
                                     @{
-                                        isChecked = Model != null ? Model.Istrainingdoc : false;
+                                         isChecked = Model != null ? Model.Istrainingdoc : false;
                                     }
-                                    <input id="filebtn3" type="file" class="d-none form-control doc_uploder file" asp-for="Trainingdoc">
-                                    <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn3').click()">
-                                        <span class="d-none d-sm-inline">Upload</span>
-                                    </button>
-
+                                    @if(CV.role() == "Admin")
+                                    {
+                                        <input id="filebtn3" type="file" class="d-none form-control doc_uploder file" asp-for="Trainingdoc">
+                                        <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn3').click()">
+                                            <span class="d-none d-sm-inline">Upload</span>
+                                        </button>
+                                    }
                                     @{
                                         if (Model != null && Model.Istrainingdoc)
                                         {
@@ -361,78 +395,87 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md form-check d-flex mb-3">
-                            <div class="col-md-3 form-check mx-2 my-2">
-                                <input class="form-check-input agreement-checkbox" asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" disabled>
-                                <label class="form-check-label" for="Isnondisclosuredoc">
-                                    Non-disclosure Agreement
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <div>
-                                    @{
-                                        isChecked = Model != null ? Model.Isnondisclosuredoc : false;
-                                    }
-                                    <input id="filebtn4" type="file" class="d-none form-control doc_uploder file" asp-for="NonDisclosuredoc">
-                                    <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn4').click()">
-                                        <span class="d-none d-sm-inline">Upload</span>
-                                    </button>
-                                    @{
-                                        if (Model != null && Model.Isnondisclosuredoc)
-                                        {
-                                            <a href="~/Upload/Physician/@Model.PhysicianId/NonDisclosuredoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
-                                        }
-                                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="col-md form-check d-flex mb-3">
+                                <div class="col-md-3 form-check mx-2 my-2">
+                                    <input class="form-check-input agreement-checkbox" asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" disabled>
+                                    <label class="form-check-label" for="Isnondisclosuredoc">
+                                        Non-disclosure Agreement
+                                    </label>
                                 </div>
-                                <div class="file-details" style="display:none;">
-                                    <p><span class="file-name"></span></p>
+                                <div class="col-md-3">
+                                    <div>
+                                        @{
+                                            isChecked = Model != null ? Model.Isnondisclosuredoc : false;
+                                        }
+                                        <input id="filebtn4" type="file" class="d-none form-control doc_uploder file" asp-for="NonDisclosuredoc">
+                                        <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn4').click()">
+                                            <span class="d-none d-sm-inline">Upload</span>
+                                        </button>
+                                        @{
+                                            if (Model != null && Model.Isnondisclosuredoc)
+                                            {
+                                                <a href="~/Upload/Physician/@Model.PhysicianId/NonDisclosuredoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="file-details" style="display:none;">
+                                        <p><span class="file-name"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md form-check d-flex mb-3">
-                            <div class="col-md-3 form-check mx-2 my-2">
-                                <input class="form-check-input agreement-checkbox" asp-for="Islicencedoc" type="checkbox" id="Islicensedoc" disabled>
-                                <label class="form-check-label" for="Islicensedoc">
-                                    License Document
-                                </label>
-                            </div>
-                            <div class="col-md-3">
-                                <div>
-                                    @{
-                                        isChecked = Model != null ? Model.Islicencedoc : false;
-                                    }
-                                    <input id="filebtn5" type="file" class="d-none form-control doc_uploder file" asp-for="Licensedoc">
-                                    <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn5').click()">
-                                        Upload
-                                    </button>
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="col-md form-check d-flex mb-3">
+                                <div class="col-md-3 form-check mx-2 my-2">
+                                    <input class="form-check-input agreement-checkbox" asp-for="Islicencedoc" type="checkbox" id="Islicensedoc" disabled>
+                                    <label class="form-check-label" for="Islicensedoc">
+                                        License Document
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div>
+                                        @{
+                                            isChecked = Model != null ? Model.Islicencedoc : false;
+                                        }
+                                        <input id="filebtn5" type="file" class="d-none form-control doc_uploder file" asp-for="Licensedoc">
+                                        <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn5').click()">
+                                            Upload
+                                        </button>
 
-                                    @{
-                                        if (Model != null && Model.Islicencedoc)
-                                        {
-                                            <a href="~/Upload/Physician/@Model.PhysicianId/Agreementdoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
+                                        @{
+                                            if (Model != null && Model.Islicencedoc)
+                                            {
+                                                <a href="~/Upload/Physician/@Model.PhysicianId/Agreementdoc.pdf" target="_blank" class="btn btn-info mx-2 text-white ">View</a>
+                                            }
                                         }
-                                    }
-                                </div>
-                                <div class="file-details" style="display:none;">
-                                    <p><span class="file-name"></span></p>
+                                    </div>
+                                    <div class="file-details" style="display:none;">
+                                        <p><span class="file-name"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-end ">
-                            <button type="submit" class="btn btn-info text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderOnboarding">
-                                <span class="d-none d-sm-inline">Save</span>
-                            </button>
-                            <button type="button" class="btn btn-danger text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="DeleteProvider" asp-route-PhysicianID="@(Model!= null?Model.PhysicianId:null)" id="DeleteAccount">
-                                <span class="d-none d-sm-inline">Delete Account</span>
-                            </button>
-                            <input type="submit" class="btn btn-success text-white ms-2" id="add" value="Create Account" />
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="row">
+                            <div class="d-flex justify-content-end ">
+                                <button type="submit" class="btn btn-info text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderOnboarding">
+                                    <span class="d-none d-sm-inline">Save</span>
+                                </button>
+                                <button type="button" class="btn btn-danger text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="DeleteProvider" asp-route-PhysicianID="@(Model!= null?Model.PhysicianId:null)" id="DeleteAccount">
+                                    <span class="d-none d-sm-inline">Delete Account</span>
+                                </button>
+                                <input type="submit" class="btn btn-success text-white ms-2" id="add" value="Create Account" />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </form>

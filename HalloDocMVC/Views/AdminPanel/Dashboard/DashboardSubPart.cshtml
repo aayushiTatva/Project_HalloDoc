@@ -1,7 +1,9 @@
 ﻿@using HalloDocMVC.DBEntity.ViewModels;
 @using HalloDocMVC.Models;
+@using HalloDocMVC.Repositories.Admin.Repository.Interface;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel;
+@inject ILogin _ILogin;
 <form id="filterForm" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#SearchResult"
       asp-action="SearchResult" asp-controller="Dashboard" novalidate="novalidate">
     <div class="mx-sm-1 mx-md-2 mx-xxl-4 mt-0 bg-light">
@@ -72,24 +74,24 @@
                 </button>
 
             </div>
-
-            <div class="col-md-2 col-sm-4 col-4 position-relative">
-                <button type="submit" name="Status" value="3,7,8" class="btn text-start shadow-none w-100">
-                    <div class="p-1 rounded toClose ps-2 pt-3 thumbnail" id="toclose">
-                        <div class="d-inline-flex fw-bold">
-                            <div class="d-none d-md-block">
-                                <i class="fa-solid fa-user-xmark mx-2 mt-1"></i>
+            @if (CV.role() == "Admin")
+            {
+                <div class="col-md-2 col-sm-4 col-4 position-relative">
+                    <button type="submit" name="Status" value="3,7,8" class="btn text-start shadow-none w-100">
+                        <div class="p-1 rounded toClose ps-2 pt-3 thumbnail" id="toclose">
+                            <div class="d-inline-flex fw-bold">
+                                <div class="d-none d-md-block">
+                                    <i class="fa-solid fa-user-xmark mx-2 mt-1"></i>
+                                </div>
+                                TO CLOSE
                             </div>
-                            TO CLOSE
+                            <div class="mt-2">
+                                <span class="h4 fw-bold">@Model.ToCloseRequest</span>
+                            </div>
                         </div>
-                        <div class="mt-2">
-                            <span class="h4 fw-bold">@Model.ToCloseRequest</span>
-                        </div>
-                    </div>
-                </button>
+                    </button>
 
-            </div>
-
+                </div>
             <div class="col-md-2 col-sm-4 col-4 position-relative">
                 <button type="submit" name="Status" value="9" class="btn text-start shadow-none w-100">
                     <div class="p-1 rounded unpaid ps-2 pt-3 thumbnail" id="unpaid">
@@ -104,46 +106,53 @@
                         </div>
                     </div>
                 </button>
-            </div>
+                </div>
+            }
         </div>
+
         <!--End Status of requests-->
         <!--Important links-->
         <div class="d-flex justify-content-between mx-2">
             <div>
                 <strong class="fs-6">Patients</strong> <small>@TempData["CurrentStatus"]</small>
             </div>
-            <div>
-                <button class="btn btn-info text-white shadow-none mb-2" data-bs-toggle="modal" data-bs-target="#SendLink">
-                    <small>
-                        <i class="bi bi-send"></i>
-                        <span class="adminIcon">Send Link</span>
-                    </small>
-                </button>
-                <a class="btn btn-info text-white shadow-none mb-2" asp-controller="CreateRequest" asp-action="Index">
-                    <small>
-                        <i class="bi bi-file-earmark-plus"></i>
-                        <span class="adminIcon">Create Requests</span>
-                    </small>
-                </a>
-                <button class="btn btn-info text-white shadow-none mb-2">
-                    <small>
-                        <i class="fa-solid fa-share"></i>
-                        <span class="adminIcon">Export</span>
-                    </small>
-                </button>
-                <button class="btn btn-info text-white shadow-none mb-2">
-                    <small>
-                        <i class="fa-solid fa-share-from-square"></i>
-                        <span class="adminIcon">Export All</span>
-                    </small>
-                </button>
-                <button class="btn btn-info text-white shadow-none mb-2">
-                    <small>
-                        <i class="fa-solid fa-user-nurse"></i>
-                        <span class="adminIcon">Request DIY Support</span>
-                    </small>
-                </button>
-            </div>
+                <div>
+                    <button class="btn btn-info text-white shadow-none mb-2" data-bs-toggle="modal" data-bs-target="#SendLink">
+                        <small>
+                            <i class="bi bi-send"></i>
+                            <span class="adminIcon">Send Link</span>
+                        </small>
+                    </button>
+                    <a class="btn btn-info text-white shadow-none mb-2" asp-controller="CreateRequest" asp-action="Index">
+                        <small>
+                            <i class="bi bi-file-earmark-plus"></i>
+                            <span class="adminIcon">Create Requests</span>
+                        </small>
+                    </a>
+
+                @if (CV.role() == "Admin")
+                {
+                    <button class="btn btn-info text-white shadow-none mb-2">
+                        <small>
+                            <i class="fa-solid fa-share"></i>
+                            <span class="adminIcon">Export</span>
+                        </small>
+                    </button>
+                    <button class="btn btn-info text-white shadow-none mb-2">
+                        <small>
+                            <i class="fa-solid fa-share-from-square"></i>
+                            <span class="adminIcon">Export All</span>
+                        </small>
+                    </button>
+                    <button class="btn btn-info text-white shadow-none mb-2">
+                        <small>
+                            <i class="fa-solid fa-user-nurse"></i>
+                            <span class="adminIcon">Request DIY Support</span>
+                        </small>
+                    </button>
+                }
+                </div>
+            
         </div>
         <!--End Important links-->
         <!--Filters-->
@@ -156,14 +165,18 @@
                             <input asp-for="SearchInput" id="SearchInput" type="text" class="form-control" placeholder="Search Patients">
                         </div>
                     </div>
-                    <div class="search col-lg-3 col-sm-6 col-xs-12 mb-1">
-                        <div class="ms-1">
-                            <i class="fa fa-search"></i>
-                            <select asp-for="RegionId" asp-items="@(new SelectList(ViewBag.ComboBoxRegion, "RegionId", "RegionName"))" onchange="SearchSubmit()" class="form-select shadow-none text-secondary" id="floatingSelectGrid">
-                                <option class="text-secondary w-100">All Regions</option>
-                            </select>
+                        <div class="search col-lg-3 col-sm-6 col-xs-12 mb-1">
+
+                        @if (CV.role() == "Admin")
+                        {
+                            <div class="ms-1">
+                                <i class="fa fa-search"></i>
+                                <select asp-for="RegionId" asp-items="@(new SelectList(ViewBag.ComboBoxRegion, "RegionId", "RegionName"))" onchange="SearchSubmit()" class="form-select shadow-none text-secondary" id="floatingSelectGrid">
+                                    <option class="text-secondary w-100">All Regions</option>
+                                </select>
+                            </div>
+                        }
                         </div>
-                    </div>
                     <div class="requestType col-lg-6 col-sm-12 d-flex justify-content-end">
                         <div class="d-flex align-self-center t-filter">
                             <button type="submit" name="filter" value="1,2,3,4" class="btn me-2 shadow-none activeFilter">

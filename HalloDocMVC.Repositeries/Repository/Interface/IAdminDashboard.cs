@@ -9,7 +9,8 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
 {
     public interface IAdminDashboard
     {
-        public PaginationModel CardData();
+        PaginationModel CardData(int ProviderId);
+        PaginationModel GetRequests(string Status, string Filter, PaginationModel data, int ProviderId);
         public PaginationModel GetRequests(string Status, string Filter, PaginationModel pagination);
     }
 }

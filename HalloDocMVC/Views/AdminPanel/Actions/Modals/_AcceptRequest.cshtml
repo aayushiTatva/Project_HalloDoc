@@ -1,0 +1,28 @@
+﻿<div class="modal fade" id="AcceptCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Accept Case</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Actions" asp-action="AcceptRequest" class="needs-validation" novalidate>
+                <input type="hidden" value="" id="RequestID_Input_ModelAcceptCase" name="RequestId" />
+                <div class="modal-body">
+                    <h6>For accepting this request click on accept button and for reassign case to admin click on reject button</h6>
+                    <div class="form-floating mb-3">
+                        <textarea required id="changenote" rows="4" name="Note" class="input-outline w-100 h-100 fs-6 form-control shadow-none" type="text"></textarea>
+                        <label class="inputs-lable inputs-lable fs-6" for="changenote">Message</label>
+                        <div class="invalid-feedback">
+                            Enter Valid Reason.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Accept</button>
+                    <button asp-controller="Actions" asp-action="TransferToAdmin" type="submit" class="btn btn-danger text-white">Reject</button>
+                    <a class="btn btn-outline-info" data-bs-dismiss="modal">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

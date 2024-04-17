@@ -22,13 +22,20 @@ namespace HalloDocMVC.Controllers.AdminController
             _IComboBox = iComboBox;
         }
         #endregion Configuration
-        [CheckProviderAccess("Admin")]
+        [CheckProviderAccess("Admin,Provider")]
+        [Route("Provider/Dashboard")]
+        [Route("Admin/Dashboard")]
         #region Index
         public async Task<IActionResult> Index()
         {
             ViewBag.ComboBoxRegion = await _IComboBox.ComboBoxRegions();
             ViewBag.ComboBoxCaseReason = await _IComboBox.ComboBoxCaseReasons();
-            var countRequest = _IAdminDashboard.CardData();
+            PaginationModel countRequest = _IAdminDashboard.CardData(-1);
+            if (CV.role() == "Provider")
+            {
+                countRequest = _IAdminDashboard.CardData(Convert.ToInt32(CV.UserID()));
+                return View("~/Views/AdminPanel/Dashboard/Index.cshtml", countRequest);
+            }
             return View("~/Views/AdminPanel/Dashboard/Index.cshtml", countRequest);
         }
         #endregion Index
@@ -44,6 +51,10 @@ namespace HalloDocMVC.Controllers.AdminController
             Response.Cookies.Append("Filter", Filter);
 
             PaginationModel contacts = _IAdminDashboard.GetRequests(Status, Filter, pagination);
+            if (CV.role() == "Provider")
+            {
+                contacts = _IAdminDashboard.GetRequests(Status, Filter, pagination, Convert.ToInt32(CV.UserID()));
+            }
 
             switch (Status)
             {

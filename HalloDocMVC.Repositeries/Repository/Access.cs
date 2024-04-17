@@ -2,15 +2,8 @@
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 
 namespace HalloDocMVC.Repositories.Admin.Repository
 {

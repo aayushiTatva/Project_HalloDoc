@@ -36,5 +36,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         EncounterModel GetEncounterData(int RequestId);
         bool EditEncounterData(EncounterModel Data, string id);
         bool SendLink(string FirstName, string LastName, string Email, string PhoneNumber);
+        public Task<bool> AcceptPhysician(int requestid, string note, int ProviderId);
+        public Task<bool> TransfertoAdmin(int RequestID, string Note, int ProviderId);
     }
 }

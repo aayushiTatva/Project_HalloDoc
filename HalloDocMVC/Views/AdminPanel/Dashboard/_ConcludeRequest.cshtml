@@ -1,4 +1,5 @@
 ﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel;
+@using HalloDocMVC.DBEntity.ViewModels;
     @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 
     <!--Desktop Screen View of table-->
@@ -10,24 +11,31 @@
                         <small>Name</small>
                     </th>
                     <th></th>
-                    <th scope="col">
-                        <small>Date Of Birth</small>
-                    </th>
-                    <th scope="col">
-                        <small>Physician Name</small>
-                    </th>
-                    <th scope="col">
-                        <small>Date of Service</small>
-                    </th>
+                     @if (CV.role() == "Admin")
+                {
+                        <th scope="col">
+                            <small>Date Of Birth</small>
+                        </th>
+                        <th scope="col">
+                            <small>Physician Name</small>
+                        </th>
+                        <th scope="col">
+                            <small>Date of Service</small>
+                        </th>
+                }
                     <th scope="col">
                         <small>Phone</small>
                     </th>
                     <th scope="col">
                         <small>Address</small>
                     </th>
+                    @if (CV.role() == "Admin")
+                {
+                   
                     <th scope="col">
                         <small>Chat With</small>
                     </th>
+                }
                     <th scope="col">
                         <small>Actions</small>
                     </th>
@@ -42,22 +50,25 @@
                     </td>
                 </tr>
             }
-                @foreach (var item in Model.list)
+            @foreach (var (item, index) in Model.list.Select((item, index) => (item, index)))
             {
                 <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white">
                     <td><small>@item.PatientName</small></td>
-                    <td>
-                        <button class="btn border-white text-white">
-                            <i class="fa-regular fa-envelope"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
-                    </td>
-                    <td>
-                        <small>@item.ProviderName</small>
-                    </td>
-                    <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    @if (CV.role() == "Admin")
+                    {
+                        <td>
+                            <button class="btn border-white text-white">
+                                <i class="fa-regular fa-envelope"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <small>@item.DateOfBirth.ToString("MMM d , yyyy")</small>
+                        </td>
+                        <td>
+                            <small>@item.ProviderName</small>
+                        </td>
+                        <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
+                    }
                     <td>
                         <button class="btn border border-white text-white mt-2">
                             <i class="fa-solid fa-phone pe-2"></i>
@@ -81,14 +92,17 @@
                         }
                     </td>
                     <td><small>@item.Address</small></td>
-                    <td>
-                        <button class="btn border border-white text-white my-2">
-                            <small>Patient</small>
-                        </button>
-                        <button class="btn border border-white text-white my-2">
-                            <small>Provider</small>
-                        </button>
-                    </td>
+                    @if (CV.role() == "Admin")
+                    {
+                        <td>
+                            <button class="btn border border-white text-white my-2">
+                                <small>Patient</small>
+                            </button>
+                            <button class="btn border border-white text-white my-2">
+                                <small>Provider</small>
+                            </button>
+                        </td>
+                    }
                     <td>
                         <button class="btn border border-white text-white my-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <small>Actions</small>
@@ -112,18 +126,22 @@
                                     View Notes
                                 </a>
                             </li>
-                            <li>
-                                <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="dropdown-item">
-                                    <i class="fa-solid fa-file-circle-check me-1"></i>
-                                    Orders
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-receipt me-2"></i>
-                                    Doctors Note
-                                </a>
-                            </li>
+                            @if (CV.role() == "Admin")
+                            {
+
+                                <li>
+                                    <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="dropdown-item">
+                                        <i class="fa-solid fa-file-circle-check me-1"></i>
+                                        Orders
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-receipt me-2"></i>
+                                        Doctors Note
+                                    </a>
+                                </li>
+                            }
                             <li>
                                 <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
                                     <i class="fa-solid fa-receipt me-2"></i>

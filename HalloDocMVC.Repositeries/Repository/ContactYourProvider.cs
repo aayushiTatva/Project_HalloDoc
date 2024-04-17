@@ -27,6 +27,8 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             _emailConfiguration = emailConfiguration;
         }
         #endregion
+
+        #region GetContacts
         public PaginationProvider GetContacts(PaginationProvider paginationProvider)
         {
             List<ProviderModel> upload =  (from r in _context.Physicians
@@ -72,6 +74,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
 
 
         }
+        #endregion
+
+        #region PhysicianByRegion
         public PaginationProvider PhysicianByRegion(int? region, PaginationProvider paginationProvider)
         {
             List<ProviderModel> details = (from pr in _context.Physicianregions
@@ -114,6 +119,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             };
             return roles1;
         }
+        #endregion
 
         #region ChangeNotification
         public async Task<bool> ChangeNotification(Dictionary<int, bool> changeValueDict)
@@ -350,6 +356,28 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             }
         }
         #endregion
+
+        #region ResetPassword
+        public async Task<bool> ResetPassword(string Password, int PhysicianId)
+        {
+            var hash = new PasswordHasher<string>();
+            var req = await _context.Physicians.Where(w => w.Physicianid == PhysicianId).FirstOrDefaultAsync();
+            if(req != null)
+            {
+                var User = await _context.Aspnetusers.Where(w => w.Id == req.Aspnetuserid).FirstOrDefaultAsync();
+                if (User != null)
+                {
+                    User.Passwordhash = hash.HashPassword(null, Password);
+                    _context.Aspnetusers.Update(User);
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        #endregion
+
         #region EditPhysicianInfo
         public async Task<bool> EditPhysicianInfo(ProviderModel vm)
         {
@@ -562,6 +590,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             }
         }
         #endregion
+
         #region FindPhysicianLocation
         public async Task<List<ProviderLocation>> FindPhysicianLocation()
         {
