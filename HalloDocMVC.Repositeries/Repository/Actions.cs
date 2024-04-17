@@ -418,45 +418,42 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         #endregion
 
         #region GetDocuments
-        public async Task<ViewUploadModel> GetDocument(int? id)
+        public async Task<ViewUploadModel> GetDocument(int? id, ViewUploadModel model)
         {
             var requests = _context.Requests.FirstOrDefault(req => req.Requestid == id);
             var requestClient = _context.Requestclients.FirstOrDefault(reqclient => reqclient.Requestid == id);
-            ViewUploadModel upload = new ViewUploadModel();
-            /*upload.ConfirmationNumber = requests.Confirmationnumber;*/
-            upload.RequestId = requests.Requestid;
-            upload.FirstName = requestClient.Firstname;
-            upload.LastName = requestClient.Lastname;
-            var result = from requestWiseFile in _context.Requestwisefiles
-                         join request in _context.Requests on requestWiseFile.Requestid equals request.Requestid
-                         join physician in _context.Physicians on request.Physicianid equals physician.Physicianid into physicianGroup
-                         from phys in physicianGroup.DefaultIfEmpty()
-                         join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
-                         from adm in adminGroup.DefaultIfEmpty()
-                         where request.Requestid == id && requestWiseFile.Isdeleted == new BitArray(1)
-                         select new
-                         {
-                             Uploader = requestWiseFile.Physicianid != null ? phys.Firstname : (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
-                             IsDeleted = requestWiseFile.Isdeleted.ToString(),
-                             RequestwisefilesId = requestWiseFile.Requestwisefileid,
-                             Status = requestWiseFile.Doctype,
-                             CreatedDate = requestWiseFile.Createddate,
-                             filename = requestWiseFile.Filename,
-                         };
-            List<Documents> doclist = new List<Documents>();
-            foreach (var item in result)
+            List<Documents> result = (from requestWiseFile in _context.Requestwisefiles
+                                      join request in _context.Requests on requestWiseFile.Requestid equals request.Requestid
+                                      join physician in _context.Physicians on request.Physicianid equals physician.Physicianid into physicianGroup
+                                      from phys in physicianGroup.DefaultIfEmpty()
+                                      join admin in _context.Admins on requestWiseFile.Adminid equals admin.Adminid into adminGroup
+                                      from adm in adminGroup.DefaultIfEmpty()
+                                      where request.Requestid == id && requestWiseFile.Isdeleted == new BitArray(1)
+                                      select new Documents
+                                      {
+                                          Uploader = requestWiseFile.Physicianid != null ? phys.Firstname : (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
+                                          isDeleted = requestWiseFile.Isdeleted.ToString(),
+                                          RequestwisefileId = requestWiseFile.Requestwisefileid,
+                                          Status = requestWiseFile.Doctype,
+                                          CreatedDate = requestWiseFile.Createddate,
+                                          filename = requestWiseFile.Filename,
+                                      }).ToList();
+            int totalItemCount = result.Count;
+            int totalPages = (int)Math.Ceiling(totalItemCount / (double)model.PageSize);
+            List<Documents> list1 = result.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            ViewUploadModel upload = new()
             {
-                doclist.Add(new Documents
-                {
-                    Uploader = item.Uploader,
-                    isDeleted = item.IsDeleted,
-                    RequestwisefileId = item.RequestwisefilesId,
-                    Status = item.Status,
-                    CreatedDate = item.CreatedDate,
-                    filename = item.filename
-                });
-            }
-            upload.documents = doclist;
+                ConfirmationNumber = requests.Confirmationnumber,
+                RequestId = requests.Requestid,
+                FirstName = requestClient.Firstname,
+                LastName = requestClient.Lastname,
+                documents = list1,
+                CurrentPage = model.CurrentPage,
+                PageSize = model.PageSize,
+                TotalItemCount = totalItemCount,
+                TotalPages = totalPages
+            };
             return upload;
         }
         #endregion

@@ -156,7 +156,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                RequestTypeId = req.Requesttypeid,
                                                FirstName = rc.Firstname,
                                                StartDate = req.Createddate,
-                                               Lastname = req.Lastname,
+                                               Lastname = rc.Lastname,
                                                PhysicianName = p.Firstname + " " + p.Lastname,
 
                                            }).ToList();

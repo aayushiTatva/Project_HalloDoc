@@ -9,7 +9,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
 {
     public class RecordsModel
     {
-        public int UserId;
+        public int UserId { get; set; }
         public string SearchInput { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,6 +20,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public DateTime? EndDate { get; set; }
         public string PhysicianName { get; set; }
         public string Email { get; set; }
+        public int EmailLogId { get; set; }
         public string PhoneNumber { get; set; }
         public int? AccountType { get; set; }
         public string? ReceiverName { get; set; }

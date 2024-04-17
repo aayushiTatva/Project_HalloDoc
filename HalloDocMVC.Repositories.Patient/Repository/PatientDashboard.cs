@@ -5,6 +5,7 @@ using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Collections;
 using System.Globalization;
@@ -22,8 +23,37 @@ namespace HalloDocMVC.Repositories.Patient.Repository
         }
         #endregion Configuration
 
+        public PatientDashboardModel GetPatientData(string id, PatientDashboardModel model)
+        {
+            List<PatientDashboardModel> allData = _context.Requests.Include(x => x.Requestwisefiles)
+                                                                  .Where(x => x.Userid == Int32.Parse(id) && x.Isdeleted == new BitArray(1))
+                                                                  .Select(x => new PatientDashboardModel
+                                                                  {
+                                                                      CreatedDate = x.Createddate,
+                                                                      Status = x.Status,
+                                                                      RequestId = x.Requestid,
+                                                                      DocumentCount = x.Requestwisefiles.Where(x => x.Isdeleted == new BitArray(1)).Count()
+                                                                  }).ToList();
+
+            int totalItemCount = allData.Count;
+            int totalPages = (int)Math.Ceiling(totalItemCount / (double)model.PageSize);
+            List<PatientDashboardModel> list1 = allData.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+            PatientDashboardModel Data = new()
+            {
+                PatientData = list1,
+                CurrentPage = model.CurrentPage,
+                TotalPages = totalPages,
+                PageSize = model.PageSize,
+                IsAscending = model.IsAscending,
+                TotalItemCount = totalItemCount,
+                UserId = Int32.Parse(id),
+            };
+            return Data;
+        }
+
         #region UploadDoc
-        public async Task<bool> UploadDoc (int RequestId, IFormFile? UploadFile)
+        public async Task<bool> UploadDoc(int RequestId, IFormFile? UploadFile)
         {
             if (UploadFile != null)
             {

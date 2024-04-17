@@ -1,13 +1,8 @@
 ﻿﻿@{
     Layout = "~/Views/Shared/Patient/_LayoutPatientDashboard.cshtml";
 }
-@using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
-@{
-    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserID");
-    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
-}
+@model HalloDocMVC.DBEntity.ViewModels.PatientPanel.PatientDashboardModel
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
 <partial name="~/Views/PatientPanel/Modals/_SubmitRequestModal.cshtml">
     <div class="container">
         <div class="justify-content-between d-flex mt-5 position-relative ">
@@ -31,26 +26,25 @@
                         <tr>
                             <th scope="col">Created Date <i class="bi bi-arrow-down"></i></th>
                             <th scope="col">Current Status</th>
-                            <th scope="col"><a asp-action="ViewDocuments" asp-controller="PatientDashboard" style="text-decoration:none; color:black;">Document</a></th>
+                            <th scope="col">Document</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider mx-5">
-                        @foreach (var item in ViewBag.list)
+                        @foreach (var item in Model.PatientData)
                         {
                             <tr>
-                                <td scope="row"> @item.Createddate</td>
-                                <td>@item.Status</td>
+                                <td scope="row"> @item.CreatedDate</td>
+                                <td>
+                                    <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId">
+                                        @Enum.GetName(typeof(Status), item.Status)
+                                    </a>
+                                </td>
                                 <td>
                                     @{
-                                        if (ViewBag.docidlist.Contains(item.Requestid))
+                                        if (item.DocumentCount > 0)
                                         {
-                                            <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.Requestid" class="btn btn-outline-info btn-sm document-button">
-                                                Document
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
-                                                     class="bi bi-arrow-down-circle mx-1" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                          d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                                </svg>
+                                            <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId" class="btn border border-info btn-sm text-info document-button shadow-none">
+                                                (@item.DocumentCount) Documents
                                             </a>
                                         }
                                     }
@@ -62,9 +56,52 @@
             </div>
 
         </div>
+    </div><!--Mobile screen view-->
+    <div class="accordion mt-3 d-block d-sm-none mx-2" id="accordionExample">
+        <div class="dBlock">
+            @foreach (var item in Model.PatientData)
+            {
+                <div class="accordion-item btn-i">
+                    <div class="accordion-header" id="flush-heading-@item.RequestId">
+                        <div class="p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestId" aria-expanded="false" aria-controls="collapse_@item.RequestId">
+                            <div class="row w-100">
+                                <div class="col">
+                                    <i class="fa-solid fa-clock pe-2 text-info"></i>
+                                    <strong>Created Date : </strong>
+                                    @item.CreatedDate.ToString("MMM d, yyyy")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="flush-@item.RequestId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-user text-info"></i>
+                                <strong class="px-1">Provider : -</strong>
+                                @*@item.Status*@
+                            </div>
+                            <div class="mb-3">
+                                <i class="fa-solid fa-check text-info"></i>
+                                <strong class="px-1">Current Status : </strong>
+                                <a class="btn shadow-none" asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId">
+                                    @Enum.GetName(typeof(Status), item.Status)
+                                </a>
+                            </div>
+                            <div>
+                                @{
+                                    if (item.DocumentCount > 0)
+                                    {
+                                        <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId" class="btn btn-outline-info btn-sm document-button shadow-none col-12">
+                                            (@item.DocumentCount) Documents
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
     </div>
-    @*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-    *@
-    @{
-    }
+    <!--End Mobile screen view-->

@@ -14,6 +14,10 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public string LastName { get; set; }
         public string ConfirmationNumber { get; set; }
         public List<Documents> documents { get; set; }
+        public int TotalItemCount { get; set; }
+        public int CurrentPage { get; set; } = 1;
+        public int PageSize { get; set; } = 5;
+        public int TotalPages { get; set; } = 1;
         public class Documents
         {
             public short? Status { get; set; }

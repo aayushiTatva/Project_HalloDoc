@@ -34,7 +34,7 @@
     <div class="row ">
         <div class="card shadow">
             <div class="card-body border-0">
-                <div class="table-responsive">
+                <div class="table-responsive d-none d-sm-block">
                     <table class="table table-responsive mt-3 mb-0">
                         <thead>
                             <tr>
@@ -68,16 +68,16 @@
                                         <td>@item.EndDate</td>
                                     }
                                     <td>
-                                        <a asp-action="" asp-controller="" class="contactprovider shadow-none document-button mx-1 mb-2">
+                                        <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
                                             <button class="contactprovider">
-                                               Views
+                                               View Case
                                             </button>
                                         </a>
                                     </td>
                                     <td>
-                                        <a asp-action="" asp-controller="" class="contactprovider shadow-none document-button mx-1 mb-2">
+                                        <a asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
                                             <button class="contactprovider">
-                                                Actions
+                                                Documents
                                             </button>
                                         </a>
                                     </td>
@@ -86,6 +86,60 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Mobile View -->
+                <div class="accordion d-block d-sm-none p-2" id="accordionExample">
+                    <div class="dBlock">
+                        @foreach (var item in Model.SearchRecords)
+                        {
+                            <div class="accordion-item btn-i">
+                                <div class="accordion-header" id="flush-heading-@item.RequestId">
+                                    <div class="p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.RequestId" aria-expanded="false" aria-controls="collapse_@item.RequestId">
+                                        <div class="row w-100">
+                                            <div class="col">
+                                                <p>@item.FirstName @item.Lastname</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="flush-@item.RequestId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body container-fluid">
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                            Created Date : @item.StartDate.ToString("MMM d yyyy")
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-user text-info border border-info rounded-pill p-1"></i>
+                                            Provider : @item.PhysicianName
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                            Concluded Date : @item.EndDate
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-check text-info border border-info rounded-pill p-1"></i>
+                                            Status : @Enum.GetName(typeof(Status), item.Status)
+                                        </div>
+                                        <div class="mb-3">
+                                            @{
+                                                <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" class="btn btn-outline-info btn-sm document-button shadow-none col-12">
+                                                    View Case
+                                                </a>
+                                            }
+                                        </div>
+                                        <div>
+                                            <a asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="btn btn-outline-info btn-sm document-button shadow-none col-12">
+                                                Documents
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- End Mobile View -->
                 <nav aria-label="Page navigation example" id="paginationSearch">
                     <div class="d-flex justify-content-between mx-2 mt-3">
                         <div>

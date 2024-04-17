@@ -175,9 +175,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region ViewDocuments
-        public async Task<IActionResult> ViewDocuments(int? id)
+        public async Task<IActionResult> ViewDocuments(int? id, ViewUploadModel model)
         {
-            ViewUploadModel vum = await _IActions.GetDocument(id);
+            ViewUploadModel vum = await _IActions.GetDocument(id, model);
             return View("~/Views/AdminPanel/Actions/ViewUploads.cshtml", vum);
         }
         #endregion

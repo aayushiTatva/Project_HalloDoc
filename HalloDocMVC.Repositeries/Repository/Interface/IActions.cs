@@ -22,7 +22,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         public bool ClearCase(int RequestID);
         public ViewNotesModel getNotes(int id);
         public bool EditViewNotes(string? adminnotes, string? physiciannotes, int RequestID);
-        Task<ViewUploadModel> GetDocument(int? id);
+        Task<ViewUploadModel> GetDocument(int? id, ViewUploadModel model);
         public Boolean UploadDocuments(int Requestid, IFormFile formFile);
         Task<bool> DeleteDocuments(string ids);
         public Healthprofessional SelectProfessionalById(int VendorId);

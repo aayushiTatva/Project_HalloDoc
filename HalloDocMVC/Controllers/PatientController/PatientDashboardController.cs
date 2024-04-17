@@ -2,8 +2,10 @@
 using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
+using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
 using HalloDocMVC.Models;
+using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -18,79 +20,54 @@ namespace HalloDocMVC.Controllers.PatientController
         private readonly HalloDocContext _context;
         private readonly IPatientDashboard _IPatientDashboard;
         private readonly INotyfService _INotyfService;
-        public PatientDashboardController(HalloDocContext context, IPatientDashboard iPatientDashboard, INotyfService iNotyfService)
+        private readonly IActions _IActions;
+        public PatientDashboardController(HalloDocContext context, IPatientDashboard iPatientDashboard, INotyfService iNotyfService, IActions iAction)
         {
             _context = context;
             _IPatientDashboard = iPatientDashboard;
             _INotyfService = iNotyfService;
+            _IActions = iAction;
         }
         #endregion Configuration
+
         #region Dashboard
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PatientDashboardModel model)
         {
-            if (CV.UserID() != null)
-            {
-                var UserIDForRequest = _context.Users.Where(r => r.Userid == Convert.ToInt32(CV.UserID())).FirstOrDefault();
-
-                if (UserIDForRequest != null)
-                {
-                    List<DBEntity.DataModels.Request> Request = _context.Requests.Where(r => r.Userid == UserIDForRequest.Userid).ToList();
-                    List<int> ids = new();
-                    foreach (var request in Request)
-                    {
-
-                        var doc = _context.Requestwisefiles.Where(r => r.Requestid == request.Requestid).FirstOrDefault();
-                        if (doc != null)
-                        {
-                            ids.Add(request.Requestid);
-                        }
-                    }
-                    ViewBag.docidlist = ids;
-                    ViewBag.list = Request;
-
-                    // Get the list of documents for each request
-                    var docList = _context.Requestwisefiles.ToList();
-
-                    // Group the documents by request id and count them
-                    var docCount = docList.GroupBy(d => d.Requestid)
-                                          .ToDictionary(g => g.Key, g => g.Count());
-
-                    // Store the dictionary in the ViewBag
-                    ViewBag.docCount = docCount;
-
-                }
-                return View("~/Views/PatientPanel/Dashboard/PatientDashboard.cshtml");
-            }
-            else
-            {
-                return View("../Login/Index");
-            }
-
+            PatientDashboardModel data = _IPatientDashboard.GetPatientData(CV.UserID(), model);
+            return View("~/Views/PatientPanel/Dashboard/PatientDashboard.cshtml", data);
         }
         #endregion Dashboard
 
         #region ViewDocuments
-        public IActionResult ViewDocuments(int? id)
+        public async Task<IActionResult> ViewDocuments(int? id, ViewUploadModel model)
         {
-            List<DBEntity.DataModels.Request> Request = _context.Requests.Where(r => r.Requestid == id).ToList();
-            ViewBag.requestinfo = Request;
-            List<Requestwisefile> DocList = _context.Requestwisefiles.Where(r => r.Requestid == id).ToList();
-            ViewBag.DocList = DocList;
-            return View("~/Views/PatientPanel/Dashboard/ViewDocuments.cshtml");
+            ViewUploadModel vm = await _IActions.GetDocument(id, model);
+            return View("~/Views/PatientPanel/Dashboard/ViewDocuments.cshtml", vm);
         }
         #endregion ViewDocuments
 
         #region UploadDocuments
-        public async Task<IActionResult> UploadDoc(int RequestId, IFormFile? UploadFile)
+        public async Task<IActionResult> UploadDoc(int RequestId, List<IFormFile> files)
         {
-            if (await _IPatientDashboard.UploadDoc(RequestId, UploadFile))
+            if (files != null && files.Count > 0)
             {
-                _INotyfService.Success("File has been Uploaded Successfully.");
+                foreach (var file in files)
+                {
+                    if (_IActions.UploadDocuments(RequestId, file))
+                    {
+                        _INotyfService.Success("File Uploaded Successfully.");
+                    }
+                    else
+                    {
+                        _INotyfService.Error("File not uploaded.");
+                    }
+                }
             }
             else
             {
-                _INotyfService.Error("File has not been uploaded");
+                _INotyfService.Error("No files selected.");
             }
+
             return RedirectToAction("ViewDocuments", "PatientDashboard", new { id = RequestId });
         }
         #endregion UploadDocuments

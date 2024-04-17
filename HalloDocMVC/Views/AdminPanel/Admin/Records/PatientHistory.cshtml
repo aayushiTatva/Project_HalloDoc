@@ -33,29 +33,29 @@
             <div class="card-body border-0">
                 <form id="FilterForm">
                     <div class="row d-flex">
-                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 mb-3">
                             <input asp-for="FirstName" type="text" class="form-control shadow-none" id="Fname" placeholder="First Name">
                                 <label class="ms-2" for="Fname"> First Name</label>
                         </div>
-                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 mb-3">
                             <input  asp-for="LastName" type="text" class="form-control shadow-none" id="Lname" placeholder="Last Name">
                             <label class="ms-2" for="Lname"> Last Name</label>
                         </div>
-                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 mb-3">
                             <input asp-for="Email" type="email" class="form-control shadow-none" id="email" placeholder="Email">
                             <label class="ms-2" for="email"> Email</label>
                         </div>
-                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-3 col-md-4 col-sm-6 mb-3">
                             <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none input" id="PhoneNumber" placeholder="PhoneNumber">
                             <label class="ms-2" for="PhoneNumber">PhoneNumber</label>
                         </div>
-                        <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12 d-flex mt-1 justify-content-end">
+                        <div class="col-lg-12 col-md-4 col-sm-6 d-flex mt-1 justify-content-end">
                             <a class="relogin"><button class="btn btn-info text-white rounded-1" type="button" id="Submit">Search</button></a>
                             <a class="relogin"><button class="btn btn-outline-info bg-white rounded-1 ms-2" id="Clear">Clear</button></a>
                         </div>
                     </div>
                 </form>
-                <div class="table-responsive">
+                <div class="table-responsive d-none d-sm-block">
                     <table class="table table-responsive mt-3 mb-0">
                         <thead>
                             <tr>
@@ -90,6 +90,45 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Mobile View -->
+                <div class="accordion mt-3 d-block d-sm-none mx-2" id="accordionExample">
+                    <div class="dBlock">
+                        @foreach (var item in Model.SearchRecords)
+                        {
+                            <div class="accordion-item btn-i">
+                                <div class="accordion-header" id="flush-heading-@item.UserId">
+                                    <div class="p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.UserId" aria-expanded="false" aria-controls="collapse_@item.UserId">
+                                        <div class="row w-100">
+                                            <div class="col">
+                                                <p>@item.FirstName @item.Lastname</p>
+                                                <p class="fw-bold">@item.PhoneNumber</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="flush-@item.UserId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body container-fluid">
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-envelope text-info border border-info rounded-pill p-1"></i>
+                                            Email : @item.Email
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-phone text-info border border-info rounded-pill p-1"></i>
+                                            Phone : @item.PhoneNumber
+                                        </div>
+                                        <div class="d-flex justify-content-end me-2">
+                                            <a asp-controller="Records" asp-action="ExplorePatientCases" asp-route-UserId="@item.UserId" class="btn btn-sm border-info text-info shadow-none mx-1 mb-2 Explore">
+                                                Explore
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- End Mobile View -->
                 <nav aria-label="Page navigation example" id="paginationPatientHistory">
                     <div class="d-flex justify-content-between mx-2 mt-3">
                         <div>

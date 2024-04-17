@@ -40,35 +40,35 @@
             <div class="card-body border-0">
                 <form id="FilterForm">
                     <div class="row d-flex">
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 mb-3">
                             <select asp-for="AccountType" asp-items="@(new SelectList(enumData, "ID", "Name"))" id="accountdropdown" class="form-select shadow-none text-secondary" data-allow-clear="true">
                                 <option value="-1">Search By Role</option>
                                 <label class="ms-2" for=""> Search By Role</label>
                             </select>
                         </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 mb-3">
                             <input asp-for="ReceiverName" type="text" class="form-control shadow-none" id="Rname" placeholder="Reciever's Name">
                             <label class="ms-2" for="Rname"> Reciever's Name</label>
                         </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 mb-3">
                             <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none" id="tel" placeholder="PhoneNumber">
                             <label class="ms-2" for="tel"> PhoneNumber</label>
                         </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 mb-3">
                             <input asp-for="StartDate" type="date" class="form-control shadow-none input" id="createddate" placeholder="CreatedDate">
                             <label class="ms-2" for="createddate">CreatedDate</label>
                         </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
+                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 mb-3">
                             <input asp-for="SentDate" type="date" class="form-control shadow-none input" id="sentdate" placeholder="SentDate">
                             <label class="ms-2" for="sentdate">SentDate</label>
                         </div>
-                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3 d-flex mt-1 justify-content-end">
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3 d-flex mt-1 justify-content-end">
                             <a class="relogin"><button class="btn btn-info text-white shadow-none rounded-1" type="button" id="Submit">Search</button></a>
                             <a class="relogin"><button class="btn btn-outline-info bg-white shadow-none rounded-1 ms-2" id="Clear">Clear</button></a>
                         </div>
                     </div>
                 </form>
-                <div class="table-responsive">
+                <div class="table-responsive d-none d-sm-block">
                     <table class="table table-responsive mt-3 mb-0">
                         <thead>
                             <tr>
@@ -103,6 +103,57 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Mobile View -->
+                <div class="accordion mt-3 d-block d-sm-none mx-2" id="accordionExample">
+                    <div class="dBlock">
+                        @foreach (var item in Model.SMSLog)
+                        {
+                            <div class="accordion-item btn-i">
+                                <div class="accordion-header" id="flush-heading-@item.SMSLogId">
+                                    <div class="p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.SMSLogId" aria-expanded="false" aria-controls="collapse_@item.SMSLogId">
+                                        <div class="row w-100">
+                                            <div class="col">
+                                                <p>@item.Recipient</p>
+                                                Action Name : <span class="fw-bold">@Enum.GetName(typeof(EmailAction), item.Action)</span> <br />
+                                                Mobile Number : <span class="fw-bold">@item.PhoneNumber</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="flush-@item.SMSLogId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body container-fluid">
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-user text-info border border-info rounded-pill p-1"></i>
+                                            Role Name : @Enum.GetName(typeof(AccountType), item.RoleId)
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                            Created Date : @item.CreatedDate.ToString("MMM d, yyyy hh:mm tt")
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                            Sent Date : @item.SentDate.ToString("MMM d, yyyy")
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-check text-info border border-info rounded-pill p-1"></i>
+                                            Sent : Yes
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-envelope text-info border border-info rounded-pill p-1"></i>
+                                            Sent Tries : @item.SentTries
+                                        </div>
+                                        <div class="mb-3">
+                                            <i class="fa-solid fa-check text-info border border-info rounded-pill p-1"></i>
+                                            Confiramtion Number : @item.ConfirmationNumber
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- End Mobile View -->
                 <nav aria-label="Page navigation example" id="paginationSMSLogs">
                     <div class="d-flex justify-content-between mx-2 mt-3">
                         <div>

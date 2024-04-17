@@ -1,184 +1,236 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.RecordsModel;
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Email Logs";
 }
-@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.RecordsModel
-@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+
 @{
-    var enumData = from AccountType e in Enum.GetValues(typeof(AccountType))
-                   select new
-                   {
-                       ID = (int)e,
-                       Name = e.ToString()
-                   };
-
-    var requestStatus = from RequestType e in Enum.GetValues(typeof(RequestType))
-                        select new
-                        {
-                            ID = (int)e,
-                            Name = e.ToString()
-                        };
-
-    var data = from EmailAction e in Enum.GetValues(typeof(EmailAction))
-                   select new
-                   {
-                       ID = (int)e,
-                       Name = e.ToString()
-                   };
+    var AccountType = from AccountType e in Enum.GetValues(typeof(AccountType))
+                      select new
+                      {
+                          ID = (int)e,
+                          Name = e.ToString()
+                      };
 }
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-6">
-            <h4><strong>EmailLogs</strong></h4>
-        </div>
-    </div>
-    <div class="row ">
-        <div class="card shadow">
-            <div class="card-body border-0">
-                <form id="FilterForm">
-                    <div class="row d-flex">
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <select asp-for="AccountType" asp-items="@(new SelectList(enumData, "ID", "Name"))" id="statusdropdown" class="form-select shadow-none text-secondary" data-allow-clear="true">
-                                <option value="-1">Search By Role</option>
-                                <label class="ms-2" for=""> Search By Role</label>
-                            </select>
-                        </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <input asp-for="ReceiverName" type="text" class="form-control shadow-none" id="Rname" placeholder="Reciever's Name">
-                            <label class="ms-2" for="Rname"> Reciever's Name</label>
-                        </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <input asp-for="Email" type="email" class="form-control shadow-none" id="email" placeholder="Patient Name">
-                            <label class="ms-2" for="email"> Email</label>
-                        </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <input asp-for="StartDate" type="date" class="form-control shadow-none input" id="startdate" placeholder="CreatedDate">
-                            <label class="ms-2" for="createddate">CreatedDate</label>
-                        </div>
-                        <div class="form-floating col-lg-2 col-md-4 col-sm-6 col-xs-12 mb-3">
-                            <input asp-for="SentDate" type="date" class="form-control shadow-none input" id="sentdate" placeholder="SentDate">
-                            <label class="ms-2" for="sentdate">SentDate</label>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 d-flex mt-1">
-                            <a class="relogin"><button class="btn btn-info text-white rounded-1" type="button" id="Submit">Search</button></a>
-                            <a class="relogin"><button class="btn btn-outline-info bg-white rounded-1 ms-2" id="Clear">Cancel</button></a>
-                        </div>
-                    </div>
-                </form>
-                <div class="table-responsive">
-                    <table class="table table-responsive mt-3 mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">Recipient</th>
-                                <th scope="col">Action</th>
-                                <th scope="col">Role Name</th>
-                                <th scope="col">Email Id</th>
-                                <th scope="col">Create Date</th>
-                                <th scope="col">Sent Date</th>
-                                <th scope="col">Sent</th>
-                                <th scope="col">Sent Tries</th>
-                                <th scope="col">Confirmation Number</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider" id="EmailLogs">
-                            @foreach (var item in Model.EmailLog)
-                            {
-                                <tr>
-                                    <td scope="row">
-                                        @item.Recipient
-                                    </td>
-                                    <td>@Enum.GetName(typeof(EmailAction), item.Action)</td>
-                                    <td>@Enum.GetName(typeof(AccountType), item.RoleId)</td>
-                                    <td>@item.EmailId</td>
-                                    <td>@item.CreatedDate.ToString("MMM d yyyy")</td>
-                                    <td>@item.SentDate.ToString("MMM d yyyy")</td>
-                                    <td scope="row">Yes</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <nav aria-label="Page navigation example" id="paginationEmailLogs">
-                    <div class="d-flex justify-content-between mx-2 mt-3">
-                        <div>
-                            @if (Model.TotalPages == 0)
-                            {
-                                Model.CurrentPage = 0;
-                            }
-                            Page @Model.CurrentPage / @Model.TotalPages
-                        </div>
-                        <div>
-                            <ul class="pagination pagination-container">
-                                @{
-                                    int i;
-                                    <form id="paginationform" asp-controller="Records" asp-action="EmailLogs" novalidate="novalidate" class="d-flex">
-                                        <input type="hidden" asp-for="PageSize" />
-                                        <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
 
-                                        @if (@Model.CurrentPage > 1)
-                                        {
-                                        <li class="page-item me-2">
-                                            <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
-                                        </li>
-                                        }
-                                        else
-                                        {
-                                        <li class="me-2 page-item">
-                                            <button class="disabled btn">&lt;</button>
-                                        </li>
-                                        }
-                                        @for (i = 1; i <= @Model.TotalPages; i++)
-                                        {
-                                        <li class="page-item me-2">
-                                            <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
-                                        </li>
-                                        }
-                                        @if (@Model.TotalPages > @Model.CurrentPage)
-                                        {
-                                        <li class="page-item me-2">
-                                            <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
-                                        </li>
-                                        }
-                                        else
-                                        {
-                                        <li class="page-item">
-                                            <button class="btn disabled">&gt;</button>
-                                        </li>
-                                        }
-                                    </form>
-                                }
-                            </ul>
-                        </div>
+<div class="container-fluid px-4 mt-2 pb-3">
+    <div class="d-flex justify-content-between my-2">
+        <div class="d-flex align-self-center">
+            <h4><strong>Email Logs (Gmail)</strong></h4>
+        </div>
+        <a asp-controller="Dashboard" asp-action="Index" class="btn border-info shadow-none">
+            <strong class="text-info">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+            </strong>
+        </a>
+    </div>
+
+    <div class="bg-white rounded shadow my-3">
+        <!-- Filter Inputs -->
+        <form id="FilterForm">
+            <div class="row p-2">
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <select asp-for="AccountType" asp-items="@(new SelectList(AccountType, "ID", "Name"))" class="form-select form-control shadow-none" id="AccountTypeDropDown">
+                        </select>
+                        <label for="AccountTypeDropDown">Search By Role</label>
                     </div>
-                </nav>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input asp-for="ReceiverName" type="text" class="form-control shadow-none" id="ReceiverName" placeholder="Enter Patient Name">
+                        <label for="ReceiverName">Reciever Name</label>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" type="email" class="form-control shadow-none" id="Email" placeholder="Enter Email">
+                        <label for="Email">Email Id</label>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input asp-for="StartDate" type="date" class="form-control shadow-none" id="CreatedDate" placeholder="Enter Created Date">
+                        <label for="CreatedDate">Created Date</label>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input asp-for="EndDate" type="date" class="form-control shadow-none" id="SentDate" placeholder="Enter SentDate">
+                        <label for="SentDate">Sent Date</label>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12 d-flex align-self-center justify-content-end">
+                    <button type="button" id="Submit" class="btn btn-info text-white shadow-none me-2">Search</button>
+                    <button type="button" id="Clear" class="btn border-info text-info shadow-none mx-2">Clear</button>
+                </div>
+            </div>
+        </form>
+        <!-- End Filter Inputs -->
+        <!-- Desktop View -->
+        <div class="table-responsive d-none d-sm-block">
+            <table class="table table-responsive mt-3 mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col">Recipient</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Role Name</th>
+                        <th scope="col">Email Id</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Sent Date</th>
+                        <th scope="col">Sent</th>
+                        <th scope="col">Sent Tries</th>
+                        <th scope="col">Confirmation Number</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider" id="EmailLogs">
+                    @foreach (var item in Model.EmailLog)
+                    {
+                        <tr>
+                            <td>@item.Recipient</td>
+                            <td>@Enum.GetName(typeof(EmailAction), item.Action)</td>
+                            <td>@Enum.GetName(typeof(AccountType), item.RoleId)</td>
+                            <td>@item.EmailId</td>
+                            <td>@item.CreatedDate.ToString("MMM d, yyyy hh:mm tt")</td>
+                            <td>@item.SentDate.ToString("MMM d, yyyy")</td>
+                            <td>Yes</td>
+                            <td>@item.SentTries</td>
+                            <td>@item.ConfirmationNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End Desktop View -->
+        <!-- Mobile View -->
+        <div class="accordion mt-3 d-block d-sm-none mx-2" id="accordionExample">
+            <div class="dBlock">
+                @foreach (var item in Model.EmailLog)
+                {
+                    <div class="accordion-item btn-i">
+                        <div class="accordion-header" id="flush-heading-@item.EmailLogId">
+                            <div class="p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.EmailLogId" aria-expanded="false" aria-controls="collapse_@item.EmailLogId">
+                                <div class="row w-100">
+                                    <div class="col">
+                                        <p>@item.Recipient</p>
+                                        Action Name : <span class="fw-bold">@Enum.GetName(typeof(EmailAction), item.Action)</span> <br />
+                                        Email : <span class="fw-bold">@item.EmailId</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="flush-@item.EmailLogId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
+                            <div class="accordion-body container-fluid">
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-user text-info border border-info rounded-pill p-1"></i>
+                                    Role Name : @Enum.GetName(typeof(AccountType), item.RoleId)
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                    Created Date : @item.CreatedDate.ToString("MMM d, yyyy hh:mm tt")
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-calendar-days text-info border border-info rounded-pill p-1"></i>
+                                    Sent Date : @item.SentDate.ToString("MMM d, yyyy")
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-check text-info border border-info rounded-pill p-1"></i>
+                                    Sent : Yes
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-envelope text-info border border-info rounded-pill p-1"></i>
+                                    Sent Tries : @item.SentTries
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-check text-info border border-info rounded-pill p-1"></i>
+                                    Confiramtion Number : @item.ConfirmationNumber
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
             </div>
         </div>
+        <!-- End Mobile View -->
+        <!--Pagination-->
+        <nav aria-label="Page navigation example" id="paginationEmailLog">
+            <div class="d-flex justify-content-between mx-2 mt-3">
+                <div>
+                    @if (Model.TotalPages == 0)
+                    {
+                        Model.CurrentPage = 0;
+                    }
+                    Page @Model.CurrentPage / @Model.TotalPages
+                </div>
+                <div>
+                    <ul class="pagination pagination-container">
+                        @{
+                            int i;
+                            <form id="paginationform" asp-controller="Records" asp-action="EmailLogs" novalidate="novalidate" class="d-flex">
+                                <input type="hidden" asp-for="PageSize" />
+                                <input type="hidden" asp-for="CurrentPage" id="currentpagevalue" />
+
+                                @if (@Model.CurrentPage > 1)
+                                {
+                                <li class="page-item me-2">
+                                    <button class="btn shadow-none" onclick="setpagenumber('previous')">&lt;</button>
+                                </li>
+                                }
+                                else
+                                {
+                                <li class="me-2 page-item">
+                                    <button class="disabled btn">&lt;</button>
+                                </li>
+                                }
+                                @for (i = 1; i <= @Model.TotalPages; i++)
+                                {
+                                <li class="page-item me-2">
+                                    <button class="@(i == @Model.CurrentPage ? "activePage" : "") btn shadow-none" onclick="setpagenumber(@i)">@i</button>
+                                </li>
+                                }
+                                @if (@Model.TotalPages > @Model.CurrentPage)
+                                {
+                                <li class="page-item me-2">
+                                    <button class="btn shadow-none" onclick="setpagenumber('next')">&gt;</button>
+                                </li>
+                                }
+                                else
+                                {
+                                <li class="page-item">
+                                    <button class="btn disabled">&gt;</button>
+                                </li>
+                                }
+                            </form>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--End Pagination-->
     </div>
 </div>
-<script>
 
+<script>
     modeldata = @Html.Raw(Json.Serialize(Model))
 
-    const clear = document.getElementById("Clear");
+        const clear = document.getElementById("Clear");
     const submit = document.getElementById("Submit");
 
     clear.addEventListener("click", function () {
-        const inputs = document.querySelectorAll("#FilterForm input[type='text'], #FilterForm input[type='email'], #FilterForm input[type='tel'], #FilterForm input[type='date']",);
-
+        const inputs = document.querySelectorAll("#FilterForm input[type='text'], #FilterForm input[type='date'], #FilterForm input[type='email']");
         inputs.forEach(input => {
             input.value = "";
         });
+
+        document.getElementById('AccountTypeDropDown').selectedIndex = 0;
         $('#Submit').click();
     });
+
     $(document).ready(function () {
         $("#Submit").click(function () {
             var formData = $("#FilterForm").serialize();
-
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("EmailLogs", "Records")',
@@ -189,11 +241,12 @@
                     var bodyContent = $(response).find('tbody').html();
                     var pagination = $(response).find('nav').html();
                     $('#EmailLogs').html(bodyContent);
-                    $('#paginationEmailLogs').html(pagination);
+                    $('#paginationEmailLog').html(pagination);
                 }
             });
         });
     });
+
 
     function setpagenumber(e) {
         if (e == 'previous') {
