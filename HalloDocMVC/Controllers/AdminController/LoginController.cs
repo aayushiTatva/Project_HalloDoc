@@ -91,14 +91,17 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("../AdminPanel/Login/AuthError");
         }
 
+        #region SendMailResetPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMailResetPassword(string Email)
         {
             if (await _ILogin.CheckRegisterEmail(Email))
             {
                 var Subject = "Change Your Password";
-                var agreementUrl = "localhost:5171/Login/ResetPassword?Datetime=" + _emailConfiguration.Encode(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")) + "&email" + _emailConfiguration.Encode(Email);
-                _emailConfiguration.SendMail(Email, Subject, $"<a href ='{agreementUrl}'>Reset Password</a>");
-                _INotyfService.Success("Mail sent successfully");
+                var agreementUrl = "localhost:5171/Login/ResetPassword?Datetime=" + _emailConfiguration.Encode(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")) + "&email=" + _emailConfiguration.Encode(Email);
+                _emailConfiguration.SendMail(Email, Subject, $"<a href='{agreementUrl}'>Reset Password</a>");
+                _INotyfService.Success("Mail Sent Successfully");
             }
             else
             {
@@ -107,11 +110,12 @@ namespace HalloDocMVC.Controllers.AdminController
             }
             return RedirectToAction("Index");
         }
-
-        public async Task<IActionResult> ResetPassword(string? Datetime, string? email)
+        #endregion
+        #region ResetPassword
+        public async Task<IActionResult> ResetPassword(string? Datetime,string? email)
         {
             string Decode = _emailConfiguration.Decode(email);
-            DateTime s = DateTime.ParseExact(_emailConfiguration.Decode(Datetime), "MM/dd/yyyy hh:mm:ss tt",CultureInfo.InvariantCulture);
+            DateTime s = DateTime.ParseExact(_emailConfiguration.Decode(Datetime), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
             TimeSpan dif = s - DateTime.Now;
             if(dif.Hours < 24)
             {
@@ -120,9 +124,46 @@ namespace HalloDocMVC.Controllers.AdminController
             }
             else
             {
-                ViewBag.TotalHours = "Url is Expired";
+                ViewBag.TotalHours = "Url is expired";
             }
             return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
         }
+        #endregion
+
+        #region SavePassword
+        public async Task<IActionResult> SavePassword(string ConfirmPassword, string Password, string Email)
+        {
+            if(Password != null)
+            {
+                if(ConfirmPassword != Password)
+                {
+                    return View("ResetPassword");
+                }
+                try
+                {
+                    if(Email == null)
+                    {
+                        _INotyfService.Error("Password remained unchanged");
+                    }
+                    else
+                    {
+                        if(await _ILogin.SavePassword(Email, Password))
+                        {
+                            _INotyfService.Success("Password saved successfully");
+                        }
+                        else
+                        {
+                            _INotyfService.Error("Password remains unchanged");
+                        }
+                    }
+                }
+                catch(DbUpdateConcurrencyException)
+                {
+
+                }
+            }
+            return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
+        }
+        #endregion
     }
 }

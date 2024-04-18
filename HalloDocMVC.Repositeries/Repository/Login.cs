@@ -99,5 +99,24 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return accessGranted;
         }
         #endregion IsAccessGranted
+
+        #region SavePassword
+        public async Task<bool> SavePassword(string email, string Password)
+        {
+            try
+            {
+                Aspnetuser user = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == email);
+                var hasher = new PasswordHasher<string>();
+                user.Passwordhash = hasher.HashPassword(null, Password);
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "p0jfHI8/4cORmr3GKM+UQVSSNkVDkpz0Gihoo+IvuLc=",
+  "Hash": "kZZCPJHLD7LmcCrf0YKnI1Fqb18j/D0kt0tPwefDAwY=",
   "Source": "HalloDocMVC",
   "BasePath": "_content/HalloDocMVC",
   "Mode": "Default",
@@ -3859,6 +3859,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\127\\Fig8. Admin dashboard in To Close state-20240326033722.jpg"
     },
     {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\133\\Fig66.Submit Information me-20240418033227.jpg",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/133/Fig66.Submit Information me-20240418033227.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\133\\Fig66.Submit Information me-20240418033227.jpg"
+    },
+    {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\92\\Fig7. Admin dashboard in Conclude state-20240417095939.jpg",
       "SourceId": "HalloDocMVC",
       "SourceType": "Discovered",
@@ -3959,6 +3976,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\96\\My schedule-20240311041926.png"
+    },
+    {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig65.Patient Create New Request.jpg",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/Fig65.Patient Create New Request.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Fig65.Patient Create New Request.jpg"
     },
     {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig68. View Documents.jpg",

@@ -32,7 +32,15 @@
                     <h4>Patient Information</h4>
                     <div class="mt-2"> Confirmation Number</div>
                     <div>
-                        <span class="text-info"> @*@CV.UserName()*@012021113220321320</span>
+                        @if(Model.ConfirmationNumber != null)
+                        {
+                            <span class="text-info"> @Model.ConfirmationNumber</span>
+                        }
+                        else
+                        {
+                            <span class="text-info"> @*@CV.UserName()*@012021113220321320</span>
+                        }
+
                     </div><br />
                         <div class=" row">
                             <div class="col form-floating  space">

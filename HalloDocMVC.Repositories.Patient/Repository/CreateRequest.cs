@@ -4,6 +4,7 @@ using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,15 +40,17 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 var Request = new Request();
                 var Requestclient = new Requestclient();
                 var isexist = _context.Users.FirstOrDefault(x => x.Email == viewDataPatientRequest.Email);
+                var hasher = new PasswordHasher<String>();
                 if (isexist == null)
                 {
                     // Aspnetuser
                     Guid g = Guid.NewGuid();
                     Aspnetuser.Id = g.ToString();
                     Aspnetuser.Username = viewDataPatientRequest.Email;
-                    Aspnetuser.Passwordhash = viewDataPatientRequest.PassWord;
+                    Aspnetuser.Passwordhash = hasher.HashPassword(null, viewDataPatientRequest.PassWord);
                     Aspnetuser.CreatedDate = DateTime.Now;
                     Aspnetuser.Email = viewDataPatientRequest.Email;
+                    Aspnetuser.Phonenumber = viewDataPatientRequest.PhoneNumber;
                     _context.Aspnetusers.Add(Aspnetuser);
                     await _context.SaveChangesAsync();
 
@@ -62,7 +66,9 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                     User.State = viewDataPatientRequest.State;
                     User.City = viewDataPatientRequest.City;
                     User.Zipcode = viewDataPatientRequest.ZipCode;
+                    User.Regionid = 1;
                     User.Createdby = Aspnetuser.Id;
+                    User.Isdeleted = new BitArray(1);
                     User.Createddate = DateTime.Now;
                     _context.Users.Add(User);
                     await _context.SaveChangesAsync();
@@ -104,36 +110,25 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 Requestclient.State = viewDataPatientRequest.State;
                 Requestclient.City = viewDataPatientRequest.City;
                 Requestclient.Zipcode = viewDataPatientRequest.ZipCode;
+                Requestclient.Regionid = 1;
 
             _context.Requestclients.Add(Requestclient);
                 await _context.SaveChangesAsync();
 
                 if (viewDataPatientRequest.UploadFile != null)
                 {
-                    string FilePath = "wwwroot\\Upload";
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
+                string upload = SaveFileModel.UploadDocument(viewDataPatientRequest.UploadFile, Request.Requestid);
 
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    string fileNameWithPath = Path.Combine(path, viewDataPatientRequest.UploadFile.FileName);
-                    viewDataPatientRequest.UploadImage = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + viewDataPatientRequest.UploadFile.FileName;
-
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        viewDataPatientRequest.UploadFile.CopyTo(stream);
-                    }
-
-                    var requestwisefile = new Requestwisefile
-                    {
-                        Requestid = Request.Requestid,
-                        Filename = viewDataPatientRequest.UploadFile.FileName,
-                        Createddate = DateTime.Now,
-                    };
-                    _context.Requestwisefiles.Add(requestwisefile);
-                    _context.SaveChanges();
-                }
+                var requestwisefile = new Requestwisefile()
+                {
+                    Requestid = Request.Requestid,
+                    Filename = upload,
+                    Createddate = DateTime.Now,
+                    Isdeleted = new BitArray(1)
+                };
+                _context.Requestwisefiles.Add(requestwisefile);
+                _context.SaveChanges();
+            }
            /* }*/
             return true; /*View("../Request/SubmitRequestPage");*/ /*which page is to be returned after saving the details in DB*/
         }
@@ -145,23 +140,24 @@ namespace HalloDocMVC.Repositories.Patient.Repository
         {
             var Request = new Request
             {
-                Requesttypeid = 3, /* these details are added to requestclient table to refer to patient via client*/
+                Requesttypeid = 3, /* these details are added to requestclient table to refer to patient*/
                 Status = 1,
                 Firstname = viewDataFamilyRequest.FF_FirstName,
                 Lastname = viewDataFamilyRequest.FF_LastName,
                 Email = viewDataFamilyRequest.FF_Email,
                 Relationname = viewDataFamilyRequest.FF_RelationWithPatient,
+                Confirmationnumber = _confirmationNumber.GetConfirmationNumber(viewDataFamilyRequest.State, viewDataFamilyRequest.FirstName, viewDataFamilyRequest.LastName),
                 Phonenumber = viewDataFamilyRequest.FF_PhoneNumber,
                 Createddate = DateTime.Now,
+                Isdeleted = new BitArray(1),
                 Isurgentemailsent = new BitArray(1)
-
             };
             _context.Requests.Add(Request);/*To add details to DB*/
             await _context.SaveChangesAsync();/*To save details to synchronisation*/
 
             var Requestclient = new Requestclient
             {
-                Request = Request, /* these details are added to request table*/
+                Request = Request, /* these details are added to requestclient table*/
                 Requestid = Request.Requestid,
                 Notes = viewDataFamilyRequest.Symptoms,
                 Firstname = viewDataFamilyRequest.FirstName,
@@ -176,7 +172,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 Street = viewDataFamilyRequest.Street,
                 State = viewDataFamilyRequest.State,
                 City = viewDataFamilyRequest.City,
-                Zipcode = viewDataFamilyRequest.ZipCode
+                Zipcode = viewDataFamilyRequest.ZipCode,
+               Regionid = 1
 
             };
             _context.Requestclients.Add(Requestclient);
@@ -184,25 +181,13 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
             if (viewDataFamilyRequest.UploadFile != null)
             {
-                string FilePath = "wwwroot\\Upload";
-                string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
-
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                string fileNameWithPath = Path.Combine(path, viewDataFamilyRequest.UploadFile.FileName);
-                viewDataFamilyRequest.UploadImage = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + viewDataFamilyRequest.UploadFile.FileName;
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                {
-                    viewDataFamilyRequest.UploadFile.CopyTo(stream);
-                }
+                string upload = SaveFileModel.UploadDocument(viewDataFamilyRequest.UploadFile, Request.Requestid);
 
                 var requestwisefile = new Requestwisefile()
                 {
                     Requestid = Request.Requestid,
-                    Filename = viewDataFamilyRequest.UploadFile.FileName,
+                    Filename = upload,
+                    Isdeleted = new BitArray(1),
                     Createddate = DateTime.Now,
                 };
                 _context.Requestwisefiles.Add(requestwisefile);
@@ -239,7 +224,9 @@ namespace HalloDocMVC.Repositories.Patient.Repository
             Request.Firstname = viewDataConciergeRequest.CON_FirstName;
             Request.Lastname = viewDataConciergeRequest.CON_LastName;
             Request.Email = viewDataConciergeRequest.CON_Email;
+            Request.Confirmationnumber = _confirmationNumber.GetConfirmationNumber(viewDataConciergeRequest.CON_State, viewDataConciergeRequest.FirstName, viewDataConciergeRequest.LastName);
             Request.Phonenumber = viewDataConciergeRequest.CON_PhoneNumber;
+            Request.Isdeleted = new BitArray(1);
             Request.Isurgentemailsent = new BitArray(1);
             Request.Createddate = DateTime.Now;
             _context.Requests.Add(Request);
@@ -256,6 +243,10 @@ namespace HalloDocMVC.Repositories.Patient.Repository
             Requestclient.Strmonth = viewDataConciergeRequest.DateOfBirth.ToString("MMMM");
             Requestclient.Intyear = viewDataConciergeRequest.DateOfBirth.Year;
             Requestclient.Location = viewDataConciergeRequest.RoomSuite;
+            Requestclient.City = viewDataConciergeRequest.CON_City;
+            Requestclient.State = viewDataConciergeRequest.CON_State;
+            Requestclient.Zipcode = viewDataConciergeRequest.CON_Zipcode;
+            Requestclient.Address = viewDataConciergeRequest.CON_Street + " " + viewDataConciergeRequest.CON_City + " " + viewDataConciergeRequest.CON_State + " " + viewDataConciergeRequest.CON_Zipcode;
             _context.Requestclients.Add(Requestclient);
             await _context.SaveChangesAsync();
 
@@ -282,8 +273,10 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 Lastname = viewDataBusinessRequest.BP_LastName,
                 Email = viewDataBusinessRequest.BP_Email,
                 Phonenumber = viewDataBusinessRequest.BP_PhoneNumber,
+                Confirmationnumber = _confirmationNumber.GetConfirmationNumber(viewDataBusinessRequest.State, viewDataBusinessRequest.FirstName, viewDataBusinessRequest.LastName),
                 Createddate = DateTime.Now,
-                Isurgentemailsent = new BitArray(1)
+                Isurgentemailsent = new BitArray(1),
+                Isdeleted = new BitArray(1)
 
             };
             _context.Requests.Add(Request);/*To add details to DB*/
@@ -317,7 +310,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 City = viewDataBusinessRequest.City,
                 Zipcode = viewDataBusinessRequest.ZipCode,
                 Address = viewDataBusinessRequest.Street + "," + viewDataBusinessRequest.City  + "," + viewDataBusinessRequest.State,
-                Location = viewDataBusinessRequest.RoomSuite
+                Location = viewDataBusinessRequest.RoomSuite,
+                Regionid = 1
 
             };
             _context.Requestclients.Add(Requestclient);
