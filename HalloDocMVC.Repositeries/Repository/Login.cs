@@ -3,6 +3,7 @@ using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,35 +29,44 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         #region CheckAccessLogin
         public async Task<UserInformation> CheckAccessLogin(Aspnetuser aspNetUser)
         {
-            var user = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Email == aspNetUser.Email && u.Passwordhash == aspNetUser.Passwordhash);
+            var user = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Email == aspNetUser.Email );
             UserInformation admin = new UserInformation();
             if (user != null)
             {
-                var data = _context.Aspnetuserroles.FirstOrDefault(E => E.Userid == user.Id);
-                var datarole = _context.Aspnetroles.FirstOrDefault(e => e.Id == data.Roleid);
-                admin.UserName = user.Username;
-                admin.FirstName = admin.FirstName ?? string.Empty;
-                admin.LastName = admin.LastName ?? string.Empty;
-                admin.Role = datarole.Name;
-                admin.AspNetUserId = user.Id;
-                if (admin.Role == "Admin")
+                var hasher = new PasswordHasher<string>();
+                PasswordVerificationResult result = hasher.VerifyHashedPassword(null, user.Passwordhash, aspNetUser.Passwordhash);
+                if (result != PasswordVerificationResult.Success)
                 {
-                    var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
-                    admin.UserId = admindata.Adminid;
-                    admin.RoleId = (int)admindata.Roleid;
-                }
-                else if (admin.Role == "Patient")
-                {
-                    var admindata = _context.Users.FirstOrDefault(u => u.Aspnetuserid == user.Id);
-                    admin.UserId = admindata.Userid;
+                    return null;
                 }
                 else
                 {
-                    var admindata = _context.Physicians.FirstOrDefault(u => u.Aspnetuserid == user.Id);
-                    admin.UserId = admindata.Physicianid;
-                    admin.RoleId = (int)admindata.Roleid;
+                    var data = _context.Aspnetuserroles.FirstOrDefault(E => E.Userid == user.Id);
+                    var datarole = _context.Aspnetroles.FirstOrDefault(e => e.Id == data.Roleid);
+                    admin.UserName = user.Username;
+                    admin.FirstName = admin.FirstName ?? string.Empty;
+                    admin.LastName = admin.LastName ?? string.Empty;
+                    admin.Role = datarole.Name;
+                    admin.AspNetUserId = user.Id;
+                    if (admin.Role == "Admin")
+                    {
+                        var admindata = _context.Admins.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                        admin.UserId = admindata.Adminid;
+                        admin.RoleId = (int)admindata.Roleid;
+                    }
+                    else if (admin.Role == "Patient")
+                    {
+                        var admindata = _context.Users.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                        admin.UserId = admindata.Userid;
+                    }
+                    else
+                    {
+                        var admindata = _context.Physicians.FirstOrDefault(u => u.Aspnetuserid == user.Id);
+                        admin.UserId = admindata.Physicianid;
+                        admin.RoleId = (int)admindata.Roleid;
+                    }
+                    return admin;
                 }
-                return admin;
             }
             else
             {

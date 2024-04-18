@@ -101,6 +101,19 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion LoadSchedulingPartial
 
+        #region LoadSchedulingPartialProvider
+        public IActionResult LoadSchedulingPartialProvider(string date)
+        {
+            var currentDate = DateTime.Parse(date);
+            MonthWiseScheduling month = new()
+            {
+                Date = currentDate,
+                ShiftDetail = _context.Shiftdetails.Include(u => u.Shift).Where(u => u.Isdeleted == new BitArray(new[] { false }) && u.Shift.Physicianid == Int32.Parse(CV.UserID())).ToList()
+            };
+            return PartialView("../AdminPanel/Admin/Scheduling/_MonthWise", month);
+        }
+        #endregion
+
         #region AddShift
         public IActionResult AddShift(SchedulingModel model)
         {

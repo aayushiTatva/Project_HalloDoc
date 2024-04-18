@@ -20,8 +20,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXENsb3NlQ2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/ConcludeCare.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXENvbmNsdWRlQ2FyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/EncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXEVuY291bnRlckZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/EncounterPdf.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXEVuY291bnRlclBkZi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/Modals/EncounterPdf.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXE1vZGFsc1xFbmNvdW50ZXJQZGYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/Modals/_AcceptRequest.cshtml]
@@ -46,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/Modals/_ContactYourProvider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXE1vZGFsc1xfQ29udGFjdFlvdXJQcm92aWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/Modals/_EncounterForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXE1vZGFsc1xfRW5jb3VudGVyRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/Modals/_SendAgreement.cshtml]
@@ -130,6 +146,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Provider/Index1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm92aWRlclxJbmRleDEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Provider/Modals/_RequestToAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm92aWRlclxNb2RhbHNcX1JlcXVlc3RUb0FkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/source/repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Records/BlockedHistory.cshtml]

@@ -567,6 +567,30 @@
           }
         }
       },
+      "Rotativa/1.7.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "5.2.3"
+        },
+        "compile": {
+          "lib/net461/Rotativa.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Rotativa.dll": {}
+        }
+      },
+      "Rotativa.AspNetCore/1.3.2": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Rotativa.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/Rotativa.AspNetCore.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "System.Collections.NonGeneric/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1861,6 +1885,40 @@
         "npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512",
         "npgsql.entityframeworkcore.postgresql.nuspec",
         "postgresql.png"
+      ]
+    },
+    "Rotativa/1.7.3": {
+      "sha512": "MdLzud1Tt9JYLG3aNZHQcEITbT2r829rZAm96iLZAUlilXTsZkReKzyfjaIfwDZ9+++TRUKwWPKjI+WPHVz0ZA==",
+      "type": "package",
+      "path": "rotativa/1.7.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/App_Browsers/qt.browser",
+        "content/Rotativa/help-wkhtmltoimage.txt",
+        "content/Rotativa/help-wkhtmltopdf.txt",
+        "content/Rotativa/wkhtmltoimage.exe",
+        "content/Rotativa/wkhtmltopdf.exe",
+        "lib/net461/Rotativa.dll",
+        "rotativa.1.7.3.nupkg.sha512",
+        "rotativa.nuspec"
+      ]
+    },
+    "Rotativa.AspNetCore/1.3.2": {
+      "sha512": "bzhSTu7OB9mDpoV+9YP61ABnQl50nXoUOjbkgMmmNnypb5fvuY7S75ANz/fObdA3Z6wBGSKUNzfGQH0zhIRGqg==",
+      "type": "package",
+      "path": "rotativa.aspnetcore/1.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net5.0/Rotativa.AspNetCore.dll",
+        "lib/net6.0/Rotativa.AspNetCore.dll",
+        "lib/net7.0/Rotativa.AspNetCore.dll",
+        "lib/netcoreapp3.1/Rotativa.AspNetCore.dll",
+        "lib/netstandard2.0/Rotativa.AspNetCore.dll",
+        "rotativa.aspnetcore.1.3.2.nupkg.sha512",
+        "rotativa.aspnetcore.nuspec"
       ]
     },
     "System.Collections.NonGeneric/4.3.0": {
@@ -3250,6 +3308,8 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.16",
       "Microsoft.AspNetCore.Http.Features >= 5.0.17",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 7.0.11",
+      "Rotativa >= 1.7.3",
+      "Rotativa.AspNetCore >= 1.3.2",
       "Twilio >= 7.0.4",
       "Twilio.AspNet.Mvc >= 7.0.0"
     ]
@@ -3308,6 +3368,14 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[7.0.11, )"
+          },
+          "Rotativa": {
+            "target": "Package",
+            "version": "[1.7.3, )"
+          },
+          "Rotativa.AspNetCore": {
+            "target": "Package",
+            "version": "[1.3.2, )"
           },
           "Twilio": {
             "target": "Package",
@@ -3375,6 +3443,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Rotativa 1.7.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Rotativa",
       "targetGraphs": [
         "net7.0"
       ]

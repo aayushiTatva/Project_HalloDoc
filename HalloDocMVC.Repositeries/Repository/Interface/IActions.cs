@@ -38,5 +38,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         bool SendLink(string FirstName, string LastName, string Email, string PhoneNumber);
         public Task<bool> AcceptPhysician(int requestid, string note, int ProviderId);
         public Task<bool> TransfertoAdmin(int RequestID, string Note, int ProviderId);
+        public bool CaseFinalized(EncounterModel Data);
+        public bool Housecall(int RequestId);
+        public bool Consult(int RequestId);
+        public bool ConcludeCare(int RequestId, string Notes);
     }
 }

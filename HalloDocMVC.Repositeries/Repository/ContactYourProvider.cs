@@ -605,5 +605,21 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return pl;
         }
         #endregion FindPhysicianLocation
+
+        #region RequestToAdmin
+        public bool RequestToAdmin(int ProviderId, string Notes)
+        {
+            try
+            {
+                var res = _context.Physicians.FirstOrDefault(e => e.Physicianid == ProviderId);
+                _emailConfiguration.SendMail(res.Email, "Request For Profile Changes", Notes);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion RequestToAdmin
     }
 }

@@ -764,7 +764,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         #region EditEncounterData
         public bool EditEncounterData(EncounterModel Data, string id)
         {
-                var admindata = _context.Admins.FirstOrDefault(e => e.Aspnetuserid == id);
+                
                 if (Data.EncounterId == 0)
                 {
                     Encounterform enc = new Encounterform
@@ -795,7 +795,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                         Skin = Data.Skin,
                         Temp = Data.Temp,
                         TreatmentPlan = Data.Treatment,
-                        Adminid = admindata.Adminid,
                         Createddate = DateTime.Now,
                         Modifieddate = DateTime.Now,
                     };
@@ -834,7 +833,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                         encdetails.Skin = Data.Skin;
                         encdetails.Temp = Data.Temp;
                         encdetails.TreatmentPlan = Data.Treatment;
-                        encdetails.Adminid = admindata.Adminid;
                         encdetails.Modifieddate = DateTime.Now;
                         _context.Encounterforms.Update(encdetails);
                         _context.SaveChanges();
@@ -849,6 +847,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
 
         }
         #endregion EditEncounterData
+
         #region SendLink
         public bool SendLink(string FirstName, string LastName, string Email, string PhoneNumber)
         {
@@ -919,6 +918,84 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             return true;
         }
         #endregion TransfertoAdmin
+
+        #region CaseFinalized
+        public bool CaseFinalized(EncounterModel Data)
+        {
+            try
+            {
+                var data = _context.Encounterforms.FirstOrDefault(e => e.Encounterformid == Data.EncounterId);
+                data.Isfinalize = true;
+                data.Modifieddate = DateTime.Now;
+                _context.Encounterforms.Update(data);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+        #region Housecall
+        public bool Housecall(int RequestId)
+        {
+            var request = _context.Requests.FirstOrDefault(req => req.Requestid == RequestId);
+            request.Status = 5;
+            request.Modifieddate = DateTime.Now;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Requestid = RequestId;
+            rsl.Createddate = DateTime.Now;
+            rsl.Status = 5;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion
+
+        #region Consult
+        public bool Consult(int RequestId)
+        {
+            var request = _context.Requests.FirstOrDefault(req => req.Requestid == RequestId);
+            request.Status = 6;
+            request.Modifieddate = DateTime.Now;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new Requeststatuslog();
+            rsl.Requestid = RequestId;
+            rsl.Createddate = DateTime.Now;
+            rsl.Status = 6;
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion
+
+        #region ConcludeCare
+        public bool ConcludeCare(int RequestId, string Notes)
+        {
+            var requestData = _context.Requests.FirstOrDefault(e => e.Requestid == RequestId);
+            requestData.Status = 8;
+            requestData.Modifieddate = DateTime.Now;
+            _context.Requests.Update(requestData);
+            _context.SaveChanges();
+
+            Requeststatuslog rsl = new()
+            {
+                Requestid = RequestId,
+                Notes = Notes,
+                Status = 8,
+                Createddate = DateTime.Now
+            };
+            _context.Requeststatuslogs.Add(rsl);
+            _context.SaveChanges();
+            return true;
+        }
+        #endregion ConcludeCare
     }
 
 }

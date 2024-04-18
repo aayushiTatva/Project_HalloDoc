@@ -1,13 +1,9 @@
-﻿using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using AspNetCoreHero.ToastNotification.Notyf;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Repositories.Admin.Repository;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol.Plugins;
-using System.Drawing;
+using ViewAsPdf = Rotativa.AspNetCore.ViewAsPdf;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
@@ -391,5 +387,113 @@ namespace HalloDocMVC.Controllers.AdminController
             return Redirect("~/Provider/Dashboard");
         }
         #endregion TransferToAdmin
+
+        #region Finalize
+        public IActionResult Finalize(EncounterModel model)
+        {
+            bool data = _IActions.EditEncounterData(model, CV.ID());
+            if (data)
+            {
+                bool final = _IActions.CaseFinalized(model);
+                if (final)
+                {
+                    _INotyfService.Success("Case Is Finalized...");
+                    if (CV.role() == "Provider")
+                    {
+                        return RedirectToAction("Index", "DashBoard");
+                    }
+                    return RedirectToAction("Index", "AdminDashBoard");
+                }
+                else
+                {
+                    _INotyfService.Error("Case Is Not Finalized Please Enter Valid Data...");
+                    return RedirectToAction("Encounter", new { id = model.RequesId });
+                }
+            }
+            else
+            {
+                _INotyfService.Error("Case Is Not Finalized...");
+                return RedirectToAction("Encounter", new { id = model.RequesId });
+            }
+
+        }
+        #endregion
+
+        #region Housecall
+        public IActionResult Housecall(int RequestId)
+        {
+            if (_IActions.Housecall(RequestId))
+            {
+                _INotyfService.Success("Case Accepted...");
+            }
+            else
+            {
+                _INotyfService.Error("Case Not Accepted...");
+            }
+            return Redirect("~/Provider/Dashboard");
+        }
+        #endregion
+
+        #region Consult
+        public IActionResult Consult(int RequestId)
+        {
+            if (_IActions.Consult(RequestId))
+            {
+                _INotyfService.Success("Case is in conclude state...");
+            }
+            else
+            {
+                _INotyfService.Error("Error...");
+            }
+            return Redirect("~/Provider/Dashboard");
+        }
+        #endregion
+
+        #region GeneratePDF
+        public IActionResult GeneratePDF(int id)
+        {
+            var FormDetails = _IActions.GetEncounterData(id);
+            return new ViewAsPdf("../AdminPanel/Actions/EncounterPdf", FormDetails);
+        }
+        #endregion
+
+        #region ConcludeCare
+        public async Task<IActionResult> ConcludeCare(int? id, ViewUploadModel viewDocument)
+        {
+            id ??= viewDocument.RequestId;
+            ViewUploadModel v = await _IActions.GetDocument(id, viewDocument);
+            return View("../AdminPanel/Actions/ConcludeCare", v);
+        }
+        #endregion ConcludeCare
+
+        #region UploadDocProvider
+        public IActionResult UploadDocProvider(int Requestid, IFormFile file)
+        {
+            if (_IActions.UploadDocuments(Requestid, file))
+            {
+                _INotyfService.Success("File Uploaded Successfully");
+            }
+            else
+            {
+                _INotyfService.Error("File Not Uploaded");
+            }
+            return RedirectToAction("ConcludeCare", "Actions", new { id = Requestid });
+        }
+        #endregion UploadDocProvider
+
+        #region ConcludeCarePost
+        public IActionResult ConcludeCarePost(int RequestId, string Notes)
+        {
+            if (_IActions.ConcludeCare(RequestId, Notes))
+            {
+                _INotyfService.Success("Case concluded...");
+            }
+            else
+            {
+                _INotyfService.Error("Error...");
+            }
+            return Redirect("~/Provider/Dashboard");
+        }
+        #endregion ConcludeCarePost
     }
 }

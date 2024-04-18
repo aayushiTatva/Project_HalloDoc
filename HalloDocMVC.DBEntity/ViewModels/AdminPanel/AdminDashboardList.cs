@@ -17,7 +17,10 @@
         public int? ProviderId { get; set; }
         public string? ProviderName { get; set; }
         public string? Region { get; set; }
+        public int RegionId { get; set; }
         public string Status { get; set; }
+        public int ProviderEncounterStatus { get; set; }
+        public bool IsFinalize { get; set; }
     }
 
     public class PaginationModel

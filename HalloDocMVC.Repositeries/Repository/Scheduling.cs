@@ -249,25 +249,25 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             TimeOnly currentTimeOfDay = TimeOnly.FromDateTime(DateTime.Now);
 
             List<ProviderModel> pl = await (from r in _context.Physicians
-                                           where r.Isdeleted == new BitArray(1)
-                                           select new ProviderModel
-                                           {
-                                               CreatedDate = r.Createddate,
-                                               PhysicianId = r.Physicianid,
-                                               Address1 = r.Address1,
-                                               Address2 = r.Address2,
-                                               AdminNotes = r.Adminnotes,
-                                               AltPhoneNumber = r.Altphone,
-                                               BusinessName = r.Businessname,
-                                               BusinessWebsite = r.Businesswebsite,
-                                               City = r.City,
-                                               FirstName = r.Firstname,
-                                               LastName = r.Lastname,
-                                               Status = r.Status,
-                                               Email = r.Email,
-                                               Photo = r.Photo
+                                            where r.Isdeleted == new BitArray(1)
+                                            select new ProviderModel
+                                            {
+                                                CreatedDate = r.Createddate,
+                                                PhysicianId = r.Physicianid,
+                                                Address1 = r.Address1,
+                                                Address2 = r.Address2,
+                                                AdminNotes = r.Adminnotes,
+                                                AltPhoneNumber = r.Altphone,
+                                                BusinessName = r.Businessname,
+                                                BusinessWebsite = r.Businesswebsite,
+                                                City = r.City,
+                                                FirstName = r.Firstname,
+                                                LastName = r.Lastname,
+                                                Status = r.Status,
+                                                Email = r.Email,
+                                                Photo = r.Photo
 
-                                           }).ToListAsync();
+                                            }).ToListAsync();
             if (region != null)
             {
                 pl = await (

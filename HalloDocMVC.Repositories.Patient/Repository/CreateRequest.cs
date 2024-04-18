@@ -85,6 +85,7 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                 Request.Phonenumber = viewDataPatientRequest.PhoneNumber;
             Request.Confirmationnumber = _confirmationNumber.GetConfirmationNumber(viewDataPatientRequest.State, viewDataPatientRequest.FirstName, viewDataPatientRequest.LastName);
             Request.Isurgentemailsent = new BitArray(1);
+            Request.Isdeleted = new BitArray(1);
                 Request.Createddate = DateTime.Now;
                 _context.Requests.Add(Request);
                 await _context.SaveChangesAsync();

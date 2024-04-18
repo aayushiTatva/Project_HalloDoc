@@ -674,9 +674,6 @@ C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Text.Encoding.CodePages.dll
@@ -710,3 +707,11 @@ C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\obj\Debug
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\obj\Debug\net7.0\HalloDocMVC.pdb
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\obj\Debug\net7.0\HalloDocMVC.genruntimeconfig.cache
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\obj\Debug\net7.0\ref\HalloDocMVC.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\EPPlus.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\EPPlus.Interfaces.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\EPPlus.System.Drawing.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\Rotativa.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\Rotativa.AspNetCore.dll

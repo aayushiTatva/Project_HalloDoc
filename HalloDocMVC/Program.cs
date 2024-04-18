@@ -7,6 +7,7 @@ using HalloDocMVC.Repositories;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using HalloDocMVC.Repositories.Patient.Repository;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
@@ -41,7 +42,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseRotativa();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();

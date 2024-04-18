@@ -6,6 +6,7 @@
 }
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.EncounterModel
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
+@using HalloDocMVC.DBEntity.ViewModels;
 <div class="container mt-4">
     <div class="row">
         <div class="col-6">
@@ -258,9 +259,9 @@
                             <a asp-controller="dashboard" asp-action="Index" class="btn bg-white border border-info rounded-2 text-info ms-2">Cancel</a>*@
                             <button type="submit" class="btn btn-info text-white shadow-none me-2">Save Changes</button>
                             @{
-                                if (Model.Isfinalize == false)
+                                if (CV.role() == "Provider")
                                 {
-                                    <button type="submit" value="Finalize" asp-action="Finalize" asp-controller="SubmitForm" class="btn btn-danger btn-cancel me-2" style="background-color:#9c27b0">Finalize</button>
+                                    <button type="submit" value="Finalize" asp-action="Finalize" asp-controller="Actions" class="btn btn-danger btn-cancel me-2" style="background-color:#9c27b0">Finalize</button>
                                 }
                             }
                             <a asp-controller="Dashboard" asp-action="Index" class="btn border border-info text-info shadow-none">Cancel</a>

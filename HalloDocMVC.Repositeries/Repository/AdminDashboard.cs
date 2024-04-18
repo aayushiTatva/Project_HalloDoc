@@ -58,7 +58,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                 join reg in _context.Regions
                                                 on rc.Regionid equals reg.Regionid into RegGroup
                                                 from rg in RegGroup.DefaultIfEmpty()
-                                                where status.Contains(req.Status) && filter.Contains(req.Requesttypeid) &&  (pagination.SearchInput == null ||
+                                                where req.Isdeleted == new BitArray(1) && status.Contains(req.Status) && filter.Contains(req.Requesttypeid) &&  (pagination.SearchInput == null ||
                                                         rc.Firstname.Contains(pagination.SearchInput) || rc.Lastname.Contains(pagination.SearchInput) ||
                                                         req.Firstname.Contains(pagination.SearchInput) || req.Lastname.Contains(pagination.SearchInput) ||
                                                         rc.Email.Contains(pagination.SearchInput) || rc.Phonenumber.Contains(pagination.SearchInput) ||
@@ -113,7 +113,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                 join reg in _context.Regions
                                                 on rc.Regionid equals reg.Regionid into RegGroup
                                                 from rg in RegGroup.DefaultIfEmpty()
-                                                where statusdata.Contains(req.Status) && filter.Contains(req.Requesttypeid) && (req.Isdeleted == new BitArray(1)) && (data.SearchInput == null ||
+                                                where req.Isdeleted == new BitArray(1) && statusdata.Contains(req.Status) && filter.Contains(req.Requesttypeid) && (req.Isdeleted == new BitArray(1)) && (data.SearchInput == null ||
                                                          rc.Firstname.Contains(data.SearchInput) || rc.Lastname.Contains(data.SearchInput) ||
                                                          req.Firstname.Contains(data.SearchInput) || req.Lastname.Contains(data.SearchInput) ||
                                                          rc.Email.Contains(data.SearchInput) || rc.Phonenumber.Contains(data.SearchInput) ||
@@ -134,6 +134,8 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                     Region = rg.Name,
                                                     ProviderName = p.Firstname + " " + p.Lastname,
                                                     PatientPhoneNumber = rc.Phonenumber,
+                                                    ProviderEncounterStatus = req.Status,
+                                                    IsFinalize = _context.Encounterforms.Any(ef => ef.Requestid == req.Requestid && ef.Isfinalize),
                                                     Address = rc.Address,
                                                     Notes = rc.Notes,
                                                     ProviderId = req.Physicianid,
@@ -153,6 +155,43 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                 TotalItemCount = totalItemCount,
             };
             return paginatedViewModel;
+        }
+        #endregion
+
+        #region Export
+        public List<AdminDashboardList> Export(string status)
+        {
+            List<int> statusdata = status.Split(',').Select(int.Parse).ToList();
+            List<AdminDashboardList> allData = (from req in _context.Requests
+                                                join reqClient in _context.Requestclients
+                                                on req.Requestid equals reqClient.Requestid into reqClientGroup
+                                                from rc in reqClientGroup.DefaultIfEmpty()
+                                                join phys in _context.Physicians
+                                                on req.Physicianid equals phys.Physicianid into physGroup
+                                                from p in physGroup.DefaultIfEmpty()
+                                                join reg in _context.Regions
+                                                on rc.Regionid equals reg.Regionid into RegGroup
+                                                from rg in RegGroup.DefaultIfEmpty()
+                                                where statusdata.Contains(req.Status)
+                                                orderby req.Createddate descending
+                                                select new AdminDashboardList
+                                                {
+                                                    RequestId = req.Requestid,
+                                                    RequestTypeId = req.Requesttypeid,
+                                                    Requestor = req.Firstname + " " + req.Lastname,
+                                                    PatientName = rc.Firstname + " " + rc.Lastname,
+                                                    DateOfBirth = new DateTime((int)rc.Intyear, DateTime.ParseExact(rc.Strmonth, "MMMM", new CultureInfo("en-US")).Month, (int)rc.Intdate),
+                                                    RequestedDate = req.Createddate,
+                                                    Email = rc.Email,
+                                                    Region = rg.Name,
+                                                    ProviderName = p.Firstname + " " + p.Lastname,
+                                                    PatientPhoneNumber = rc.Phonenumber,
+                                                    Address = rc.Address,
+                                                    Notes = rc.Notes,
+                                                    ProviderId = req.Physicianid,
+                                                    RequestorPhoneNumber = req.Phonenumber
+                                                }).ToList();
+            return allData;
         }
         #endregion
     }

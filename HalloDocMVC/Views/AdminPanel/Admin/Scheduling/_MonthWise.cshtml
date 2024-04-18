@@ -1,12 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.MonthWiseScheduling
+﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.MonthWiseScheduling
 @using Microsoft.AspNetCore.Html
 @using Microsoft.AspNetCore.Mvc.Rendering
-
+@using HalloDocMVC.DBEntity.ViewModels;
 
 <div id="calendar" class="my-3 pb-3">
     @{
@@ -111,14 +106,20 @@
                                                                 {
                                                                     <div class="shiftdisplay shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
                                                                         @obj.Starttime-@obj.Endtime
-                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        @if (CV.role() == "Admin")
+                                                                        {
+                                                                            @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        }
                                                                     </div>
                                                                 }
                                                                 else
                                                                 {
                                                                     <div class="shiftdisplay2 shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
                                                                         @obj.Starttime-@obj.Endtime
-                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        @if (CV.role() == "Admin")
+                                                                        {
+                                                                            @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        }
                                                                     </div>
                                                                 }
                                                             </td>
@@ -145,14 +146,20 @@
                                                                 {
                                                                     <div class="shiftdisplay shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
                                                                         @obj.Starttime-@obj.Endtime
-                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        @if (CV.role() == "Admin")
+                                                                        {
+                                                                            @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        }
                                                                     </div>
                                                                 }
                                                                 else
                                                                 {
                                                                     <div class="shiftdisplay2 shiftmodal" id="@obj.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal">
                                                                         @obj.Starttime-@obj.Endtime
-                                                                        @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        @if (CV.role() == "Admin")
+                                                                        {
+                                                                            @obj.Shift.Physician.Firstname @obj.Shift.Physician.Lastname
+                                                                        }
                                                                     </div>
                                                                 }
 
@@ -190,16 +197,21 @@
     $('.removeactive').removeClass('active text-white');
     $('#Month').addClass('active text-white');
 
-    var currentdate = $('#currentMonth').val();
-    $('#showDate').text(currentdate);
+    if ("@CV.role()" == "Admin") {
+        var currentdate = $('#currentMonth').val();
+        $('#showDate').text(currentdate);
+    }
 
     function monthWiseReadMore(id) {
         var x = document.getElementById('readmore');
         if (x.innerHTML == "Read More") {
             x.innerHTML = "Read Less";
         }
-        else {
+        else if (x.innerHTML = "Read Less") {
             x.innerHTML = "Read More";
+        }
+        else {
+            x.innerHTML = "Read Less";
         }
         var ids = document.getElementsByClassName(id);
         for (var i = 0; i < ids.length; i++) {

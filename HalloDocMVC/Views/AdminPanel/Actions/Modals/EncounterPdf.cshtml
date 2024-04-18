@@ -1,0 +1,19 @@
+﻿<div class="modal fade" id="EncounterPdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<form method="post" asp-controller="Actions" asp-action="GeneratePDF">
+				<div class="modal-header bg-info text-white">
+					<input type="hidden" id="RequestID_EncounterPdf" value="" name="id" />
+					<h5 class="modal-title" id="exampleModalLongTitle">Select Type Of Care</h5>
+					<i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+				</div>
+				<div class="modal-body">
+					<div class="d-flex justify-content-center">
+						<p class="text-secondary">Encounter Form Finalize successfully </p>
+						<button type="submit" class="btn bg-info text-white me-2">Download</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

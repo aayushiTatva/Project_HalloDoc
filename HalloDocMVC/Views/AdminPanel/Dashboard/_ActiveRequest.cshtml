@@ -103,9 +103,24 @@
                         }
                     </td>
                     <td><small>@item.Address</small></td>
-                    <td>
+                    @if (CV.role() == "Provider")
+                    {
+                        <td>
+                            @if (item.ProviderEncounterStatus == 5)
+                            {
+                                <a asp-action="Consult" asp-controller="Actions" asp-route-RequestId="@item.RequestId" class="btn btn-info text-white">
+                                    House Call
+                                </a>
+                            }
+                        </td>
+                    }
+                   @* <td>
                         <button class="btn border border-white text-white my-2">House Call</button>
-                    </td>
+                    </td>*@
+                    @if (CV.role() == "Provider")
+                    {
+                        <td><small>@item.ProviderEncounterStatus</small></td>
+                    }
                     @if (CV.role() == "Admin")
                     {
                         <td><small>Admin transferred to Dr. AGOLA</small></td>
@@ -159,12 +174,33 @@
                                     </a>
                                 </li>
                             }
-                            <li>
-                                <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
-                                    <i class="fa-solid fa-receipt me-2"></i>
-                                    Encounter
-                                </a>
-                            </li>
+                            @if (CV.role() == "Provider" && item.ProviderEncounterStatus == 4)
+                            {
+                                <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#Encounter" class="dropdown-item" onclick="model_Case(@item.RequestId)">
+                                        <i class="fa-solid fa-receipt me-2"></i>
+                                        Encounter
+                                    </a>
+                                </li>
+                            }
+                            @if (item.IsFinalize)
+                            {
+                                <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#EncounterPdf" class="dropdown-item" onclick="model_Case(@item.RequestId)">
+                                        <i class="fa-solid fa-receipt me-2"></i>
+                                        Encounter
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
+                                        <i class="fa-solid fa-receipt me-2"></i>
+                                        Encounter
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </td>
                 </tr>
@@ -383,4 +419,9 @@
         $("#paginationform").submit();
     }
     console.log("Hello setpagenumber");
+
+    function model_Case(id){
+        document.getElementById('RequestID_Encounter').value = id;
+        document.getElementById('RequestID_EncounterPdf').value = id;
+    }
 </script>

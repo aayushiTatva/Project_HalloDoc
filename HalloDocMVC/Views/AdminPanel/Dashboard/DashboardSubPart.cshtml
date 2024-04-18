@@ -132,13 +132,13 @@
 
                 @if (CV.role() == "Admin")
                 {
-                    <button class="btn btn-info text-white shadow-none mb-2">
+                    <button class="btn btn-info text-white shadow-none mb-2" onclick="Export(@CV.CurrentStatus())">
                         <small>
                             <i class="fa-solid fa-share"></i>
                             <span class="adminIcon">Export</span>
                         </small>
                     </button>
-                    <button class="btn btn-info text-white shadow-none mb-2">
+                    <button class="btn btn-info text-white shadow-none mb-2" onclick="Export('1,2,3,4,5,6,7,8,9,10,11')">
                         <small>
                             <i class="fa-solid fa-share-from-square"></i>
                             <span class="adminIcon">Export All</span>
@@ -209,5 +209,37 @@
 <script>
     function SearchSubmit() {
         $('#filterForm').submit();
+    }
+
+    function Export(status) {
+        location.reload();
+        console.log(status);
+        $.ajax({
+            method: "POST",
+            url: "/Dashboard/Export",
+            data: { status: status },
+            xhrFields: {
+                responseType: 'blob'
+            },
+
+            success: function (result) {
+
+                var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'RequestData.xlsx';
+
+                document.body.appendChild(link);
+                link.click();
+
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(link.href);
+            },
+
+            error: function () {
+                console.log("error");
+            }
+        });
     }
 </script>

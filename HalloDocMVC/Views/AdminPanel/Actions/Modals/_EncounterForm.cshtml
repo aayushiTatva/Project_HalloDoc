@@ -1,0 +1,87 @@
+﻿<div class="modal fade" id="Encounter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <input type="hidden" id="RequestID_Encounter" name="RequestId" />
+                <h5 class="modal-title" id="exampleModalLongTitle">Select Type Of Care</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <a id="Housecall" class="btn border-info text-info me-2">HouseCall</a>
+                    <a id="Consult" class="btn border-info text-info">Consult</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="Save" type="button" class="btn btn-info text-white shadow-none">Save</button>
+                <button type="button" class="btn border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    let Housecall = false;
+    let Consult = false;
+
+    $('#Housecall').on('click', function () {
+        Housecall = true;
+        Consult = false;
+        var element1 = document.getElementById("Housecall");
+        element1.classList.remove("border-info");
+        element1.classList.remove("text-info");
+        element1.classList.add("bg-info");
+        element1.classList.add("text-white");
+        var element2 = document.getElementById("Consult");
+        element2.classList.remove("bg-info");
+        element2.classList.remove("text-white");
+        element2.classList.add("border-info");
+        element2.classList.add("text-info");
+    })
+    $('#Consult').on('click', function () {
+        Consult = true;
+        Housecall = false;
+        var element1 = document.getElementById("Housecall");
+        element1.classList.remove("bg-info");
+        element1.classList.remove("text-white");
+        element1.classList.add("border-info");
+        element1.classList.add("text-info");
+        var element2 = document.getElementById("Consult");
+        element2.classList.remove("border-info");
+        element2.classList.remove("text-info");
+        element2.classList.add("bg-info");
+        element2.classList.add("text-white");
+    })
+    $('#Save').on('click', function () {
+        var RequestId = $("#RequestID_Encounter").val();
+        console.log(RequestId)
+        if (Housecall == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Housecall", "Actions")',
+                data: { RequestId: RequestId },
+                cache: false,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+        }
+        else if (Consult == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Consult", "Actions")',
+                data: { RequestId: RequestId },
+                cache: false,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+        }
+    })
+</script>

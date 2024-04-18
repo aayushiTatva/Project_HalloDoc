@@ -76,11 +76,12 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         #region ResetPassword
         public async Task<bool> ResetPassword(string Password, int AdminId)
         {
+            var hasher = new PasswordHasher<string>();
             var request = await _context.Admins.Where(a => a.Adminid == AdminId).FirstOrDefaultAsync();
             Aspnetuser? aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(u => u.Id == request.Aspnetuserid);
             if(aspnetuser != null)
             {
-                aspnetuser.Passwordhash = Password;
+                aspnetuser.Passwordhash = hasher.HashPassword(null, Password);
                 _context.Aspnetusers.Update(aspnetuser);
                 _context.SaveChanges();
                 return true;

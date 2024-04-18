@@ -21,5 +21,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         Task<bool> EditProviderProfile(ProviderModel vm, string AdminId);
         Task<bool> EditProviderOnbording(ProviderModel vm, string AdminId);
         Task<List<ProviderLocation>> FindPhysicianLocation();
+        bool RequestToAdmin(int ProviderId, string Notes);
     }
 }

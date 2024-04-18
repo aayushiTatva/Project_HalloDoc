@@ -251,6 +251,22 @@ namespace HalloDocMVC.Controllers.AdminController
             return false;
         }
         #endregion SMS
+
+        #region RequestToAdmin
+        public IActionResult RequestToAdmin(string Note)
+        {
+            bool Contact = _IContactYourProvider.RequestToAdmin(Convert.ToInt32(CV.UserID()), Note);
+            if (Contact)
+            {
+                _INotyfService.Success("Mail Sent Succesfully.");
+            }
+            else
+            {
+                _INotyfService.Error("Mail did not Send");
+            }
+            return RedirectToAction("PhysicianProfile", "Providers", new { id = Convert.ToInt32(CV.UserID()) });
+        }
+        #endregion RequestToAdmin
     }
 } 
              

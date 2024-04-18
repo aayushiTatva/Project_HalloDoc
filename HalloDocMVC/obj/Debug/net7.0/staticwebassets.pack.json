@@ -1,6 +1,22 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Rotativa\\help-wkhtmltoimage.txt",
+      "PackagePath": "staticwebassets\\Rotativa\\help-wkhtmltoimage.txt"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Rotativa\\help-wkhtmltopdf.txt",
+      "PackagePath": "staticwebassets\\Rotativa\\help-wkhtmltopdf.txt"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltoimage.exe"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Rotativa\\wkhtmltopdf.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltopdf.exe"
+    },
+    {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\100\\Fig7. Admin dashboard in Conclude state-20240326032932.jpg",
       "PackagePath": "staticwebassets\\Upload\\100\\Fig7. Admin dashboard in Conclude state-20240326032932.jpg"
     },
@@ -43,6 +59,10 @@
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\108\\Fig8. Admin dashboard in To Close state-20240312034825.jpg",
       "PackagePath": "staticwebassets\\Upload\\108\\Fig8. Admin dashboard in To Close state-20240312034825.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\108\\Fig8. Admin dashboard in To Close state-20240418022907.jpg",
+      "PackagePath": "staticwebassets\\Upload\\108\\Fig8. Admin dashboard in To Close state-20240418022907.jpg"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\108\\Fig9. Admin dashboard in Unpaid state-20240312024813.jpg",
@@ -127,6 +147,10 @@
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig68. View Documents.jpg",
       "PackagePath": "staticwebassets\\Upload\\Fig68. View Documents.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig7. Admin dashboard in Conclude state.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Fig7. Admin dashboard in Conclude state.jpg"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig8. Admin dashboard in To Close state.jpg",

@@ -1,7 +1,7 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using HalloDocMVC.DBEntity.ViewModels;
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.SchedulingModel
 
 <div class="modal fade" id="AddShiftModal" tabindex="-1" aria-labelledby="addShiftModalLabel1" aria-hidden="true">
@@ -17,10 +17,17 @@
                         <select class="form-select mt-3 p-2 shadow-none" required data-allow-clear="true" tabindex="-1" onchange="myFunction()" id="addshiftregion" asp-for="RegionId" asp-items="@(new SelectList(ViewBag.RegionComboBox,"RegionId","RegionName"))" data-control="select2" data-placeholder="Select Level">
                         </select>
                     </div>
-                    <div class="form-floating">
-                        <select class="form-select mt-3 p-2 shadow-none" required asp-for="PhysicianId" data-allow-clear="true" tabindex="-1" id="Physician" data-control="select2" data-placeholder="Select Level">
-                        </select>
-                    </div>
+                    @if (CV.role() == "Admin")
+                    {
+                        <div class="form-floating">
+                            <select class="form-select mt-3 p-2 shadow-none" required asp-for="PhysicianId" data-allow-clear="true" tabindex="-1" id="Physician" data-control="select2" data-placeholder="Select Level">
+                            </select>
+                        </div>
+                    }
+                    @if (CV.role() == "Provider")
+                    {
+                        <input type="hidden" asp-for="PhysicianId" value="@CV.UserID()" />
+                    }
                     <div class="form-floating mt-3">
                         <input asp-for="ShiftDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control shadow-none" placeholder="Date">
                         <label for="floatingInput">Shift Date</label>

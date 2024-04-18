@@ -1,0 +1,30 @@
+﻿<div class="modal fade" id="RequestToAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header  bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Request To Administrator</h5>
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
+            </div>
+            <form asp-controller="Providers" asp-action="RequestToAdmin" class="needs-validation" novalidate>
+                <input type="hidden" value="" id="RequestID_Input_ModelBlockCase" name="requestid" />
+                <div class="modal-body">
+                    <p class="text-secondary">
+                        Need to send message to edit
+                    </p>
+
+                    <div class="form-floating mb-3">
+                        <textarea id="changenote" rows="4" name="Note" required class="input-outline w-100 h-100 fs-6 form-control shadow-none" type="text"></textarea>
+                        <label class="inputs-lable inputs-lable-textarea fs-6" id="notedata">Message</label>
+                        <div class="invalid-feedback">
+                            Please enter valid Message!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class=" btn btn-info text-white">Send</button>
+                    <button type="button" class="btn border border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

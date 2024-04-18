@@ -12,5 +12,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         PaginationModel CardData(int ProviderId);
         PaginationModel GetRequests(string Status, string Filter, PaginationModel data, int ProviderId);
         public PaginationModel GetRequests(string Status, string Filter, PaginationModel pagination);
+        public List<AdminDashboardList> Export(string status);
     }
 }
