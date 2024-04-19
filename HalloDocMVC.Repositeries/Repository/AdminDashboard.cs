@@ -173,7 +173,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                 on rc.Regionid equals reg.Regionid into RegGroup
                                                 from rg in RegGroup.DefaultIfEmpty()
                                                 where statusdata.Contains(req.Status)
-                                                orderby req.Createddate descending
                                                 select new AdminDashboardList
                                                 {
                                                     RequestId = req.Requestid,

@@ -57,9 +57,13 @@
                     <label class="ms-2" for="email"> Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 form-floating mb-3">
+                @*<div class="col-md-6 form-floating mb-3">
                     <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phones" placeholder="(201) 555-0123" />
                     <label class="ms-2" for="tel">Phone Number</label>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>*@
+                <div class="col-md-6 form-floating phone mb-3">
+                    <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none phone w-100 h-100 " id="" autocomplete="off">
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
             </div>
@@ -173,6 +177,20 @@
 
 </script>
 <script>
+    window.onload = function (e) {
+        initializeIntlTelInput();
+    }
+
+    function initializeIntlTelInput() {
+        const phoneInputFields = document.querySelectorAll(".phone input[type='tel']");
+
+        for (var i = 0; i < phoneInputFields.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputFields[i], {
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.1/build/js/utils.js",
+                initialCountry: "in",
+            });
+        }
+    }
     $("#files").change(function () {
         filename = this.files[0].name;
         console.log(filename);

@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdminLogin.cshtml";
+    ViewData["Title"] = "Create Account";
+}
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdminLogin.cshtml";
+}
+<div class="container-fluid">
+    <div class="row min-vh-100 d-flex">
+        <div class=" col-md-6 mt-5">
+            <img src="~/images/poster.jpg" style="height: 100%; width: 100%;" />
+        </div>
+        <div class="col-md-6">
+            <div class="row min-vh-100 maindiv">
+                <div class="centerdiv">
+                    <img class="" src="~/images/Patient site 1.png" />
+                    <h3 class="py-3">Create Account</h3>
+                    <strong class="text-danger">@ViewData["error"]</strong>
+                    <form id="LoginForm" asp-controller="Login" asp-action="CreatNewAccontPost" method="post">
+                        <div class="form-floating mb-4 email">
+                            <input name="Email" type="email" class="form-control shadow-none " id="Email" placeholder="name@example.com">
+                            <label class="bg-transparent" for="Email">Email</label>
+                            <button type="button" class="btn btn-light">
+                                <i class="icon fa-solid fa-user field-icon position-relative"></i>
+                            </button>
+                            <span class="text-danger emailerror" style="display:none;">Enter valid email address</span>
+                        </div>
+                        <div class="form-floating mb-4 password">
+                            <input name="Password" type="password" class="form-control shadow-none eyehide " id="Password" placeholder="Password">
+                            <label for="Password">Password</label>
+                            <button type="button" class="btn btn-light" onclick="passtoggle('Password')">
+                                <i class="Password fa fa-eye-slash"></i>
+                                <i class="Password fa fa-eye" style="display:none"></i>
+                            </button>
+                        </div>
+                        <div class="form-floating mb-4 password">
+                            <input name="Passwordhash" type="password" class="form-control shadow-none eyehide " id="ConfirmPassword" placeholder="Password">
+                            <label for="ConfirmPassword">Confirm Password</label>
+                            <button type="button" class="btn btn-light" onclick="passtoggle('ConfirmPassword')">
+                                <i class="ConfirmPassword fa fa-eye-slash"></i>
+                                <i class="ConfirmPassword fa fa-eye" style="display:none"></i>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white w-100 mb-4 p-2 shadow-none" role="button">
+                            Create
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

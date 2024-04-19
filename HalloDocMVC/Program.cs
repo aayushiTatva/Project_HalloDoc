@@ -20,7 +20,7 @@ builder.Services.AddSession();
 builder.Services.AddScoped<IAdminDashboard, AdminDashboard>();
 builder.Services.AddScoped<IActions, Actions>();
 builder.Services.AddScoped<IComboBox, ComboBox>();
-builder.Services.AddScoped<ICreateRequest, CreateRequest>();
+builder.Services.AddScoped<ICreateRequestRepository, CreateRequest>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IPatientDashboard, PatientDashboard>();

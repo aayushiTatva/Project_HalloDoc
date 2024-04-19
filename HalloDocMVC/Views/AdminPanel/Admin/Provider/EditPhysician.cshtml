@@ -62,8 +62,9 @@
                             <label class="ms-2" for="uname"> UserName</label>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
-                            <input asp-for="Password" type="password" class="form-control shadow-none" id="passwd" placeholder="Password">
+                            <input asp-for="Password" type="password" class="form-control shadow-none " id="passwd" placeholder="Password">
                             <label class="ms-2" for="passwd">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                     </div>
                     @if (CV.role() == "Admin")
@@ -80,6 +81,7 @@
                                     <select asp-for="RoleId" class="form-select form-control shadow-none input0" id="Role" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
                                     </select>
                                     <label class="ms-2" for="Role">Role</label>
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
                                     @*<select class="form-select shadow-none AccInput" required asp-for="RoleId" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.UserRoleComboBox, "RoleId", "RoleName"))">
                             </select>
                             <label for="Roleid">Role</label>*@
@@ -94,7 +96,7 @@
                                 <input type="button" value="Edit" id="edit0" class="btn btn-info text-white me-2" onclick="toggleFormElements0()" />
                                 <input type="submit" value="Save" id="save0" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditAccountInfo" class="btn btn-info text-white me-2" />
                             }
-                            <input type="submit" value="Reset Password" id="resetpassbtn" asp-controller="Providers" asp-action="ResetPassword" asp-route-id="@Model.PhysicianId" class="btn border border-info text-info" />
+                            <input type="submit" value="Reset Password" id="resetpassbtn" asp-controller="Providers" asp-action="ResetPassword" class="btn border border-info text-info" />
                         </div>
                     </div>
                 </div>
@@ -109,20 +111,24 @@
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="FirstName" type="text" class="form-control shadow-none input1 ProviderInput" id="fname" placeholder="details">
                             <label class="ms-2" for="fname"> First Name</label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="LastName" type="text" class="form-control shadow-none input1 ProviderInput" id="lname" placeholder="details">
                             <label class="ms-2" for="lname">Last Name</label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="Email" type="email" class="form-control shadow-none input1 ProviderInput" id="email" placeholder="Email">
                             <label class="ms-2" for="email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="PhoneNumber" class="form-control shadow-none input1 ProviderInput" type="tel" id="phones" placeholder="Phone Number" />
                             <label class="ms-2" for="tel">Phone Number</label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -133,6 +139,7 @@
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="Npinumber" class="form-control shadow-none input1 ProviderInput" type="text" id="phones" placeholder="Phone Number" />
                             <label class="ms-2" for="tel">NPI Number</label>
+                            <span asp-validation-for="Npinumber" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -141,6 +148,7 @@
                             <div class="col-md-6 form-floating mb-3">
                                 <input asp-for="Syncmailaddredss" class="form-control shadow-none input1 ProviderInput" type="text" id="phones" placeholder="Phone Number" />
                                 <label class="ms-2" for="tel">Synchronization Email Address</label>
+                                <span asp-validation-for="Syncmailaddredss" class="text-danger"></span>
                             </div>
                         }
                         <input type="hidden" asp-for="RegionsId" id="regionids" />
@@ -189,22 +197,27 @@
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="Address1" type="text" class="form-control shadow-none input2 ProviderInput" id="address1" placeholder="Address 1">
                             <label class="ms-2" for="address1"> Address 1</label>
+                            <span asp-validation-for="Address1" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="Address2" type="text" class="form-control shadow-none input2 ProviderInput" id="address2" placeholder="Address 2">
                             <label class="ms-2" for="address2">Address 2</label>
+                            <span asp-validation-for="Address2" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="City" type="text" class="form-control shadow-none input2 ProviderInput" id="city" placeholder="City">
                             <label class="ms-2" for="city">City</label>
+                            <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
                             <select class="form-select shadow-none input2 ProviderInput" asp-for="State" id="floatingSelectGrid" style="height: 60px" placeholder="State">
                                 <option selected class="text-secondary">State</option>
                                 <option value="1">Virginia</option>
                             </select>
+                           @* <input asp-for="State" type="text" class="form-control shadow-none input2 ProviderInput" id="state" placeholder="State">
+                            <label class="ms-2" for="state">State</label>*@
                         </div>
                     </div>
                     <div class="row">
@@ -215,6 +228,7 @@
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="AltPhoneNumber" class="form-control shadow-none input2 ProviderInput" type="tel" id="phones" placeholder="Phone Number" />
                             <label class="ms-2" for="tel">Phone Number</label>
+                            <span asp-validation-for="AltPhoneNumber" class="text-danger"></span>
                         </div>
                     </div>
                     @if (CV.role() == "Admin")
@@ -238,10 +252,12 @@
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="BusinessName" type="text" class="form-control shadow-none input3 ProviderInput" id="BusinessName" placeholder="Address 1">
                             <label class="ms-2" for="BusinessName"> Business Name</label>
+                            <span asp-validation-for="BusinessName" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
                             <input asp-for="BusinessWebsite" type="text" class="form-control shadow-none input3 ProviderInput" id="BusinessWebsite" placeholder="Address 2">
                             <label class="ms-2" for="BusinessWebsite">Business Website</label>
+                            <span asp-validation-for="BusinessWebsite" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -481,7 +497,7 @@
                     {
                         <div class="row">
                             <div class="d-flex justify-content-end ">
-                                <button type="submit" class="btn btn-info text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderOnboarding">
+                                <button type="submit" id="saveboard" class="btn btn-info text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderOnboarding">
                                     <span class="d-none d-sm-inline">Save</span>
                                 </button>
                                 <button type="button" class="btn btn-danger text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="DeleteProvider" asp-route-PhysicianID="@(Model!= null?Model.PhysicianId:null)" id="DeleteAccount">
@@ -523,8 +539,7 @@
     }
     $(document).ready(function () {
         if ("@ViewData["PhysicianAccount"]" == "Add") {
-            $('#save0,#save1,#save2,#save3,#edit0,#edit1,#edit2,#edit3,#deleteaccount,#formsave').css("display", "none");
-            document.getElementById("uname").disabled = (1 == 1);
+            $('#save0,#save1,#save2,#save3,#edit0,#edit1,#edit2,#edit3,#deleteaccount,#formsave,#resetpassbtn,#saveboard').css("display", "none");
         }
     });
     $("#file").change(function () {

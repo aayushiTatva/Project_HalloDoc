@@ -220,6 +220,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("AdminEdit", new { id = AdminId });
         }
         #endregion ResetPassword
+
         #region EditAdministratorInfo
         public async Task<IActionResult> EditAdministratorInfo(AdminProfileModel profile)
         {
@@ -235,6 +236,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("AdminEdit", new { id = profile.AdminId });
         }
         #endregion EditAdministratorInfo
+
         #region EditBillingInfo
         [HttpPost]
         public async Task<IActionResult> EditBillingInfo(AdminProfileModel adminProfile)
@@ -250,6 +252,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("AdminEdit", new { id = adminProfile.AdminId });
         }
         #endregion
+
         #region EditAdministratorInfo
         public async Task<IActionResult> EditAccountInfo(ProviderModel profile)
         {
@@ -265,6 +268,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("PhysicianAddEdit", new { id = profile.PhysicianId });
         }
         #endregion EditAdministratorInfo
+
         #region EditAdministratorInfo
         public async Task<IActionResult> EditPhysicianInfo(ProviderModel profile)
         {
@@ -280,6 +284,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("PhysicianAddEdit", new { id = profile.PhysicianId });
         }
         #endregion EditAdministratorInfo
+
         #region EditAdministratorInfo
         public async Task<IActionResult> EditMailingInfo(ProviderModel data)
         {
@@ -295,6 +300,7 @@ namespace HalloDocMVC.Controllers.AdminController
             }
         }
         #endregion EditAdministratorInfo
+
         #region EditProviderProfile
         public async Task<IActionResult> EditProviderProfile(ProviderModel data)
         {

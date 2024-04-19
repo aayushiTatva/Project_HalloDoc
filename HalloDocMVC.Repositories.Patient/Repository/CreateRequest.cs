@@ -18,15 +18,17 @@ using System.Threading.Tasks;
 
 namespace HalloDocMVC.Repositories.Patient.Repository
 {
-    public class CreateRequest : ICreateRequest
+    public class CreateRequest : ICreateRequestRepository
     {
         #region Configuration
         private readonly HalloDocContext _context;
         private readonly IConfirmationNumber _confirmationNumber;
-        public CreateRequest(HalloDocContext context, IConfirmationNumber iConfirmationNumber)
+        private readonly EmailConfiguration _emailConfiguration;
+        public CreateRequest(HalloDocContext context, IConfirmationNumber iConfirmationNumber, EmailConfiguration iemailConfiguration)
         {
             _context = context;
             _confirmationNumber = iConfirmationNumber;
+            _emailConfiguration = iemailConfiguration;
         }
         #endregion
 
@@ -46,7 +48,7 @@ namespace HalloDocMVC.Repositories.Patient.Repository
                     // Aspnetuser
                     Guid g = Guid.NewGuid();
                     Aspnetuser.Id = g.ToString();
-                    Aspnetuser.Username = viewDataPatientRequest.Email;
+                    Aspnetuser.Username = viewDataPatientRequest.FirstName;
                     Aspnetuser.Passwordhash = hasher.HashPassword(null, viewDataPatientRequest.PassWord);
                     Aspnetuser.CreatedDate = DateTime.Now;
                     Aspnetuser.Email = viewDataPatientRequest.Email;
@@ -138,6 +140,13 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateFamilyRequest(ViewDataFamilyRequestModel viewDataFamilyRequest)
         {
+            var aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == viewDataFamilyRequest.Email);
+            if (aspnetuser == null)
+            {
+                var Subject = "Create Account";
+                var agreementUrl = "localhost:5171/Login/CreateNewAccount";
+                _emailConfiguration.SendMail(viewDataFamilyRequest.Email, Subject, $"<a href='{agreementUrl}'>Create Account</a>");
+            }
             var Request = new Request
             {
                 Requesttypeid = 3, /* these details are added to requestclient table to refer to patient*/
@@ -202,6 +211,13 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateConciergeRequest(ViewDataConciergeRequestModel viewDataConciergeRequest)
         {
+            var aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == viewDataConciergeRequest.Email);
+            if (aspnetuser == null)
+            {
+                var Subject = "Create Account";
+                var agreementUrl = "localhost:5171/AdminPanel/Login/CreateAccount";
+                _emailConfiguration.SendMail(viewDataConciergeRequest.Email, Subject, $"<a href='{agreementUrl}'>Create Account</a>");
+            }
             var Concierge = new Concierge();
             var Request = new Request();
             var Requestclient = new Requestclient();
@@ -264,7 +280,13 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateBusinessRequest(ViewDataBusinessRequestModel viewDataBusinessRequest)
         {
-
+            var aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == viewDataBusinessRequest.Email);
+            if (aspnetuser == null)
+            {
+                var Subject = "Create Account";
+                var agreementUrl = "localhost:5171/AdminPanel/Login/CreateAccount";
+                _emailConfiguration.SendMail(viewDataBusinessRequest.Email, Subject, $"<a href='{agreementUrl}'>Create Account</a>");
+            }
             var Request = new Request
             {
                 Requesttypeid = 4,

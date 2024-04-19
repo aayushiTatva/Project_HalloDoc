@@ -235,7 +235,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                     var Aspnetuser = new Aspnetuser();
                     var hasher = new PasswordHasher<string>();
                     Aspnetuser.Id = Guid.NewGuid().ToString();
-                    Aspnetuser.Username = providermodel.UserName;
+                    Aspnetuser.Username = "MD." + providermodel.LastName + "." + providermodel.FirstName[0];
                     Aspnetuser.Passwordhash = hasher.HashPassword(null, providermodel.Password);
                     Aspnetuser.Email = providermodel.Email;
                     Aspnetuser.CreatedDate = DateTime.Now;
@@ -252,7 +252,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                     Physician.Aspnetuserid = Aspnetuser.Id;
                     Physician.Firstname = providermodel.FirstName;
                     Physician.Lastname = providermodel.LastName;
-                    Physician.Status = providermodel.Status;
+                    Physician.Status = 1;
                     Physician.Roleid = providermodel.RoleId;
                     Physician.Email = providermodel.Email;
                     Physician.Mobile = providermodel.PhoneNumber;

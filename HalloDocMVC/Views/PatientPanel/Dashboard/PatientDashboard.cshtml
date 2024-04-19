@@ -35,7 +35,7 @@
                             <tr>
                                 <td scope="row"> @item.CreatedDate</td>
                                 <td>
-                                    <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId">
+                                    <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId" style="text-decoration: none;">
                                         @Enum.GetName(typeof(Status), item.Status)
                                     </a>
                                 </td>

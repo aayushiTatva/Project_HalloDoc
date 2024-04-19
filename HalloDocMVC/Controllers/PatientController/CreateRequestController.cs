@@ -13,12 +13,12 @@ namespace HalloDocMVC.Controllers.PatientController
     {
         #region Configuration
         private readonly HalloDocContext _context;
-        private readonly ICreateRequest _ICreateRequest;
+        private readonly ICreateRequestRepository _ICreateRequestRepository;
         private readonly INotyfService _INotyfService;
-        public CreateRequestController(HalloDocContext context, ICreateRequest iActions, INotyfService iNotyfService)
+        public CreateRequestController(HalloDocContext context, ICreateRequestRepository iActions, INotyfService iNotyfService)
         {
             _context = context;
-            _ICreateRequest = iActions;
+            _ICreateRequestRepository = iActions;
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
@@ -56,7 +56,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> PatientRequest(ViewDataPatientRequestModel model)
         {
-            if (await _ICreateRequest.CreatePatientRequest(model))
+            if (await _ICreateRequestRepository.CreatePatientRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -75,7 +75,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> FamilyRequest(ViewDataFamilyRequestModel model)
         {
-            if (await _ICreateRequest.CreateFamilyRequest(model))
+            if (await _ICreateRequestRepository.CreateFamilyRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -95,7 +95,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> ConciergeRequest(ViewDataConciergeRequestModel model)
         {
-            if (await _ICreateRequest.CreateConciergeRequest(model))
+            if (await _ICreateRequestRepository.CreateConciergeRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -114,7 +114,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> BusinessRequest(ViewDataBusinessRequestModel model)
         {
-            if (await _ICreateRequest.CreateBusinessRequest(model))
+            if (await _ICreateRequestRepository.CreateBusinessRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }

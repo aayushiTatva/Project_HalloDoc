@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HalloDocMVC.Repositories.Patient.Repository.Interface
 {
-    public interface ICreateRequest
+    public interface ICreateRequestRepository
     {
         Task<bool> CreatePatientRequest(ViewDataPatientRequestModel viewDataPatientRequest);
         Task<bool> CreateFamilyRequest(ViewDataFamilyRequestModel viewDataFamilyRequest);

@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="form-floating mb-3">
-                        <input asp-for="PatientName" type="text" class="form-control shadow-none" id="PatientName" placeholder="Enter Patient Name">
+                        <input asp-for="FirstName" type="text" class="form-control shadow-none" id="PatientName" placeholder="Enter Patient Name">
                         <label for="PatientName">Patient Name</label>
                     </div>
                 </div>
@@ -433,9 +433,6 @@
         inputs.forEach(input => {
             input.value = "";
         });
-
-        document.getElementById('RequestStatusDropDown').selectedIndex = 0;
-        document.getElementById('RequestStatusTypeDropDown').selectedIndex = 0;
         $('#Submit').click();
     });
 

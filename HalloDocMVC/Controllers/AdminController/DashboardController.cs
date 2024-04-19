@@ -96,6 +96,16 @@ namespace HalloDocMVC.Controllers.AdminController
         public IActionResult Export(string status)
         {
             var requestData = _IAdminDashboard.Export(status);
+            List<int> statuslist = status.Split(',').Select(int.Parse).ToList();
+            if (statuslist.Count > 1)
+            {
+                requestData = _IAdminDashboard.Export(status);
+            }
+            else
+            {
+                var currentstatus = CV.CurrentStatus();
+                requestData = _IAdminDashboard.Export(currentstatus);
+            }
 
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
@@ -119,15 +129,15 @@ namespace HalloDocMVC.Controllers.AdminController
                 {
                     worksheet.Cells[i + 2, 1].Value = requestData[i].PatientName;
                     worksheet.Cells[i + 2, 2].Value = requestData[i].Requestor;
-                    worksheet.Cells[i + 2, 3].Value = requestData[i].RequestedDate;
+                    worksheet.Cells[i + 2, 3].Value = requestData[i].RequestedDate.ToString("MMM d, yyyy");
                     worksheet.Cells[i + 2, 4].Value = requestData[i].PatientPhoneNumber;
                     worksheet.Cells[i + 2, 5].Value = requestData[i].Address;
                     worksheet.Cells[i + 2, 6].Value = requestData[i].Notes;
                     worksheet.Cells[i + 2, 7].Value = requestData[i].ProviderName;
-                    worksheet.Cells[i + 2, 8].Value = requestData[i].DateOfBirth;
+                    worksheet.Cells[i + 2, 8].Value = requestData[i].DateOfBirth.ToString("MMM d, yyyy");
                     worksheet.Cells[i + 2, 9].Value = requestData[i].RequestTypeId;
                     worksheet.Cells[i + 2, 10].Value = requestData[i].Email;
-                    worksheet.Cells[i + 2, 11].Value = requestData[i].RegionId;
+                    worksheet.Cells[i + 2, 11].Value = requestData[i].RequestId;
                 }
 
                 byte[] excelBytes = package.GetAsByteArray();

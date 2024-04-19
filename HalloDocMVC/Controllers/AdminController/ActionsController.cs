@@ -179,17 +179,28 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region UploadDocuments
-        public IActionResult UploadDocuments(int Requestid, IFormFile file)
+        public IActionResult UploadDocuments(int Requestid, List<IFormFile> files)
         {
-            if(_IActions.UploadDocuments(Requestid, file))
+            if (files != null && files.Count > 0)
             {
-                _INotyfService.Success("File Uploaded Successfully");
+                foreach (var file in files)
+                {
+                    if (_IActions.UploadDocuments(Requestid, file))
+                    {
+                        _INotyfService.Success("File Uploaded Successfully.");
+                    }
+                    else
+                    {
+                        _INotyfService.Error("File not uploaded.");
+                    }
+                }
             }
             else
             {
-                _INotyfService.Error("File mot uploaded");
+                _INotyfService.Error("No files selected.");
             }
-            return RedirectToAction("ViewDocuments", "Actions", new { id = Requestid });
+
+            return RedirectToAction("ViewUpload", "Actions", new { id = Requestid });
         }
         #endregion
 

@@ -165,5 +165,26 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
         }
         #endregion
+
+        #region CreateNewAccount
+        public IActionResult CreateNewAccount()
+        {
+            return View("~/Views/AdminPanel/Login/CreateAccount.cshtml");
+        }
+        #endregion
+        #region CreateNewAccountPost
+        public async Task<IActionResult> CreatNewAccontPost(string Email, string Password)
+        {
+            if (await _ILogin.CreateNewAccount(Email, Password))
+            {
+                _INotyfService.Success("User Created Successfully");
+            }
+            else
+            {
+                _INotyfService.Error("User Created Successfully");
+            }
+            return View("../AdminPanel/Home/Login");
+        }
+        #endregion
     }
 }

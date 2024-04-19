@@ -14,5 +14,6 @@ namespace HalloDocMVC.Repositories.Admin.Repository.Interface
         Task<bool> CheckRegisterEmail(string email);
         bool IsAccessGranted(int roleId, string menuName);
         public Task<bool> SavePassword(string email, string Password);
+        public Task<bool> CreateNewAccount(string Email, string Password);
     }
 }
