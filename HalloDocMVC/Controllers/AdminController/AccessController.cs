@@ -40,14 +40,14 @@ namespace HalloDocMVC.Controllers.AdminController
             PaginationRoles v = _IAccess.GetRoleAccessDetails(paginationRoles);
             return View("../AdminPanel/Admin/Access/Index", v);
         }
-        public async Task<IActionResult> UserAccess(int? role, PaginationUserAccess paginationUserAccess)
+        public Task<IActionResult> UserAccess(int? role, PaginationUserAccess paginationUserAccess)
         {
             PaginationUserAccess data =_IAccess.GetAllUserDetails(role, paginationUserAccess);
             if (role != null)
             {
                 data =_IAccess.GetAllUserDetails(role, paginationUserAccess);
             }
-            return View("../AdminPanel/Admin/Access/UserAccess", data);
+            return Task.FromResult<IActionResult>(View("../AdminPanel/Admin/Access/UserAccess", data));
         }
 
         #region CreateRole

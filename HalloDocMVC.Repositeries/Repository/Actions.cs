@@ -66,11 +66,11 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                     client.Intyear = model.DateOfBirth.Year;
                     client.Strmonth = monthName;
                     client.Notes = model.Notes;
-                    List<string> location = model.Address.Split(',').ToList(); //It splits the model's Address property by the comma character and converts the resulting array into a list of strings. It assigns this list to a variable named location.
-                    client.Street = location[0];
-                    client.City = location[1];
-                    client.State = location[2];
-                    client.Address = model.Room;
+                    /*List<string> location = model.Address.Split(',').ToList();*/ //It splits the model's Address property by the comma character and converts the resulting array into a list of strings. It assigns this list to a variable named location.
+                    //client.Street = location[0];
+                    //client.City = location[1];
+                    //client.State = location[2];
+                    //client.Address = model.Room;
                     _context.Requestclients.Update(client);
                     _context.SaveChangesAsync();
                     return true;

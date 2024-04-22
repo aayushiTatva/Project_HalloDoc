@@ -50,6 +50,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             .ToListAsync();
         }
         #endregion ComboBoxCaseReasons
+        
 
         #region ProviderByRegion
         public List<Physician> ProviderByRegion(int? regionId)

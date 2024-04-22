@@ -49,9 +49,9 @@
             @foreach (var (item, index) in Model.list.Select((item, index) => (item, index)))
             {
                 <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white">
-                    <td><small>@item.PatientName</small></td>
+                    <td><small class="ms-2">@item.PatientName</small></td>
                     <td>
-                        <button class="btn border-white text-white">
+                        <button class="btn border-white text-white mt-1">
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </td>
@@ -63,18 +63,20 @@
                         <small>@item.ProviderName</small>
                     </td>
                     <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
-                    <td><small>@item.Address</small></td>
+                    <td><small class="mt-1">@item.Address</small></td>
                     <td><small>Admin transferred to Dr. AGOLA</small></td>
                     <td>
-                        <button class="btn border border-white text-white my-2">
+                        <button class="btn border border-white text-white my-2 mt-1">
+                            <i class="fa-solid fa-user me-1"></i>
                             <small>Patient</small>
                         </button>
-                        <button class="btn border border-white text-white my-2">
+                        <button class="btn border border-white text-white my-2 mt-1">
+                            <i class="fa-solid fa-user me-1"></i>
                             <small>Provider</small>
                         </button>
                     </td>
                     <td>
-                        <button class="btn border border-white text-white my-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn border border-white text-white my-2 mt-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <small>Actions</small>
                         </button>
                         <ul class="dropdown-menu">
@@ -103,7 +105,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a asp-controller="Actions" asp-action="CloseCase_CC" class="dropdown-item" asp-route-id="@item.RequestId">
+                                <a asp-controller="Actions" asp-action="CloseCase_CC" class="dropdown-item" asp-route-RequestId="@item.RequestId">
                                     <i class="fa-regular fa-circle-xmark me-1"></i>
                                     Close Case
                                 </a>

@@ -51,6 +51,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("~/Views/AdminPanel/Admin/Provider/Index.cshtml", data);
         }
         #endregion
+
         #region ChangeNotification
         public async Task<IActionResult> ChangeNotification(string changedValues)
         {
@@ -61,14 +62,14 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region SendMessage
-        public async Task<IActionResult> SendMessage(string? email, string? contact, int? way, string? message)
+        public async Task<IActionResult> SendMessage(string? email, string? contact, int? communicate, string? message)
         {
             bool result = false, sms = false;
-            if (way == 1)
+            if (communicate == 1)
             {
                 sms = SendSMS(contact, message).Result;
             }
-            else if (way == 2)
+            else if (communicate == 2)
             {
                 result = await _emailConfiguration.SendMail(email, "Check Message", "Hello " + message);
             }
@@ -88,7 +89,6 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("Index");
         }
         #endregion
-
 
         #region AddPhysician
         [HttpPost]
@@ -160,6 +160,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("PhysicianProfile", new { id = PhysicianId });
         }
         #endregion
+
         #region EditPhysicianInfo
         public async Task<IActionResult> EditPhysicianInfo(ProviderModel data)
         {
@@ -228,7 +229,7 @@ namespace HalloDocMVC.Controllers.AdminController
         public async Task<bool> SendSMS(string receiverPhoneNumber, string message)
         {
             string accountSid = "AC69467c819de80787766fec56b90cc459";
-            string authToken = "e246e88eac98dd0c034be9b8b1f1a738";
+            string authToken = "47d40c1a322599e9e01db9d9a59232ae";
             string twilioPhoneNumber = "+12514188182";
 
             TwilioClient.Init(accountSid, authToken);

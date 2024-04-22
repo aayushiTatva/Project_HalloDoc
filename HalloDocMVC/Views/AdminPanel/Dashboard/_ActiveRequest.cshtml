@@ -62,10 +62,10 @@
             }
             @foreach (var (item, index) in Model.list.Select((item, index) => (item, index)))
             {
-                <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white">
-                    <td><small>@item.PatientName</small></td>
+                <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white m-2">
+                    <td><small class="ms-2">@item.PatientName</small></td>
                     <td>
-                        <button class="btn border-white text-white">
+                        <button class="btn border-white text-white mt-1">
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </td>
@@ -81,7 +81,7 @@
                         <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
                     }
                     <td>
-                        <button class="btn border border-white text-white mt-2">
+                        <button class="btn border border-white text-white mt-1">
                             <i class="fa-solid fa-phone pe-2"></i>
                             <small>@item.PatientPhoneNumber</small>
                         </button>
@@ -91,7 +91,7 @@
 
                         @if (item.RequestTypeId != 2)
                         {
-                        <button class="btn border border-white text-white mt-2">
+                        <button class="btn border border-white text-white mt-1">
                             <i class="fa-solid fa-phone pe-2"></i>
                             <small>@item.RequestorPhoneNumber</small>
                         </button>
@@ -108,7 +108,7 @@
                         <td>
                             @if (item.ProviderEncounterStatus == 5)
                             {
-                                <a asp-action="Consult" asp-controller="Actions" asp-route-RequestId="@item.RequestId" class="btn btn-info text-white">
+                                <a asp-action="Consult" asp-controller="Actions" asp-route-RequestId="@item.RequestId" class="btn btn-info text-white  mt-1">
                                     House Call
                                 </a>
                             }
@@ -125,7 +125,7 @@
                     {
                         <td><small>Admin transferred to Dr. AGOLA</small></td>
                         <td>
-                            <button class="btn border border-white text-white my-2 d-flex">
+                            <button class="btn border border-white text-white my-2 d-flex mt-1">
                                 <i class="fa-solid fa-user me-1"></i>
                                 <small>Patient</small>
                             </button>

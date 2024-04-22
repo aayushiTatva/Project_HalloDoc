@@ -9,8 +9,8 @@
             <div class="col-6  d-flex">
                 <div><h3><b>Close Case</b></h3></div>
             </div>
-            <div class="col-6 d-flex">
-                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index" ><button class="relogin shadow-none bg-white">Back</button></a>
+            <div class="col-6 d-flex justify-content-end">
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2" asp-controller="Dashboard" asp-action="Index">< Back</a>
             </div>
         </div>
         <div class="card shadow">
@@ -20,8 +20,8 @@
                         <small class="pt-3">Patient Name</small>
                         <h5 class="text-info">@Model.FirstName @Model.LastName</h5>
                     </div>
-                    <div class="col-md-6">
-                        <a class="relogin ms-auto " asp-controller="" asp-action=""><button class="relogin shadow-none bg-white">Create Invoice through quickbooks</button></a>
+                    <div class="col-md-6 ">
+                        <a class="btn relogin d-none d-sm-block mx-3 shadow-none " asp-controller="" asp-action="">Create Invoice through quickbooks</a>
                     </div>
                 </div><br/>
                 <div class="heading">
@@ -63,6 +63,8 @@
                 <div class="details">
                     <form method="post" asp-controller="Actions" asp-action="EditCloseCase" asp-route-RequestID="@Model.RequestID">
                         <input type="hidden" asp-for="RequestID" class="inputs" />
+                        <input type="hidden" asp-for="RC_FirstName" class="inputs" />
+                        <input type="hidden" asp-for="RC_LastName" class="inputs" />
                         <div class="row">
                             <div class="col form-floating  space">
                                 <input asp-for="RC_FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="details">

@@ -36,13 +36,17 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditCase
         public IActionResult EditCase(ViewCaseModel vcm)
         {
+            ViewBag.ComboBoxRegion = _IComboBox.ComboBoxRegions();
+            ViewBag.ComboBoxCaseReason = _IComboBox.ComboBoxCaseReasons();
             bool result = _IActions.EditCase(vcm);
             if (result)
             {
+                _INotyfService.Success("Case Information Updated");
                 return RedirectToAction("ViewCase", "Actions", new { id = vcm.RequestId });
             }
             else
             {
+                _INotyfService.Error("Case Information Not Updated");
                 return View("~/Views/AdminPanel/Actions/ViewCase.cshtml", vcm);
             }
         }
@@ -152,7 +156,7 @@ namespace HalloDocMVC.Controllers.AdminController
                 bool result = _IActions.EditViewNotes(adminnotes, physiciannotes, RequestID);
                 if (result)
                 {
-                    _INotyfService.Success("Notes Updated successfully...");
+                    _INotyfService.Success("Notes Updated successfully");
                     return RedirectToAction("ViewNotes", new { id = RequestID });
                 }
                 else
@@ -163,8 +167,8 @@ namespace HalloDocMVC.Controllers.AdminController
             }
             else
             {
-                _INotyfService.Information("Please Select one of the note!!");
-                TempData["Errormassage"] = "Please Select one of the note!!";
+                _INotyfService.Information("Only Physician notes and Admin notes can be updated, Please Select one of them!!");
+                TempData["Errormassage"] = "Only Physician notes and Admin notes can be updated, Please Select one of them!!";
                 return RedirectToAction("ViewNotes", new { id = RequestID });
             }
         }
@@ -179,28 +183,17 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region UploadDocuments
-        public IActionResult UploadDocuments(int Requestid, List<IFormFile> files)
+        public IActionResult UploadDocuments(int Requestid, IFormFile file)
         {
-            if (files != null && files.Count > 0)
+            if (_IActions.UploadDocuments(Requestid, file))
             {
-                foreach (var file in files)
-                {
-                    if (_IActions.UploadDocuments(Requestid, file))
-                    {
-                        _INotyfService.Success("File Uploaded Successfully.");
-                    }
-                    else
-                    {
-                        _INotyfService.Error("File not uploaded.");
-                    }
-                }
+                _INotyfService.Success("File Uploaded Successfully");
             }
             else
             {
-                _INotyfService.Error("No files selected.");
+                _INotyfService.Error("File mot uploaded");
             }
-
-            return RedirectToAction("ViewUpload", "Actions", new { id = Requestid });
+            return RedirectToAction("ViewDocuments", "Actions", new { id = Requestid });
         }
         #endregion
 
@@ -296,9 +289,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region CloseCase
-        public async Task<IActionResult> CloseCase_CC(int Id)
+        public async Task<IActionResult> CloseCase_CC(int RequestID)
         {
-            CloseCaseModel ccm = _IActions.GetRequestForCloseCase(Id);
+            CloseCaseModel ccm = _IActions.GetRequestForCloseCase(RequestID);
             return View("~/Views/AdminPanel/Actions/CloseCase.cshtml", ccm);
         }
         public IActionResult CloseCaseUnpaid(int Id)

@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\HalloDocMVC",
-    "\\HalloDocMVC.Repositeries",
-    "\\HalloDocMVC.Repositeries\\Repository",
+    "\\HalloDocMVC\\Controllers",
+    "\\HalloDocMVC\\Controllers\\AdminController",
     "\\HalloDocMVC\\Views",
     "\\HalloDocMVC\\Views\\AdminPanel",
     "\\HalloDocMVC\\Views\\AdminPanel\\Admin",
@@ -11,6 +11,6 @@
     "\\HalloDocMVC\\Views\\PatientPanel",
     "\\HalloDocMVC\\Views\\PatientPanel\\Dashboard"
   ],
-  "SelectedNode": "\\HalloDocMVC.Repositeries\\Repository\\AdminDashboard.cs",
+  "SelectedNode": "\\HalloDocMVC\\Controllers\\AdminController\\ActionsController.cs",
   "PreviewInSolutionExplorer": false
 }

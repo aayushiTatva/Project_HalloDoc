@@ -71,5 +71,10 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
             ProviderContact = 1,
             PatientContact
         }
+        public enum OnCallStatus
+        {
+            Unavailable = 0,
+            Available
+        }
     }
 }

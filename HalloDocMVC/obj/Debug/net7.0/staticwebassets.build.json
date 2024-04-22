@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qvsFOoPFn7iYezeePNaAAbz1xNKv6pBA4Db9prHQlng=",
+  "Hash": "wFQaST42uB89BxAIwOSGRCNtLmxAu7T80Y+IKn8+brQ=",
   "Source": "HalloDocMVC",
   "BasePath": "_content/HalloDocMVC",
   "Mode": "Default",
@@ -3791,6 +3791,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240329032923.jpg"
     },
     {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240422045016.jpg",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/116/Fig7. Admin dashboard in Conclude state-20240422045016.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240422045016.jpg"
+    },
+    {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig8. Admin dashboard in To Close state-20240326035515.jpg",
       "SourceId": "HalloDocMVC",
       "SourceType": "Discovered",
@@ -4520,6 +4537,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Physician\\9\\Shubh-20240402114617-Photo.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Physician\\Provider.png",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/Physician/Provider.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Physician\\Provider.png"
     }
   ]
 }

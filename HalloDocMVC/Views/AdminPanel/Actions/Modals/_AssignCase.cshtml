@@ -14,7 +14,6 @@
                     <input type="hidden" name="requestid" id="RequestID_Input_ModelAssignCase" />
                     <div class="form-floating my-3">
                         <select name="region" class="form-select form-control shadow-none" id="regionName" required data-allow-clear="true" tabindex="-1" onchange="assignFunction()" asp-items="@(new SelectList(ViewBag.ComboBoxRegion, "RegionId", "RegionName"))">
-                            
                         </select>
                         <label for="regionName">Narrow search by Region</label>
                         <div class="invalid-feedback">
@@ -23,7 +22,6 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select name="ProviderId" class="form-select form-control shadow-none" id="providerName" required data-allow-clear="true" tabindex="-1">
-                           
                         </select>
                         <label for="providerName">Select Physician</label>
                         <div class="invalid-feedback">
@@ -69,6 +67,5 @@
         });
     }
 </script>
-
 
 

@@ -34,9 +34,9 @@
                 @foreach (var item in Model.list)
             {
                 <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white">
-                    <td><small>@item.PatientName</small></td>
+                    <td><small class="ms-2">@item.PatientName</small></td>
                     <td>
-                        <button class="btn border-white text-white">
+                        <button class="btn border-white text-white mt-1">
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </td>
@@ -45,7 +45,7 @@
                     </td>
                     <td><small>@item.RequestedDate.ToString("MMM d , yyyy")</small></td>
                     <td>
-                        <button class="btn border border-white text-white mt-2">
+                        <button class="btn border border-white text-white mt-1">
                             <i class="fa-solid fa-phone pe-2"></i>
                             <small>@item.PatientPhoneNumber</small>
                         </button>
@@ -55,7 +55,7 @@
 
                         @if (item.RequestTypeId != 2)
                         {
-                        <button class="btn border border-white text-white mt-2">
+                        <button class="btn border border-white text-white mt-1">
                             <i class="fa-solid fa-phone pe-2"></i>
                             <small>@item.RequestorPhoneNumber</small>
                         </button>
@@ -68,10 +68,12 @@
                     </td>
                     <td><small>@item.Address</small></td>
                     <td>
-                        <button class="btn border border-white text-white my-2">
+                        <button class="btn border border-white text-white my-2 mt-1">
+                            <i class="fa-solid fa-user me-1"></i>
                             <small>Patient</small>
                         </button>
-                        <button class="btn border border-white text-white my-2">
+                        <button class="btn border border-white text-white my-2 mt-1">
+                            <i class="fa-solid fa-user me-1"></i>
                             <small>Provider</small>
                         </button>
                     </td>

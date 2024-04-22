@@ -20,14 +20,15 @@
                 </div>
                @* <span class="rounded-3 bg-success text-white mx-3 p-1 mb-"><small>Patients</small></span>*@
             </div>
-            <div class="col-6 d-flex">
-                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+            <div class="col-6 justify-content-end">
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
             </div>
         </div>
 
         <div class="card bg-white rounded shadow p-3">
             <form method="post" asp-controller="Actions" asp-action="EditCase" enctype="multipart/form-data">
                 <input type="hidden" asp-for="RequestId" value="@Model.RequestId" />
+                <input type="hidden" asp-for="RequestId" value="@Model.Region">
                 <div class="mt-4">
                     <h4>Patient Information</h4>
                     <div class="mt-2"> Confirmation Number</div>
@@ -72,7 +73,7 @@
                                     <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phone" placeholder="(201) 555-0123" />
                                     <label class="ms-2" for="tel">Phone Number</label>
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                                    <button class="btn border border-info text-info mx-2 ">
+                                    <button class="btn border border-info text-info mx-2 " asp-controller="Actions" asp-action="ViewCase">
                                         <i class="bi bi-telephone-fill"></i>
                                     </button>
                                 </div>
@@ -94,16 +95,16 @@
                             <div class="form-group-horizontal ">
                                 <div class="row">
                                     <div class="col-6 form-floating  space">
-                                        <input asp-for="Region" type="text" class="form-control shadow-none border-none input" id="Region" placeholder="details">
+                                        <input asp-for="Region" type="text" class="form-control shadow-none border-none " id="Region" placeholder="details" disabled>
                                         <label class="ms-2" for="Region"> Region</label>
                                     <span asp-validation-for="Region" class="text-danger"></span>
                                     </div>
                                     <div class="col-6">
                                         <div class="d-flex form-floating space">
-                                            <input asp-for="Address" type="text" class="form-control shadow-none input" id="Business" placeholder="details">
+                                            <input asp-for="Address" type="text" class="form-control shadow-none " id="Business" placeholder="details" disabled>
                                             <label class="ms-2" for="Business">Business Name/ Address</label>
                                         <span asp-validation-for="Address" class="text-danger"></span>
-                                            <button class="btn border border-info text-info mx-2">
+                                        <button class="btn border border-info text-info mx-2" asp-controller="Actions" asp-action="ViewCase">
                                                 <i class="fa fa-map-marker"></i>
                                             </button>
                                         </div>
@@ -111,7 +112,7 @@
                                 </div><br />
                                 <div class="row">
                                     <div class="col-6 form-floating  space">
-                                        <input asp-for="Room" type="text" class="form-control shadow-none input" id="Room" placeholder="details">
+                                        <input asp-for="Room" type="text" class="form-control shadow-none" id="Room" placeholder="details" disabled>
                                         <label class="ms-2" for="Room"> Room # I Suite (Optional)</label>
                                     </div>
                                 </div>
