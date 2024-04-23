@@ -2,6 +2,8 @@
     string path = Context.Request.Path;
 }
 @using HalloDocMVC.DBEntity.ViewModels;
+@using HalloDocMVC.Repositories.Admin.Repository.Interface;
+@inject ILogin _ILogin;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +54,7 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav">
-                    <li class="nav-item mt-2 @(path.StartsWith("/") ? "activeNavItemOffcanvas" : "")">
+                    @*<li class="nav-item mt-2 @(path.StartsWith("/") ? "activeNavItemOffcanvas" : "")">
                         <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item mt-4">
@@ -72,7 +74,185 @@
                     </li>
                     <li class="nav-item mt-4">
                         <a asp-controller="Records" asp-action="Index">Records</a>
-                    </li>
+                    </li>*@
+                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Dashboard"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Dashboard" asp-action="Index" class="nav-link px- text-dark @(path.StartsWith("/Dashboard") || path.StartsWith("/Actions") ? "activeNavItem" : "")" aria-current="page">
+                                <small>Dashboard</small>
+                            </a>
+                        </li>
+                    }
+                    @if (CV.role() == "Provider")
+                    {
+                        @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="" asp-action="" class="nav-link px-3 text-dark">
+                                    <small>Invoicing</small>
+                                </a>
+                            </li>
+                        }
+                        @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "MySchedule"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Scheduling" asp-action="Index" class="nav-link px-3 text-dark">
+                                    <small>My Schedule</small>
+                                </a>
+                            </li>
+                        }
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "ProviderLocation"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="ProviderLocation" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/ProviderLocation") ? "activeNavItem" : "")">
+                                    <small>Provider Location</small>
+                                </a>
+                            </li>
+                        }
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "MyProfile"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="MyProfile" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/MyProfile") ? "activeNavItem" : "")">
+                                    <small>My Profile</small>
+                                </a>
+                            </li>
+                        }
+                    }
+                    @if (CV.role() == "Provider")
+                    {
+                        @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "MyProfile"))
+                        {
+                            var a = Int32.Parse(CV.UserID());
+                            <li class="nav-item me-3">
+                                <a asp-controller="Providers" asp-action="PhysicianProfile" asp-route-id="@a" class="nav-link text-dark @(path.StartsWith("/MyProfile") ? "activeNavItem" : "")">
+                                    <small>My Profile</small>
+                                </a>
+                            </li>
+                        }
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link px-3 text-dark btn shadow-none rounded-0 @(path.StartsWith("/Providers") || path.StartsWith("/Scheduling") ? "activeNavItem" : "")">
+                                    <small>Providers</small>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Provider"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Providers" asp-action="Index" class="dropdown-item">
+                                                Provider
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Scheduling"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Scheduling" asp-action="Index" class="dropdown-item">
+                                                Scheduling
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
+                                    {
+                                        <li>
+                                            <a asp-controller="" asp-action="" class="dropdown-item">
+                                                Invoicing
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "VendorsInfo"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Partners" asp-action="Index" class="nav-link px-3 text-dark @(path.StartsWith("/Partners") ? "activeNavItem" : "")">
+                                <small>Partners</small>
+                            </a>
+                        </li>
+                    }
+                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "Role"))
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn nav-link px-3 text-dark shadow-none rounded-0 @(path.StartsWith("/Access") ? "activeNavItem" : "")">
+                                    <small>Access</small>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a asp-controller="Access" asp-action="Index" class="dropdown-item">
+                                            Account Access
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Access" asp-action="UserAccess" class="dropdown-item">
+                                            User Access
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    @if (CV.role() == "Admin")
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn rounded-0 nav-link px-3 text-dark shadow-none @(path.StartsWith("/Records") ? "activeNavItem" : "")">
+                                    <small>Records</small>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "History"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Records" asp-action="Index" class="dropdown-item">
+                                                Search Records
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "EmailLogs"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Records" asp-action="EmailLogs" class="dropdown-item">
+                                                Email Logs
+                                            </a>
+                                        </li>
+                                    }@if (_ILogin.IsAccessGranted((int)CV.RoleID(), "SMSLogs"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Records" asp-action="SMSLogs" class="dropdown-item">
+                                                SMS Logs
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "PatientRecords"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Records" asp-action="PatientHistory" class="dropdown-item">
+                                                Patient Records
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (_ILogin.IsAccessGranted((int)CV.RoleID(), "BlockedHistory"))
+                                    {
+                                        <li>
+                                            <a asp-controller="Records" asp-action="BlockedHistory" class="dropdown-item">
+                                                Blocked History
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

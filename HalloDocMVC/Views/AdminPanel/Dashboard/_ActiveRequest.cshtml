@@ -183,23 +183,27 @@
                                     </a>
                                 </li>
                             }
-                            @if (item.IsFinalize)
-                            {
-                                <li>
-                                    <a data-bs-toggle="modal" data-bs-target="#EncounterPdf" class="dropdown-item" onclick="model_Case(@item.RequestId)">
-                                        <i class="fa-solid fa-receipt me-2"></i>
-                                        Encounter
-                                    </a>
-                                </li>
-                            }
                             else
                             {
-                                <li>
-                                    <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
-                                        <i class="fa-solid fa-receipt me-2"></i>
-                                        Encounter
-                                    </a>
-                                </li>
+
+                                @if (item.ProviderEncounterStatus == 5 && item.IsFinalize)
+                                {
+                                    <li>
+                                        <a data-bs-toggle="modal" data-bs-target="#EncounterPdf" class="dropdown-item" onclick="model_Case(@item.RequestId)">
+                                            <i class="fa-solid fa-receipt me-2"></i>
+                                            Encounter
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-controller="Actions" asp-action="Encounter" class="dropdown-item" asp-route-id="@item.RequestId">
+                                            <i class="fa-solid fa-receipt me-2"></i>
+                                            Encounter
+                                        </a>
+                                    </li>
+                                }
                             }
                         </ul>
                     </td>

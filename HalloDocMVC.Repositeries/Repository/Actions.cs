@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections;
 using System.Globalization;
 using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.ViewUploadModel;
+using Org.BouncyCastle.Ocsp;
 
 namespace HalloDocMVC.Repositories.Admin.Repository
 {
@@ -188,17 +189,28 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                     requestData.Status = 11;
                     _context.Requests.Update(requestData);
                     _context.SaveChanges();
-                    Blockrequest blc = new Blockrequest
+                    var blockrequest = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestID);
+                    if(blockrequest != null)
                     {
-                        Requestid = requestData.Requestid.ToString(),
-                        Phonenumber = requestData.Phonenumber,
-                        Email = requestData.Email,
-                        Reason = Note,
-                        Createddate = DateTime.Now,
-                        Modifieddate = DateTime.Now
-                    };
-                    _context.Blockrequests.Add(blc);
-                    _context.SaveChanges();
+                        blockrequest.Isactive = new BitArray(1);
+                        blockrequest.Isactive[0] = false;
+                    }
+                    else
+                    {
+                        Blockrequest blc = new Blockrequest
+                        {
+                            Requestid = requestData.Requestid,
+                            Phonenumber = requestData.Phonenumber,
+                            Email = _context.Requestclients.FirstOrDefault(e => e.Requestid == RequestID).Email,
+                            Reason = Note,
+                            Isactive = new BitArray(1),
+                            Createddate = DateTime.Now,
+                            Modifieddate = DateTime.Now
+                        };
+                        _context.Blockrequests.Add(blc);
+                        _context.SaveChanges();
+                    }
+                    
                     return true;
                 }
                 else

@@ -65,7 +65,6 @@
                                 <th scope="col">Notes</th>
                                 <th scope="col">Is Active</th>
                                 <th scope="col">Action</th>
-                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider" id="BlockedHistory">
@@ -93,7 +92,7 @@
                                         <a asp-action="Unblock" asp-controller="Records" asp-route-RequestId="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
                                             <button class="contactprovider">
                                                 Unblock
-                                                @{
+                                                @*@{
                                                     var box = false;
                                                     if (item.IsActive != null && box == item.IsActive[0])
                                                     {
@@ -103,7 +102,7 @@
                                                     {
                                                         <td>Unblocked</td>
                                                     }
-                                                }
+                                                }*@
                                             </button>
                                         </a>
                                     </td>

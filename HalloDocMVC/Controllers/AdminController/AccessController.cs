@@ -15,6 +15,7 @@ namespace HalloDocMVC.Controllers.AdminController
 {
     public class AccessController : Controller
     {
+        #region configuration
         private readonly IAccess _IAccess;
         private readonly IComboBox _IComboBox;
         private readonly INotyfService _INotyfService;
@@ -31,6 +32,7 @@ namespace HalloDocMVC.Controllers.AdminController
             _IMyProfile = iMyProfile;
             _IContactYourProvider = iContactYourProvider; 
         }
+        #endregion
         /*public IActionResult Index()
         {
             return View("../AdminPanel/Admin/Access/Index");

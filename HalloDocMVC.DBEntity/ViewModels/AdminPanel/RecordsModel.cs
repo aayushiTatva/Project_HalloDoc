@@ -16,7 +16,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public string PatientName { get; set; }
         public short Status { get; set; }
         public int RequestType { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string PhysicianName { get; set; }
         public string Email { get; set; }
@@ -24,7 +24,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public string PhoneNumber { get; set; }
         public int? AccountType { get; set; }
         public string? ReceiverName { get; set; }
-        public DateTime SentDate { get; set; }
+        public DateTime? SentDate { get; set; }
         public List<BlockRequestModel>? BlockedRequest { get; set; }
         public List<SMSLogsModel>? SMSLog { get; set; }
         public List<EmailLogModel>? EmailLog { get; set; }

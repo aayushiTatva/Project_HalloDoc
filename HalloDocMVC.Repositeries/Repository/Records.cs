@@ -44,21 +44,21 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                                  (model.Status == null || model.Status == -1 || model.Status == 0 || r.Status == model.Status) &&
                                                  (model.FirstName == null || r.Firstname.Contains(model.FirstName)) && 
                                                  (model.RequestType == null || model.RequestType == 0 || r.Requesttypeid == model.RequestType) &&
-                                                 (model.StartDate == DateTime.MinValue || r.Createddate.Date == model.StartDate.Date) &&
+                                                 (model.StartDate == null || r.Createddate.Date == model.StartDate) &&
                                                  (model.PhysicianName == null || rpg.Firstname.Contains(model.PhysicianName)) &&
-                                                 (model.Email == null || r.Email.Contains(model.Email)) && 
+                                                 (model.Email == null || rcg.Email.Contains(model.Email)) && 
                                                  (model.PhoneNumber == null || r.Phonenumber.Contains(model.PhoneNumber))
 
                                                  select new SearchRecordsModel
                                                  {
                                                      RequestId = r.Requestid,
                                                      RequestTypeId = r.Requesttypeid,
-                                                     FirstName = r.Firstname,
-                                                     Lastname = r.Lastname,
+                                                     FirstName = rcg.Firstname,
+                                                     Lastname = rcg.Lastname,
                                                      Requestor = r.Requesttypeid,
                                                      StartDate = r.Createddate,
-                                                     Email = r.Email,
-                                                     PhoneNumber = r.Phonenumber,
+                                                     Email = rcg.Email,
+                                                     PhoneNumber = rcg.Phonenumber,
                                                      Address = rcg.Street + " " + rcg.Address + " " + rcg.City,
                                                      ZipCode = rcg.Zipcode,
                                                      Status = r.Status,
@@ -108,17 +108,17 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                            join rc in _context.Requestclients
                                            on r.Requestid equals rc.Requestid into reqClientGroup
                                            from rcg in reqClientGroup.DefaultIfEmpty()
-                                           where r.Isdeleted == new BitArray(1) && (model.FirstName == null || r.Firstname.Contains(model.FirstName)) && 
-                                           (model.Email == null || r.Email.Contains(model.Email)) && 
-                                           (model.LastName == null || r.Lastname.Contains(model.LastName)) && 
-                                           (model.PhoneNumber == null || r.Phonenumber.Contains(model.PhoneNumber))
+                                           where r.Isdeleted == new BitArray(1) && (model.FirstName == null || rcg.Firstname.Contains(model.FirstName)) && 
+                                           (model.Email == null || rcg.Email.Contains(model.Email)) && 
+                                           (model.LastName == null || rcg.Lastname.Contains(model.LastName)) && 
+                                           (model.PhoneNumber == null || rcg.Phonenumber.Contains(model.PhoneNumber))
                                            select new SearchRecordsModel
                                            {
                                                RequestId = r.Requestid,
-                                               FirstName = r.Firstname,
-                                               Lastname = r.Lastname,
-                                               Email = r.Email,
-                                               PhoneNumber = r.Phonenumber,
+                                               FirstName = rcg.Firstname,
+                                               Lastname = rcg.Lastname,
+                                               Email = rcg.Email,
+                                               PhoneNumber = rcg.Phonenumber,
                                                Address = rcg.Street + " " + rcg.Address + " " + rcg.City,
                                                UserId = (int)r.Userid
                                            }).ToList();
@@ -178,10 +178,10 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         public async Task<RecordsModel> GetEmailLogs(RecordsModel model)
         {
             List<EmailLogModel> em = await (from req in _context.Emaillogs
-                                            where req.Emailid != null && (model.AccountType == null || model.AccountType == -1 || req.Roleid == model.AccountType) &&
+                                            where req.Emailid != null && (model.AccountType == null || model.AccountType == 0 || req.Roleid == model.AccountType) &&
                                            (model.ReceiverName == null || _context.Requestclients.FirstOrDefault(e => e.Email == req.Emailid).Firstname.Contains(model.ReceiverName)) &&
-                                           (model.StartDate.Date == DateTime.MinValue || req.Createdate.Date == model.StartDate.Date) &&
-                                           (model.SentDate.Date == DateTime.MinValue || req.Sentdate.Value.Date == model.SentDate.Date) &&
+                                           (model.StartDate == null || req.Createdate.Date == model.StartDate) &&
+                                           (model.SentDate == null || req.Sentdate.Value.Date == model.SentDate) &&
                                            (model.Email == null || req.Emailid.Contains(model.Email))
                                             select new EmailLogModel
                                               {
@@ -214,9 +214,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             List<SMSLogsModel> sm = await (from req in _context.Smslogs
                                            where (model.AccountType == null || model.AccountType == -1 || req.Roleid == model.AccountType) &&
                                            (model.ReceiverName == null || _context.Requestclients.FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Firstname.Contains(model.ReceiverName)) &&
-                                           (model.StartDate.Date == DateTime.MinValue || req.Createdate.Date == model.StartDate.Date) &&
-                                           (model.SentDate.Date == DateTime.MinValue || req.Sentdate.Value.Date == model.SentDate.Date) &&
-                                           (model.PhoneNumber == null || req.Mobilenumber.Contains(model.PhoneNumber))
+                                           (model.StartDate == null || req.Createdate.Date == model.StartDate &&
+                                           (model.SentDate == null || req.Sentdate.Value.Date == model.SentDate) &&
+                                           (model.PhoneNumber == null || req.Mobilenumber.Contains(model.PhoneNumber)))
                                            select new SMSLogsModel
                                            {
                                                RequestId = req.Requestid,
@@ -245,13 +245,13 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         public async Task<RecordsModel> GetBlockedHistory(RecordsModel model)
         {
             List<BlockRequestModel> data = (from req in _context.Blockrequests
-                                            where (model.StartDate == DateTime.MinValue || req.Createddate.Value.Date == model.StartDate.Date) &&
-                                                  (model.FirstName.IsNullOrEmpty() || _context.Requests.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
+                                            where (model.StartDate == null|| req.Createddate.Value.Date == model.StartDate) &&
+                                                  (model.FirstName.IsNullOrEmpty() || _context.Requestclients.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
                                                   (model.Email.IsNullOrEmpty() || req.Email.ToLower().Contains(model.Email.ToLower())) &&
                                                   (model.PhoneNumber.IsNullOrEmpty() || req.Phonenumber.ToLower().Contains(model.PhoneNumber.ToLower()))
                                             select new BlockRequestModel
                                             {
-                                                PatientName = _context.Requests.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname,
+                                                PatientName = _context.Requestclients.FirstOrDefault(e => e.Requestid == Convert.ToInt32(req.Requestid)).Firstname,
                                                 Email = req.Email,
                                                 CreatedDate = (DateTime)req.Createddate,
                                                 IsActive = req.Isactive,
@@ -278,7 +278,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
         {
             try
             {
-                Blockrequest block = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestId.ToString());
+                Blockrequest block = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestId);
                 block.Isactive = new BitArray(1);
                 block.Isactive[0] = true;
                 _context.Blockrequests.Update(block);
