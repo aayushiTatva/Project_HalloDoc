@@ -69,18 +69,14 @@
                                     <td>
                                         @if (item.IsAdmin)
                                         {
-                                            <a asp-action="AdminEdit" asp-controller="Access" asp-route-id="@item.UserId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                                <button class="contactprovider">
+                                            <a asp-action="AdminEdit" asp-controller="Access" asp-route-id="@item.UserId" class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 float-start">
                                                     Edit
-                                                </button>
                                             </a>
                                         }
                                         else
                                         {
-                                            <a asp-action="PhysicianAddEdit" asp-controller="Access" asp-route-id="@item.UserId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                                <button class="contactprovider">
+                                            <a asp-action="PhysicianAddEdit" asp-controller="Access" asp-route-id="@item.UserId" class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 float-start">
                                                     Edit
-                                                </button>
                                             </a>
                                         }
                                     </td>

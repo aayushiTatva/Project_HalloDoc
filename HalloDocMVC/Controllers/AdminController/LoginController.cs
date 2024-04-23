@@ -41,16 +41,19 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion Configuration
 
+        #region Index
         public IActionResult Index()
         {
             return View("~/Views/AdminPanel/Home/Login.cshtml");
         }
+        #endregion
         /*
         public IActionResult ResetPassword()
         {
             return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
         }*/
 
+        #region Validate
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Validate(Aspnetuser aspNetUser)
@@ -79,6 +82,8 @@ namespace HalloDocMVC.Controllers.AdminController
                 return View("~/Views/AdminPanel/Home/Login.cshtml");
             }
         }
+        #endregion 
+
         #region Logout
         public async Task<IActionResult> Logout()
         {
@@ -86,10 +91,13 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("Index", "Login");
         }
         #endregion Logout
+
+        #region AuthError
         public IActionResult AuthError()
         {
             return View("../AdminPanel/Login/AuthError");
         }
+        #endregion
 
         #region SendMailResetPassword
         [HttpPost]
@@ -111,6 +119,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("Index");
         }
         #endregion
+
         #region ResetPassword
         public async Task<IActionResult> ResetPassword(string? Datetime,string? email)
         {
@@ -172,6 +181,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("~/Views/AdminPanel/Login/CreateAccount.cshtml");
         }
         #endregion
+
         #region CreateNewAccountPost
         public async Task<IActionResult> CreatNewAccontPost(string Email, string Password)
         {

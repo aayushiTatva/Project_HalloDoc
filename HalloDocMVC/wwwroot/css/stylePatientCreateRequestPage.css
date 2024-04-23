@@ -29,6 +29,13 @@
     border-color: aqua;
     color: aqua;
 }
+.relogin:hover {
+    float: right;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-color: aqua;
+    color: aqua;
+}
 
 
 .submission {

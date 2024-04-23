@@ -151,6 +151,8 @@
                                     </a>
                                 </li>
                             }
+                            @if(CV.role() == "Provider")
+                            {
                                 @if (item.IsFinalize)
                                 {
                                     <li>
@@ -169,12 +171,17 @@
                                         </a>
                                     </li>
                                 }
-                            <li>
-                                <a asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" class="dropdown-item">
-                                    <i class="fa-solid fa-receipt me-2"></i>
-                                    Encounter
-                                </a>
-                            </li>
+                            }
+                            @if(CV.role() == "Admin")
+                            {
+                                <li>
+                                    <a asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" class="dropdown-item">
+                                        <i class="fa-solid fa-receipt me-2"></i>
+                                        Encounter
+                                    </a>
+                                </li>
+                            }
+                            
                         </ul>
 
                     </td>
@@ -368,4 +375,9 @@
         $("#paginationform").submit();
     }
     console.log("Hello setpagenumber");
+
+    function model_Case(id) {
+        document.getElementById('RequestID_Encounter').value = id;
+        document.getElementById('RequestID_EncounterPdf').value = id;
+    }
 </script>

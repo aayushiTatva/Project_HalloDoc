@@ -2,6 +2,7 @@
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+    string path = Context.Request.Path;
 }
 <partial name="../Actions/Modals/_AssignCase.cshtml" />
 <div class="container">
@@ -21,7 +22,14 @@
                @* <span class="rounded-3 bg-success text-white mx-3 p-1 mb-"><small>Patients</small></span>*@
             </div>
             <div class="col-6 justify-content-end">
-                <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
+                @if (path.StartsWith("/Actions"))
+                {
+                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
+                }
+                @if (path.StartsWith("/Records"))
+                {
+                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Records" asp-action="ExplorePatientCases" asp-route-UserId="@Model.UserId">Back</a>
+                }
             </div>
         </div>
 

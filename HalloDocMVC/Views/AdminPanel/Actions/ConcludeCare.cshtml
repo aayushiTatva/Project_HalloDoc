@@ -13,12 +13,8 @@
                     Conclude Care
                 </strong>
             </div>
-            <div>
-                <a asp-controller="Dashboard" asp-action="Index" class="btn border border-info shadow-none">
-                    <strong class="text-info">
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-                    </strong>
-                </a>
+            <div class="col-6 justify-content-end">
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
             </div>
         </div>
         <div class="shadow bg-white rounded m-2 p-3">
@@ -105,20 +101,3 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        $('.filename').each(function () {
-            var fileName = $(this).text().trim();
-            if (fileName.endsWith('.pdf')) {
-                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif') || fileName.endsWith('.svg')) {
-                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
-            } else {
-                $(this).prepend(' <i class="fa-solid fa-file" > </i>');
-            }
-
-        });
-    });
-</script>

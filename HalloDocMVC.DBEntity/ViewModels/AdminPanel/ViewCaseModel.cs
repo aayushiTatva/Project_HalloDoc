@@ -9,6 +9,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
 {
     public class ViewCaseModel
     {
+        public int UserId { get; set; }
         public int RequestId { get; set; }
         public int RequestTypeId { get; set; }
         public int Status { get; set; }

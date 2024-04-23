@@ -34,13 +34,13 @@
         @if (CV.role() == "Admin")
         {
             <div class="col-6 ms-auto">
-                <a class="relogin ms-auto" asp-controller="Providers" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 " asp-controller="Providers" asp-action="Index">Back</a>
             </div>
         }
         @if (CV.role() == "Provider")
         {
             <div class="col-6 ms-auto">
-                <a class="relogin ms-auto" asp-controller="Dashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 " asp-controller="Dashboard" asp-action="Index">Back</a>
             </div>
         }
     </div>

@@ -70,8 +70,8 @@
                         <tbody class="table-group-divider" id="PatientHistory">
                             @foreach (var item in Model.SearchRecords)
                             {
-                                <tr>
-                                    <td scope="row">
+                                <tr scope="row">
+                                    <td >
                                         @item.FirstName 
                                     </td>
                                     <td>@item.Lastname</td>
@@ -79,10 +79,8 @@
                                     <td>@item.PhoneNumber</td>
                                     <td>@item.Address</td>
                                     <td>
-                                        <a asp-action="ExplorePatientCases" asp-controller="Records" asp-route-UserId="@item.UserId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
-                                                Explore
-                                            </button>
+                                        <a asp-action="ExplorePatientCases" asp-controller="Records" asp-route-UserId="@item.UserId" class="btn relogin d-none d-sm-block justify-content-start shadow-none float-start">
+                                            Explore
                                         </a>
                                     </td>
                                 </tr>

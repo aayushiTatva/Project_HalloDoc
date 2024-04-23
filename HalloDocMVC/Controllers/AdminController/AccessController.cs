@@ -37,11 +37,15 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             return View("../AdminPanel/Admin/Access/Index");
         }*/
+        #region Index
         public async Task<IActionResult> Index(PaginationRoles paginationRoles)
         {
             PaginationRoles v = _IAccess.GetRoleAccessDetails(paginationRoles);
             return View("../AdminPanel/Admin/Access/Index", v);
         }
+        #endregion
+
+        #region UserAccess
         public Task<IActionResult> UserAccess(int? role, PaginationUserAccess paginationUserAccess)
         {
             PaginationUserAccess data =_IAccess.GetAllUserDetails(role, paginationUserAccess);
@@ -51,6 +55,7 @@ namespace HalloDocMVC.Controllers.AdminController
             }
             return Task.FromResult<IActionResult>(View("../AdminPanel/Admin/Access/UserAccess", data));
         }
+        #endregion
 
         #region CreateRole
         public async Task<IActionResult> CreateRole(int? Id)

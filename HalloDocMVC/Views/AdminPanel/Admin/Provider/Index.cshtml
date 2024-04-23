@@ -31,9 +31,9 @@
                     <div class="col-md-6 col-sm-12 justify-content-end d-flex">
                             <form method="post" asp-controller="Providers" asp-action="ChangeNotification" id="saveChangesForm">
                                 <input type="hidden" id="changeValue" name="changedValues"/>
-                                <a class="relogin justify-content-end  ms-auto"><button class="contactprovider shadow-none bg-white ms-auto" style="display:none;" id="saveChangesButton">Save Changes</button></a>
+                            <button class="btn relogin mx-3 shadow-none ms-auto" style="display:none;" id="saveChangesButton">Save Changes</button>
                             </form>
-                        <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="provideracc shadow-none ">Create Provider Account</button></a>
+                            <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="provideracc shadow-none ">Create Provider Account</button></a>
                     </div>
                 </div>
                 
@@ -69,15 +69,13 @@
                                     <td>@item.RoleName</td>
                                     <td>@Enum.GetName(typeof(OnCallStatus), item.Isnondisclosuredoc)</td>
                                     <td>@Enum.GetName(typeof(AdminStatus), item.Status)</td>
-                                    <td>
-                                        <button data-bs-toggle="modal" data-bs-target="#ContactYourProvider" onclick="AssignContact('@item.Email','@item.PhoneNumber')" asp-route-id="@item.Email" class="contactprovider shadow-none document-button mx-1 mb-2">
+                                    <td scope="col">
+                                        <a asp-action="PhysicianProfile" asp-controller="Providers" asp-route-id="@item.PhysicianId" class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start">
+                                                Edit
+                                        </a>
+                                        <button data-bs-toggle="modal" data-bs-target="#ContactYourProvider" onclick="AssignContact('@item.Email','@item.PhoneNumber')" asp-route-id="@item.Email" class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start">
                                             Contact
                                         </button>
-                                        <a asp-action="PhysicianProfile" asp-controller="Providers" asp-route-id="@item.PhysicianId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
-                                                Edit
-                                            </button>
-                                        </a>
                                     </td>
                                 </tr>
                             }

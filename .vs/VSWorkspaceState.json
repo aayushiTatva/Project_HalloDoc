@@ -11,6 +11,6 @@
     "\\HalloDocMVC\\Views\\PatientPanel",
     "\\HalloDocMVC\\Views\\PatientPanel\\Dashboard"
   ],
-  "SelectedNode": "\\HalloDocMVC\\HalloDocMVC.sln",
+  "SelectedNode": "\\HalloDocMVC\\Controllers\\AdminController\\AccessController.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -22,10 +22,13 @@ namespace HalloDocMVC.Controllers.PatientController
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
+
+        #region Index
         public IActionResult Index()
         {
             return View("~/Views/PatientPanel/CreateRequest/SubmitRequestPage.cshtml");
         }
+        #endregion
 
         #region CheckEmail
 

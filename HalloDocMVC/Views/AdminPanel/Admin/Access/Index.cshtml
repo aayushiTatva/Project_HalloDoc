@@ -21,10 +21,10 @@
                         <div class="col-md-3">
                             <form method="post" asp-controller="Providers" asp-action="ChangeNotification" id="saveChangesForm">
                                 <input type="hidden" id="changeValue" name="changedValues" />
-                                <a class="relogin ms-auto"><button class="contactprovider shadow-none bg-white ms-auto" style="display:none;" id="saveChangesButton">Save Changes</button></a>
+                                <button class="btn relogin mx-3 shadow-none" style="display:none;" id="saveChangesButton">Save Changes</button>
                             </form>
                         </div>
-                        <a class="ms-auto pt-3" asp-controller="Access" asp-action="CreateRole"><button class="contactprovider shadow-none ">Create Access</button></a> @*
+                        <a class="ms-auto pt-3" asp-controller="Access" asp-action="CreateRole"><button class="btn relogin mx-3 shadow-none ">Create Access</button></a> @*
                         <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="contactprovider shadow-none ">Create Access</button></a>*@
                     </div>
                 </div>
@@ -49,14 +49,11 @@
                                 <tr>
                                     <td>@item.RoleName</td>
                                     <td>@Enum.GetName(typeof(AccountType), item.AccountType)</td>
-                                    <td>
-                                        <a asp-action="CreateRole" asp-controller="Access" asp-route-id="@item.RoleId" class="contactprovider shadow-none document-button mx-1 mb-2"></a>
-                                        <a asp-action="CreateRole" asp-controller="Access" asp-route-id="@item.RoleId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
+                                    <td scope="col">
+                                        <a asp-action="CreateRole" asp-controller="Access" asp-route-id="@item.RoleId" class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 float-start">
                                                 Edit
-                                            </button>
                                         </a>
-                                        <button class="contactprovider shadow-none document-button mx-1 mb-2 deletebtn">
+                                        <button class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 deletebtn float-start">
                                             Delete
                                         </button>
                                         <form id="deleteroleform" asp-action="DeleteRole" asp-controller="Access" asp-route-roleid="@item.RoleId">

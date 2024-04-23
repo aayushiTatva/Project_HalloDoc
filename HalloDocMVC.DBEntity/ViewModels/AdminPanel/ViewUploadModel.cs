@@ -9,6 +9,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
 {
     public class ViewUploadModel
     {
+        public int UserId { get; set; }
         public int RequestId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,6 +21,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public int TotalPages { get; set; } = 1;
         public class Documents
         {
+            public int UserId { get; set; }
             public short? Status { get; set; }
             public string? Uploader { get; set; }
             public string? filename { get; set; }

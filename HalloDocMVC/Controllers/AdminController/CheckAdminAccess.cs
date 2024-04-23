@@ -5,6 +5,7 @@ namespace HalloDocMVC.Controllers.AdminController
 {
     public class CheckAdminAccess : ActionFilterAttribute, IAuthorizationFilter
     {
+        #region OnAuthorization
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             var rd = filterContext.RouteData;
@@ -25,5 +26,6 @@ namespace HalloDocMVC.Controllers.AdminController
             filterContext.HttpContext.Response.Headers["Pragma"] = "no-cache";
             base.OnResultExecuting(filterContext);
         }
+        #endregion
     }
 }

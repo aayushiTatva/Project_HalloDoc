@@ -19,10 +19,13 @@ namespace HalloDocMVC.Controllers.AdminController
             _logger = logger;
         }
         #endregion
+
+        #region Index
         public async Task<IActionResult> Index()
         {
             ViewBag.Log = await _IContactYourProvider.FindPhysicianLocation();
             return View("~/Views/AdminPanel/Admin/ProviderLocation/Index.cshtml");
         }
+        #endregion
     }
 }

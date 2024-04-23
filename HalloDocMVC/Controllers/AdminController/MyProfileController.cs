@@ -67,6 +67,7 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("Index");
         }
         #endregion
+
         #region EditBillingInfo
         [HttpPost]
         public async Task<IActionResult> EditBillingInfo(AdminProfileModel adminProfile)

@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 mr-5 d-flex">
-                        <a class="ms-auto ps-5" asp-controller="Partners" asp-action="AddEditBusiness"><button class="relogin shadow-none bg-white">+ Add Business</button></a>
+                        <a class="ms-auto ps-5" asp-controller="Partners" asp-action="AddEditBusiness"><button class="btn relogin d-none d-sm-block mx-3 shadow-none justify-content-end">+ Add Business</button></a>
                     </div>
                 </div>
 
@@ -63,15 +63,15 @@
                                     <td>@item.PhoneNumber</td>
                                     <td>@item.BusinessContact</td>
                                     <td>
-                                        <button class="contactprovider shadow-none deletebtn mx-1 mb-2">
+                                        <button class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start deletebtn mb-2">
                                             Delete
                                         </button>
                                         <form id="deletepartnerform" asp-controller="Partners" asp-action="DeleteVendor" asp-route-VendorId="@item.VendorId">
                                         </form>
-                                        <a asp-action="AddEditBusiness" asp-controller="Partners" asp-route-id="@item.VendorId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
+                                        <a asp-action="AddEditBusiness" asp-controller="Partners" asp-route-id="@item.VendorId" class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start">@*
+                                            <button class="contactprovider">*@
                                                 Edit
-                                            </button>
+                                           @* </button>*@
                                         </a>
                                     </td>
                                 </tr>

@@ -13,9 +13,9 @@
                 <img src="images/Patient Site 1.png">
             </div>-->
             <!--Begin Main div-->
-            <div class="col show">
-                <div class="row">
-                    <a class="relogin" asp-controller="PatientDashboard" asp-action="Index"><button class="relogin shadow-none bg-white">Back</button></a>
+            <div class="row show">
+            <div class="col float-end">
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="PatientDashboard" asp-action="Index">Back</a>
                 </div><br /><br />
                 <!--Begin Patient info-->
             <form method="post" asp-controller="PatientDashboard" asp-action="PostMe" enctype="multipart/form-data">
@@ -25,23 +25,23 @@
                             <div class=" row">
                                 <div class="col form-floating  space">
                                     <textarea asp-for="Symptoms" class="form-control shadow-none " id="symptons" placeholder="details"></textarea>
-                                    <label for="symptons"> Enter Brief Details of Symptons(Optional)</label>
+                                    <label class="ms-2" for="symptons"> Enter Brief Details of Symptons(Optional)</label>
                                 </div>
                             </div><br />
                             <div class="row">
                                 <div class="col form-floating  space">
                                     <input asp-for="FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="details">
-                                    <label for="fname"> First Name</label>
+                                <label class="ms-2" for="fname"> First Name</label>
                                 </div>
                                 <div class="col form-floating  space">
                                     <input asp-for="LastName" type="text" class="form-control shadow-none" id="lname" placeholder="details">
-                                    <label for="lname">Last Name</label>
+                                <label class="ms-2" for="lname">Last Name</label>
                                 </div>
                             </div><br />
                             <div class="row">
                                 <div class="col form-floating  space">
                                     <input asp-for="DateOfBirth" type="date" class="form-control shadow-none" id="dob" placeholder="Date of Birth">
-                                    <label for="dob">Date Of Birth</label>
+                                <label class="ms-2" for="dob">Date Of Birth</label>
                                 </div>
                             </div>
                         </div>
@@ -54,11 +54,11 @@
                             <div class="row">
                                 <div class="col form-floating  space">
                                     <input asp-for="Email" type="email" class="form-control shadow-none" id="email" placeholder="details">
-                                    <label for="emailid"> Email</label>
+                                <label class="ms-2" for="emailid"> Email</label>
                                 </div>
                                 <div class="col-6 form-floating  space">
                                     <input asp-for="PhoneNumber" class="form-control shadow-none" type="tel" id="phone" />
-                                    <label for="tel"></label>
+                                <label class="ms-2" for="tel"></label>
                                 </div>
                             </div>
                         </div>
@@ -71,27 +71,27 @@
                             <div class="row">
                                 <div class="col-6 form-floating  space">
                                     <input asp-for="Street" type="text" class="form-control shadow-none" id="street" placeholder="details">
-                                    <label for="street"> Street</label>
+                                <label class="ms-2" for="street"> Street</label>
                                 </div>
                                 <div class="col-6 form-floating  space">
                                     <input asp-for="City" type="text" class="form-control shadow-none" id="city" placeholder="details">
-                                    <label for="city">City</label>
+                                <label class="ms-2" for="city">City</label>
                                 </div>
                             </div><br />
                             <div class="row">
                                 <div class="col-6 form-floating  space">
                                     <input asp-for="State" type="text" class="form-control shadow-none" id="state" placeholder="details">
-                                    <label for="state"> state</label>
+                                <label class="ms-2" for="state"> state</label>
                                 </div>
                                 <div class="col-6 form-floating  space">
                                     <input asp-for="ZipCode" type="text" class="form-control shadow-none " id="zipcode" placeholder="details">
-                                    <label for="zipcode">Zipcode</label>
+                                <label class="ms-2" for="zipcode">Zipcode</label>
                                 </div>
                             </div><br />
                             <div class="row">
                                 <div class="col-6 form-floating space">
                                     <input asp-for="RoomSuite" type="text" class="form-control shadow-none " id="room" placeholder="details">
-                                    <label for="room"> Room # I Suite (Optional)</label>
+                                <label class="ms-2" for="room"> Room # I Suite (Optional)</label>
                                 </div>
                             </div>
                         </div>

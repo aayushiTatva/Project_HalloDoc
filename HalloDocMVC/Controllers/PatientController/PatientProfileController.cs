@@ -1,11 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
-using HalloDocMVC.Repositories.Admin.Repository;
-using HalloDocMVC.Repositories.Patient.Repository;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HalloDocMVC.Controllers.PatientController
 {
@@ -20,6 +16,7 @@ namespace HalloDocMVC.Controllers.PatientController
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
+
         #region GetProfile
         public IActionResult Index()
         {
@@ -27,6 +24,7 @@ namespace HalloDocMVC.Controllers.PatientController
             return View("~/Views/PatientPanel/Profile/Index.cshtml", model);
         }
         #endregion GetProfile
+
         #region EditProfile
         public async Task<IActionResult> EditProfile(ViewDataUserProfileModel model)
         {

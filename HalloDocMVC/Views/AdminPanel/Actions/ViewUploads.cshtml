@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+    string path = Context.Request.Path;
     var status = "null";
     if (TempData["Status"] == null)
     {
@@ -22,7 +23,14 @@
                 </strong>
             </div>
             <div>
-                <a class="btn relogin d-none d-sm-block mx-3 shadow-none " asp-controller="Dashboard" asp-action="Index">< Back</a>
+                @if (path.StartsWith("/Actions"))
+                {
+                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
+                }
+                @if (path.StartsWith("/Records"))
+                {
+                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Records" asp-action="ExplorePatientCases" asp-route-UserId="@Model.UserId">Back</a>
+                }
             </div>
         </div>
         <div class="shadow bg-white rounded m-2 p-3">
@@ -139,7 +147,7 @@
                         <div class="form-check">
                             <input class="form-check-input doc-checkbox" type="checkbox" onclick="statusselectall()">
                         </div>
-                        <div>
+                        <div class="filename">
                             <small>@item.filename</small>
                         </div>
                     </div>
@@ -174,21 +182,6 @@
 
 <script>
     $(function () {
-
-        $('.filename').each(function () {
-            var fileName = $(this).text().trim();
-            if (fileName.endsWith('.pdf')) {
-                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif') || fileName.endsWith('.svg')) {
-                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
-            } else {
-                $(this).prepend(' <i class="fa-solid fa-file" > </i>');
-            }
-
-        });
-
         $('#downloadAll').click(function () {
             $('tbody tr').each(function () {
                 if ($(this).find('.form-check-input').prop('checked')) {

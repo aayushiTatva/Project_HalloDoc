@@ -27,8 +27,8 @@
         <div class="col-6">
             <h4><strong>Patient History</strong></h4>
         </div>
-        <div class="col-6 ms-auto">
-            <a class="relogin ms-auto" asp-controller="Records" asp-action="PatientHistory"><button class="relogin shadow-none bg-white">Back</button></a>
+        <div class="col-6 justify-content-end">
+            <a class="btn relogin d-none d-sm-block shadow-none " asp-controller="Records" asp-action="PatientHistory">Back</a>
         </div>
     </div>
     <div class="row ">
@@ -68,17 +68,13 @@
                                         <td>@item.EndDate</td>
                                     }
                                     <td>
-                                        <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
+                                        <a asp-controller="Records" asp-action="ViewCase" asp-route-id="@item.RequestId" class="btn relogin d-none d-sm-block shadow-none float-start mx-1 mb-2">
                                                View Case
-                                            </button>
                                         </a>
                                     </td>
                                     <td>
-                                        <a asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="contactprovider shadow-none document-button mx-1 mb-2">
-                                            <button class="contactprovider">
+                                        <a asp-controller="Records" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="btn relogin d-none d-sm-block shadow-none float-start mx-1 mb-2">
                                                 Documents
-                                            </button>
                                         </a>
                                     </td>
                                 </tr>

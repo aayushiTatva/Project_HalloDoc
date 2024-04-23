@@ -1,16 +1,11 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DBEntity.DataContext;
-using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
-using HalloDocMVC.Models;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Repositories.Patient.Repository.Interface;
-using HalloDocMVC.Repositories.Patient.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HalloDocMVC.Controllers.PatientController
 {

@@ -36,8 +36,8 @@
                     </strong>
                 }
             </div>
-            <div class="col-6 ms-auto">
-                <a class="relogin ms-auto" asp-controller="@(path.StartsWith("/MyProfile") ? "Dashboard" : "Access")" asp-action="@(path.StartsWith("/MyProfile") ? "Index" : "UserAccess")"><button class="relogin shadow-none bg-white">Back</button></a>
+            <div class="col-6 justify-content-end">
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none " asp-controller="@(path.StartsWith("/MyProfile") ? "Dashboard" : "Access")" asp-action="@(path.StartsWith("/MyProfile") ? "Index" : "UserAccess")">Back</a>
             </div>
         </div>
         <div class="row min-vh-100">
@@ -71,8 +71,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6 ms-auto">
-                                <button type="submit" class="relogin"><a class="btn ms-auto shadow-none bg-white" style="color:aqua;" >Reset Password</a></button>
+                            <div class="col-12 justify-content-end">
+                                <button type="submit" class="btn relogin d-none d-sm-block mx-3 shadow-none ">Reset Password</button>
                             </div>
                         </div>
                     </div>

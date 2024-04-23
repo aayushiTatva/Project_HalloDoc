@@ -8,6 +8,8 @@ using System.Collections;
 using System.Globalization;
 using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.ViewUploadModel;
 using Org.BouncyCastle.Ocsp;
+using HalloDocMVC.DBEntity.ViewModels;
+using Org.BouncyCastle.Bcpg;
 
 namespace HalloDocMVC.Repositories.Admin.Repository
 {
@@ -31,6 +33,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
             var region = _context.Regions.FirstOrDefault(E => E.Regionid == l.Regionid);
             ViewCaseModel requestforviewcase = new()
             {
+                UserId = (int)_context.Requests.FirstOrDefault(e => e.Requestid == id).Userid,
                 RequestId = id,
                 Region = region.Name,
                 RequestTypeId = n.Requesttypeid,
@@ -192,8 +195,9 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                     var blockrequest = _context.Blockrequests.FirstOrDefault(e => e.Requestid == RequestID);
                     if(blockrequest != null)
                     {
-                        blockrequest.Isactive = new BitArray(1);
-                        blockrequest.Isactive[0] = false;
+                        blockrequest.Isactive = null;
+                        _context.Blockrequests.Update(blockrequest);
+                        _context.SaveChanges();
                     }
                     else
                     {
@@ -432,6 +436,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                                       where request.Requestid == id && requestWiseFile.Isdeleted == new BitArray(1)
                                       select new Documents
                                       {
+                                          
                                           Uploader = requestWiseFile.Physicianid != null ? phys.Firstname : (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
                                           isDeleted = requestWiseFile.Isdeleted.ToString(),
                                           RequestwisefileId = requestWiseFile.Requestwisefileid,
@@ -445,6 +450,7 @@ namespace HalloDocMVC.Repositories.Admin.Repository
 
             ViewUploadModel upload = new()
             {
+                UserId = (int)_context.Requests.FirstOrDefault(e => e.Requestid == id).Userid,
                 ConfirmationNumber = requests.Confirmationnumber,
                 RequestId = requests.Requestid,
                 FirstName = requestClient.Firstname,
@@ -545,6 +551,8 @@ namespace HalloDocMVC.Repositories.Admin.Repository
                 emaillog.Requestid = r.Requestid;
                 emaillog.Createdate = DateTime.Now;
                 emaillog.Sentdate = DateTime.Now;
+                emaillog.Action = 1;
+                emaillog.Roleid = 1;
             }
 
             
