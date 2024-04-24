@@ -24,11 +24,11 @@
             <div class="col-6 justify-content-end">
                 @if (path.StartsWith("/Actions"))
                 {
-                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
+                    <a class="btn relogin mx-3 shadow-none" asp-controller="Dashboard" asp-action="Index">Back</a>
                 }
                 @if (path.StartsWith("/Records"))
                 {
-                    <a class="btn relogin d-none d-sm-block mx-3 shadow-none" asp-controller="Records" asp-action="ExplorePatientCases" asp-route-UserId="@Model.UserId">Back</a>
+                    <a class="btn relogin mx-3 shadow-none" asp-controller="Records" asp-action="ExplorePatientCases" asp-route-UserId="@Model.UserId">Back</a>
                 }
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="card bg-white rounded shadow p-3">
             <form method="post" asp-controller="Actions" asp-action="EditCase" enctype="multipart/form-data">
                 <input type="hidden" asp-for="RequestId" value="@Model.RequestId" />
-                <input type="hidden" asp-for="RequestId" value="@Model.Region">
+                <input type="hidden" asp-for="Region" value="@Model.Region">
                 <div class="mt-4">
                     <h4>Patient Information</h4>
                     <div class="mt-2"> Confirmation Number</div>
@@ -52,32 +52,32 @@
 
                     </div><br />
                         <div class=" row">
-                            <div class="col form-floating  space">
+                            <div class="col-md-6 col-xs-12 form-floating  ">
                                 <textarea asp-for="Notes" class="form-control shadow-none input" id="notes" placeholder="details" style="height: 100px"></textarea>
                                 <label class="ms-2" for="notes"> Patient Notes</label>
                             <span asp-validation-for="Notes" class="text-danger"></span>
                             </div>
                         </div><br />
                         <div class="row">
-                            <div class="col form-floating  space">
+                        <div class="col-md-6 col-xs-12 form-floating  mb-3">
                                 <input asp-for="FirstName" type="text" class="form-control shadow-none input" id="fname" placeholder="details">
                                 <label class="ms-2" for="fname"> First Name</label>
                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
-                            <div class="col form-floating  space">
+                            <div class="col-md-6 col-xs-12 form-floating  ">
                                 <input asp-for="LastName" type="text" class="form-control shadow-none input" id="lname" placeholder="details">
                                 <label class="ms-2" for="lname">Last Name</label>
                             <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                         </div><br />
                         <div class="row">
-                            <div class="col-6 form-floating  space">
+                        <div class="col-md-6 col-xs-12 form-floating  mb-3">
                                 <input asp-for="DateOfBirth" type="date" class="form-control shadow-none input" id="dob" placeholder="Date of Birth">
                                 <label class="ms-2" for="dob">Date Of Birth</label>
                                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                             </div>
-                            <div class="col-6 ">
-                                <div class="d-flex form-floating  space" style="height:100%;">
+                        <div class="col-md-6 col-xs-12 ">
+                                <div class="d-flex form-floating " style="height:100%;">
                                     <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phone" placeholder="(201) 555-0123" />
                                     <label class="ms-2" for="tel">Phone Number</label>
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
@@ -88,7 +88,7 @@
                             </div>
                         </div><br />
                         <div class="row">
-                            <div class="col-6 form-floating  space">
+                            <div class="col-md-6 col-xs-12 form-floating  mb-3">
                                 <input asp-for="Email" type="email" class="form-control shadow-none input" id="email" placeholder="details">
                                 <label class="ms-2" for="emailid"> Email</label>
                                 <span asp-validation-for="Email" class="text-danger"></span>
@@ -102,13 +102,13 @@
                             <h4>Location Information</h4>
                             <div class="form-group-horizontal ">
                                 <div class="row">
-                                    <div class="col-6 form-floating  space">
+                                    <div class="col-md-6 col-xs-12 form-floating  mb-3">
                                         <input asp-for="Region" type="text" class="form-control shadow-none border-none " id="Region" placeholder="details" disabled>
                                         <label class="ms-2" for="Region"> Region</label>
                                     <span asp-validation-for="Region" class="text-danger"></span>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="d-flex form-floating space">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="d-flex form-floating ">
                                             <input asp-for="Address" type="text" class="form-control shadow-none " id="Business" placeholder="details" disabled>
                                             <label class="ms-2" for="Business">Business Name/ Address</label>
                                         <span asp-validation-for="Address" class="text-danger"></span>
@@ -119,7 +119,7 @@
                                     </div>
                                 </div><br />
                                 <div class="row">
-                                    <div class="col-6 form-floating  space">
+                                <div class="col-md-6 col-xs-12 form-floating mb-3">
                                         <input asp-for="Room" type="text" class="form-control shadow-none" id="Room" placeholder="details" disabled>
                                         <label class="ms-2" for="Room"> Room # I Suite (Optional)</label>
                                     </div>
@@ -130,7 +130,7 @@
             </form>
             <div class="row space">
                 <div class="d-flex justify-content-end ">
-                    <button class="bg-info border border-outline-info text-white rounded-2 submission text-white" onclick="model_case(@Model.RequestId)" data-bs-target="#AssignCase" data-bs-toggle="modal" data-bs-requesrid="@Model.RequestId">Assign Case</button></>
+                    <button class="bg-info border border-outline-info text-white rounded-2 submission text-white" onclick="model_case(@Model.RequestId)" data-bs-target="#AssignCase" data-bs-toggle="modal" data-bs-requestid="@Model.RequestId">Assign Case</button></>
                     <a asp-controller="actions" asp-action="ViewNotes" asp-route-id="@Model.RequestId" class="btn bg-info border border-outline-info text-white rounded-2 text-white ms-2">View Notes</a>
                     <a asp-controller="dashboard" asp-action="Index" class="btn bg-danger rounded-2 border border-outline-danger text-white ms-2">Cancel</a>
                 </div>
@@ -161,13 +161,9 @@
         function model_Case(id) {
             console.log(id);
             var modeldata = @Html.Raw(Json.Serialize(Model))
-                document.getElementById('PatientName_ModelCancelCase').innerText = modeldata[id].patientName;
-            document.getElementById('RequestID_Input_ModelCancelCase').value = modeldata[id].requestID;
             console.log(document.getElementById('RequestID_Input_ModelAssignCase').value);
             document.getElementById('RequestID_Input_ModelAssignCase').value = id;
             console.log(document.getElementById('RequestID_Input_ModelAssignCase').value);
-            document.getElementById('RequestID_Input_ModelBlockCase').value = modeldata[id].requestID;
-            document.getElementById('PatientName_ModelBlockCase').innerText = modeldata[id].patientName;
         }
 
     </script>

@@ -13,7 +13,7 @@
             <h4><strong>Encounter Form</strong></h4>
         </div>
         <div class="col-6 ms-auto">
-            <a class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2" asp-controller="Dashboard" asp-action="Index">< Back</a>
+            <a class="btn relogin mx-3 shadow-none mb-2" asp-controller="Dashboard" asp-action="Index">< Back</a>
         </div>
     </div>
     <div class="row min-vh-100">
@@ -27,50 +27,50 @@
                     <input type="hidden" asp-for="RequesClientId" />
                     <input type="hidden" asp-for="EncounterId" />
                     <div class="row">
-                        <div class="col-md-6 form-floating  space">
+                        <div class="col-md-6 form-floating  mb-3">
                             <input asp-for="FirstName" type="text" class="form-control shadow-none" id="fname" placeholder="First Name" disabled/> 
                             <label class="ms-2" for="fname"> First Name</label>
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6 form-floating  space">
+                        <div class="col-md-6 form-floating  mb-3">
                             <input asp-for="LastName" type="text" class="form-control shadow-none " id="lname" placeholder="Last Name" disabled/>
                             <label class="ms-2" for="lname">Last Name</label>
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
-                        <div class="col form-floating">
+                        <div class="col form-floating  mb-3">
                             <input asp-for="Location" type="text" class="form-control shadow-none" id="location" placeholder="Location" disabled/>
                             <label class="ms-2" for="location">Location</label>
                             <span asp-validation-for="Location" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
-                        <div class="col-md-6 form-floating  space">
+                        <div class="col-md-6 form-floating  mb-3">
                             <input asp-for="DateOfBirth" type="date" class="form-control shadow-none" id="dob" placeholder="Date Of Birth" disabled/>
                             <label class="ms-2" for="dob">Date Of Birth</label>
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6 form-floating  space">
+                        <div class="col-md-6 form-floating   mb-3">
                             <input asp-for="Date" type="date" class="form-control shadow-none" id="currentDate" placeholder="Date" disabled/>
                             <label class="ms-2" for="currentDate">Date</label>
                             <span asp-validation-for="Date" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
-                        <div class="col-md-6 ">
+                        <div class="col-md-6  mb-3">
                             <div class="d-flex form-floating  space" style="height:100%;">
                                 <input asp-for="PhoneNumber" class="form-control shadow-none inputs" type="tel" id="phones" placeholder="(201) 555-0123" disabled />
                                 <label class="ms-2" for="tel">Phone Number</label>
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-6 form-floating  space">
+                        <div class="col-md-6 form-floating  mb-3">
                             <input asp-for="Email" type="email" class="form-control shadow-none inputs" id="email" placeholder="Email" disabled/>
                             <label class="ms-2" for="emailid"> Email</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -86,7 +86,7 @@
                                 <span asp-validation-for="HistoryOfMedical" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -102,52 +102,52 @@
                                 <span asp-validation-for="Allergies" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
-                        <div class="col-md-4 form-floating ">
+                        <div class="col-md-4 form-floating mb-3">
                             <div class="d-flex form-floating" style="height:100%;">
                                 <input asp-for="Temp" class="form-control shadow-none" id="temp" placeholder="Temp" />
                                 <label class="ms-2" for="temp">Temp</label>
                                 <span asp-validation-for="Temp" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-4 form-floating">
+                        <div class="col-md-4 form-floating mb-3">
                             <input asp-for ="Hr" class="form-control shadow-none" id="hr" placeholder="HR">
                             <label class="ms-2" for="hr"> HR</label>
                             <span asp-validation-for="Hr" class="text-danger"></span>
                         </div>
-                        <div class="col-md-4 form-floating">
+                        <div class="col-md-4 form-floating mb-3">
                             <input asp-for="Rr" class="form-control shadow-none" id="rr" placeholder="RR">
                             <label class="ms-2" for="rr"> RR</label>
                             <span asp-validation-for="Rr" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
-                        <div class="col-md-2 form-floating ">
+                        <div class="col-md-2 form-floating mb-3">
                             <div class="form-floating" style="height:100%;">
                                 <input asp-for="BloodPressureS" class="form-control shadow-none" id="bpS" placeholder="Blood Pressure(S..)" />
                                 <label class="ms-2" for="bpS">Blood Pressure(S..)</label>
                                 <span asp-validation-for="BloodPressureS" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-2 form-floating ">
+                        <div class="col-md-2 form-floating mb-3">
                             <div class="form-floating" style="height:100%;">
                                 <input asp-for="BloodPressureD" class="form-control shadow-none" id="bpD" placeholder="Blood Pressure(D..)" />
                                 <label class="ms-2" for="bpD">Blood Pressure(D..)</label>
                                 <span asp-validation-for="BloodPressureD" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-4 form-floating">
+                        <div class="col-md-4 form-floating mb-3">
                             <input asp-for="O2" class="form-control shadow-none" id="oxygen" placeholder="O2">
                             <label class="ms-2" for="oxygen"> O2</label>
                             <span asp-validation-for="O2" class="text-danger"></span>
                         </div>
-                        <div class="col-md-4 form-floating">
+                        <div class="col-md-4 form-floating mb-3">
                             <input asp-for="Pain" class="form-control shadow-none" id="pain" placeholder="Pain">
                             <label class="ms-2" for="pain"> Pain</label>
                             <span asp-validation-for="Pain" class="text-danger"></span>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -163,7 +163,7 @@
                                 <span asp-validation-for="CV" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -179,7 +179,7 @@
                                 <span asp-validation-for="ABD" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -195,7 +195,7 @@
                                 <span asp-validation-for="Skin" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -210,7 +210,7 @@
                                 <label for="other">Other</label>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -226,7 +226,7 @@
                                 <span asp-validation-for="Treatment" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -242,7 +242,7 @@
                                 <span asp-validation-for="Procedures" class="text-danger"></span>
                             </div>
                         </div>
-                    </div><br />
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">

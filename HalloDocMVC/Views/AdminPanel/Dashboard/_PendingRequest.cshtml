@@ -183,7 +183,7 @@
                                 <span class="rounded-circle @Enum.GetName(typeof(RequestType), item.RequestTypeId)"></span>
                             </div>
                             <div class="col-6 h6">
-                                @item.Address
+                                @item.Address 
                             </div>
                             <div class="col-6  text-end">
                                 <button class="btn btn-sm btn-white border-info text-info rounded-pill 2px">
@@ -200,10 +200,13 @@
                                 <small>View Case</small>
                             </a>
                         </div>
-                        <p>
-                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Date of Birth: @item.DateOfBirth
-                        </p>
+                        @if (CV.role() == "Admin")
+                        {
+                            <p>
+                                <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Date of Birth: @item.DateOfBirth
+                            </p>
+                        }
                         <p>
                             <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i>
                             Email : @item.Email
@@ -212,27 +215,29 @@
                             <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i>
                             Patient : @item.PatientPhoneNumber
                         </p>
-                        <p>
-                            <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
-                            Requestor : @item.Requestor
-                        </p>
-                        <p>
-                            <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
-                            Transfer Notes : @item.Notes
-                        </p>
-                        <p>
-                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Date of Service: @item.RequestedDate
-                        </p>
-                        <p>
-                            <i class="fa-solid fa-user-doctor border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Physician:
-                        </p>
-                        <p>
-                            <i class="fa-solid fa-user border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Requestor: @item.RequestedDate
-                        </p>
-
+                        @if (CV.role() == "Admin")
+                        {
+                            <p>
+                                <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
+                                Requestor : @item.Requestor
+                            </p>
+                            <p>
+                                <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
+                                Transfer Notes : @item.Notes
+                            </p>
+                            <p>
+                                <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Date of Service: @item.RequestedDate
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-user-doctor border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Physician:
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-user border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Requestor: @item.RequestedDate
+                            </p>
+                        }
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#SendAgreement" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
@@ -244,21 +249,27 @@
                                     <small>View Notes</small>
                                 </a>
                             </div>
-                            <div class="col-6 mb-3">
-                                <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#TransferRequest" data-bs-requestid="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #00adef;">
-                                    <small>Transfer</small>
-                                </button>
-                            </div>
+                            @if (CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#TransferRequest" data-bs-requestid="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #00adef;">
+                                        <small>Transfer</small>
+                                    </button>
+                                </div>
+                            }
                             <div class="col-6 mb-3">
                                 <a asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
                                     <small>View Uploads</small>
                                 </a>
                             </div>
-                            <div class="col-6 mb-3">
-                                <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#ClearCase" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
-                                    <small>Clear Case</small>
-                                </button>
-                            </div>
+                            @if (CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <button onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#ClearCase" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
+                                        <small>Clear Case</small>
+                                    </button>
+                                </div>
+                            }
                             <div class="col-6 mb-3">
                                 <button onclick="modal_Case(@index)"  data-bs-toggle="modal" data-bs-target="#SendAgreement" class="btn btn-white text-white rounded-pill 2px w-100 " style="background-color: #228b22;">
                                     <small>Email</small>

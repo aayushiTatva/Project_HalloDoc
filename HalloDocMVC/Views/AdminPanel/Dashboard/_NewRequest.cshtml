@@ -208,32 +208,50 @@
                             <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i>
                             Patient : @item.PatientPhoneNumber
                         </p>
-                        <p>
-                            <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
-                            Requestor : @item.Requestor
-                        </p>
+                        @if(CV.role() == "Admin")
+                        {
+
+                            <p>
+                                <i class="fa fa-user border border-info rounded-pill p-1 me-2"></i>
+                                Requestor : @item.Requestor
+                            </p>
+                        }
 
                         <div class="row">
-                            <div class="col-6 mb-3">
-                                <button onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AssignCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn text-white shadow-none rounded-pill 2px w-100" style="background-color: #943db8;">
-                                    <small>Assign Case</small>
-                                </button>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <button onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#CancelCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn btn-white text-white shadow-none rounded-pill 2px w-100" style="background-color: #e42929;">
+                            @if (CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <button onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AssignCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn text-white shadow-none rounded-pill 2px w-100" style="background-color: #943db8;">
+                                        <small>Assign Case</small>
+                                    </button>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <button onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#CancelCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn btn-white text-white shadow-none rounded-pill 2px w-100" style="background-color: #e42929;">
                                     <small>Cancel Case</small>
                                 </button>
                             </div>
+                            }
+                            @if(CV.role() == "Provider")
+                            {
+                                <div class="col-6 mb-3">
+                                    <button onclick="model_Case(@index)" data-bs-toggle="modal" data-bs-target="#AcceptCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn text-white shadow-none rounded-pill 2px w-100" style="background-color: #943db8;">
+                                        <small>Accept Case</small>
+                                    </button>
+                                </div>
+                            }
                             <div class="col-6 mb-3">
                                 <a asp-controller="Actions" asp-action="ViewNotes" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill shadow-none 2px w-100" style="background-color: #228b22;">
                                     <small>View Notes</small>
                                 </a>
                             </div>
-                            <div class="col-6 mb-3">
-                                <button onclick="model_Case(@index)" id="CancelCase_@item.RequestId" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn btn-white text-white shadow-none rounded-pill 2px w-100" style="background-color: #e42929;">
-                                    <small>Block Patient</small>
-                                </button>
-                            </div>
+                            @if(CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <button onclick="model_Case(@index)" id="CancelCase_@item.RequestId" data-bs-toggle="modal" data-bs-target="#BlockCase" data-bs-requestid="@item.RequestId" data-bs-patientname="@item.PatientName" class="btn btn-white text-white shadow-none rounded-pill 2px w-100" style="background-color: #e42929;">
+                                        <small>Block Patient</small>
+                                    </button>
+                                </div>
+                            }
                             <div class="col-6 mb-3 ">
                                 <button class="btn btn-white text-white shadow-none rounded-pill 2px w-100" style="background-color: #228b22;">
                                     <small>Email</small>

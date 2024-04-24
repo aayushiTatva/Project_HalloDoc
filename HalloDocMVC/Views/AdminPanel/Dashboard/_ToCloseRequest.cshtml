@@ -176,9 +176,9 @@
                 <div id="flush-@item.RequestId" class="accordion-collapse collapse mb-3 border-top" data-bs-parent="#accordionExample">
                     <div class="accordion-body container-fluid">
                         <div class="d-flex justify-content-end me-2">
-                            <button asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" id="viewCase" class="btn btn-sm border-primary text-primary rounded-pill 2px">
+                            <a asp-controller="Actions" asp-action="ViewCase" asp-route-id="@item.RequestId" id="viewCase" class="btn btn-sm border-primary text-primary rounded-pill 2px">
                                 <small>View Case</small>
-                            </button>
+                            </a>
                         </div>
                         <p>
                             <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
@@ -206,34 +206,34 @@
                         </p>
                         <div class="row">
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #e42929;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" asp-controller="Actions" asp-action="CloseCase_CC" asp-route-RequestId="@item.RequestId" style="background-color: #e42929;">
                                     <small>Close Case</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" asp-controller="Actions" asp-action="ViewNotes" asp-route-id="@item.RequestId" style="background-color: #228b22;">
                                     <small>View Notes</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #145545;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #145545;">
                                     <small>Doctors Note</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" asp-controller="Actions" asp-action="ViewDocuments" asp-route-id="@item.RequestId" style="background-color: #228b22;">
                                     <small>View Uploads</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" style="background-color: #228b22;">
                                     <small>Encounter</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
-                                <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
+                                <a class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
                                     <small>Clear Case</small>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-6 mb-3">
                                 <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">

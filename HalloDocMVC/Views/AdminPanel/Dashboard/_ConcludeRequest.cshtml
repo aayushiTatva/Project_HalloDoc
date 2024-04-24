@@ -226,10 +226,13 @@
                                 <small>View Case</small>
                             </a>
                         </div>
-                        <p>
-                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Date of Birth: @item.DateOfBirth
-                        </p>
+                        @if(CV.role() == "Admin")
+                        {
+                            <p>
+                                <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Date of Birth: @item.DateOfBirth
+                            </p>
+                        }
                         <p>
                             <i class="fa fa-envelope border border-info rounded-pill p-1 me-2"></i>
                             Email : @item.Email
@@ -238,15 +241,28 @@
                             <i class="fa fa-phone border  border-info rounded-pill p-1 me-2"></i>
                             Patient : @item.PatientPhoneNumber
                         </p>
-                        <p>
-                            <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Date of Service: @item.RequestedDate
-                        </p>
-                        <p>
-                            <i class="fa-solid fa-user-doctor border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
-                            Physician:
-                        </p>
+                        @if(CV.role() == "Admin")
+                        {
+
+                            <p>
+                                <i class="fa fa-calendar border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Date of Service: @item.RequestedDate
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-user-doctor border border-info rounded-pill p-1 me-2" aria-hidden="true"></i>
+                                Physician:
+                            </p>
+                        }
                         <div class="row">
+                            @if(CV.role() == "Provider")
+                            {
+                                <div class="col-6 mb-3">
+                                    <a asp-controller="Actions" asp-action="ConcludeCare" asp-route-id="@item.RequestId" class="btn btn-danger text-white rounded-pill 2px w-100">
+                                        <i class="fa-solid fa-heart-pulse me-1"></i>
+                                        Conclude Care
+                                    </a>
+                                </div>
+                            }
                             <div class="col-6 mb-3">
                                 <a asp-controller="Actions" asp-action="ViewNotes" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
                                     <small>View Notes</small>
@@ -262,16 +278,42 @@
                                     <small>View Uploads</small>
                                 </a>
                             </div>
-                            <div class="col-6 mb-3">
-                                <a asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
-                                    <small>Encounter</small>
-                                </a>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
-                                    <small>Orders</small>
-                                </a>
-                            </div>
+                            @if (CV.role() == "Provider")
+                            {
+                                @if (item.IsFinalize)
+                                {
+                                    <div class="col-6 mb-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#EncounterPdf" class="btn btn-white text-white rounded-pill 2px w-100" onclick="model_Case(@item.RequestId)" style="background-color: #228b22;">
+                                            Encounter
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-6 mb-3">
+                                        <a asp-controller="Actions" asp-action="Encounter" class="btn btn-white text-white rounded-pill 2px w-100" asp-route-id="@item.RequestId" style="background-color: #228b22;">
+                                            Encounter
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            @if (CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <a asp-controller="Actions" asp-action="Encounter" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
+                                        Encounter
+                                    </a>
+                                </div>
+                            }
+                            @if(CV.role() == "Admin")
+                            {
+                                <div class="col-6 mb-3">
+                                    <a asp-controller="Actions" asp-action="Orders" asp-route-id="@item.RequestId" class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #ee9125;">
+                                        <small>Orders</small>
+                                    </a>
+                                </div>
+                            }
+                            
                             <div class="col-6 mb-3">
                                 <button class="btn btn-white text-white rounded-pill 2px w-100" style="background-color: #228b22;">
                                     <small>Email</small>
