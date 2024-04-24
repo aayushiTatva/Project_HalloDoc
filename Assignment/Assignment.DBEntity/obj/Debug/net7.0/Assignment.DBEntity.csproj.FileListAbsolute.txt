@@ -1,0 +1,14 @@
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\bin\Debug\net7.0\Assignment.DBEntity.deps.json
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\bin\Debug\net7.0\Assignment.DBEntity.runtimeconfig.json
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\bin\Debug\net7.0\Assignment.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\bin\Debug\net7.0\Assignment.DBEntity.pdb
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.csproj.AssemblyReference.cache
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.AssemblyInfoInputs.cache
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.AssemblyInfo.cs
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.csproj.CoreCompileInputs.cache
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\refint\Assignment.DBEntity.dll
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.pdb
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\Assignment.DBEntity.genruntimeconfig.cache
+C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\Assignment\Assignment.DBEntity\obj\Debug\net7.0\ref\Assignment.DBEntity.dll

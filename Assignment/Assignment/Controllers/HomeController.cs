@@ -1,4 +1,7 @@
-﻿using Assignment.Models;
+﻿using Assignment.DBEntity.DataContext;
+using Assignment.DBEntity.ViewModels;
+using Assignment.Models;
+using Assignment.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +9,20 @@ namespace Assignment.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly TaskManagementSystemContext _context;
+        private readonly ITaskRepository _ITaskRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController( ITaskRepository iTaskRepository, TaskManagementSystemContext context)
         {
-            _logger = logger;
+            _ITaskRepository = iTaskRepository;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(TaskModel model)
         {
-            return View();
+            TaskModel taskModel = _ITaskRepository.GetRecords(model);
+            return View("~/Views/Task/TaskRecords.cshtml", taskModel);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
