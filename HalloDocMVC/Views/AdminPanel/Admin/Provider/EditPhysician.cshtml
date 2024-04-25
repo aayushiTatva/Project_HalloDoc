@@ -33,9 +33,16 @@
         </div>
         @if (CV.role() == "Admin")
         {
-            <div class="col-6 ms-auto">
-                <a class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 " asp-controller="Providers" asp-action="Index">Back</a>
-            </div>
+            @if (path.StartsWith("/Access"))
+                {<div class="col-6 ms-auto">
+                    <a class="btn relogin mx-3 shadow-none" asp-controller="Access" asp-action="UserAccess">Back</a>
+                </div>
+            }
+            @if (path.StartsWith("/Provider"))
+            {<div class="col-6 ms-auto">
+                <a class="btn relogin mx-3 shadow-none" asp-controller="Provider" asp-action="Index" >Back</a>
+                </div>
+            }
         }
         @if (CV.role() == "Provider")
         {
@@ -45,6 +52,7 @@
         }
     </div>
     <div class="row min-vh-100 mt-3">
+        
         <form method="post" asp-controller="Providers" asp-action="AddPhysician" id="addedit" enctype="multipart/form-data">
 
             <div class="card shadow border-0 mb-3">
@@ -345,7 +353,7 @@
                                     {
                                         <input id="filebtn1" type="file" class="d-none form-control doc_uploder file " asp-for="Agreementdoc">
                                         <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn1').click()">
-                                            <span class="d-none d-sm-inline">Upload</span>
+                                            <span class="">Upload</span>
                                         </button>
                                     }
                                     @{
@@ -378,7 +386,7 @@
                                     {
                                         <input id="filebtn2" type="file" class="d-none form-control doc_uploder file" asp-for="BackGrounddoc">
                                         <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn2').click()">
-                                            <span class="d-none d-sm-inline">Upload</span>
+                                            <span class="">Upload</span>
                                         </button>
                                     }
                                     @{
@@ -411,7 +419,7 @@
                                     {
                                         <input id="filebtn3" type="file" class="d-none form-control doc_uploder file" asp-for="Trainingdoc">
                                         <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn3').click()">
-                                            <span class="d-none d-sm-inline">Upload</span>
+                                            <span class="">Upload</span>
                                         </button>
                                     }
                                     @{
@@ -444,7 +452,7 @@
                                     {
                                         <input id="filebtn4" type="file" class="d-none form-control doc_uploder file" asp-for="NonDisclosuredoc">
                                         <button type="button" class="btn btn-info text-white upload-button me-2" value="Upload" onclick="document.getElementById('filebtn4').click()">
-                                            <span class="d-none d-sm-inline">Upload</span>
+                                            <span class="">Upload</span>
                                         </button>
                                     }
                                     @{
@@ -498,10 +506,10 @@
                         <div class="row">
                             <div class="d-flex justify-content-end ">
                                 <button type="submit" id="saveboard" class="btn btn-info text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditProviderOnboarding">
-                                    <span class="d-none d-sm-inline">Save</span>
+                                    <span class="">Save</span>
                                 </button>
                                 <button type="button" class="btn btn-danger text-white ms-2" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="DeleteProvider" asp-route-PhysicianID="@(Model!= null?Model.PhysicianId:null)" id="DeleteAccount">
-                                    <span class="d-none d-sm-inline">Delete Account</span>
+                                    <span class="">Delete Account</span>
                                 </button>
                                 <input type="submit" class="btn btn-success text-white ms-2" id="add" value="Create Account" />
                             </div>

@@ -152,7 +152,9 @@
                                 <i class="fa fa-cloud-upload"></i>Upload
                             </span>
                         </a>
-                        <input asp-for="UploadFile" id="files" type="file" class="d-none" accept="image/x-png,image/gif,image/jpeg">
+                        <input asp-for="UploadFile" id="files" type="file" class="d-none">
+                        <input type="hidden" id="fileFormat" name="fileFormat">
+                        <input type="hidden" id="fileSize" name="fileSize">
                     </div>
                 </div>
             </div>
@@ -167,11 +169,28 @@
 </form>
 @*</div>*@
 <script>
-    $("#files").change(function () {
-        filename = this.files[0].name;
-        console.log(filename);
-        $("#choosenfile").text(filename);
+    const fileInput = document.getElementById('files');
+    const fileFormatInput = document.getElementById('fileFormat');
+    const choosenFileSpan = document.getElementById('choosenfile');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileType = file.type;
+
+        if (fileType !== 'image/png') {
+            alert(`Invalid file format. Only PNG files are allowed.`);
+            fileInput.value = '';
+            fileFormatInput.value = '';
+            choosenFileSpan.textContent = 'No file chosen';
+            return;
+        }
+        fileFormatInput.value = fileType;
+        choosenFileSpan.textContent = fileName;
     });
+    var today = new Date();
+    var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    document.getElementById("dob").setAttribute("max", maxDate);
     function fileValidation() {
         var fileInput =
             document.getElementById('file');

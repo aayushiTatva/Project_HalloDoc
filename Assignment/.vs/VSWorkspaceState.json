@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Assignment",
+    "\\Assignment.Repository",
+    "\\Assignment.Repository\\Interface",
+    "\\Assignment\\Controllers",
+    "\\Assignment\\Views",
+    "\\Assignment\\Views\\Shared",
+    "\\Assignment\\Views\\Task",
+    "\\Assignment\\Views\\Task\\Modals",
+    "\\Assignment\\wwwroot"
+  ],
+  "SelectedNode": "\\Assignment.sln",
+  "PreviewInSolutionExplorer": false
+}

@@ -19,20 +19,20 @@ namespace Assignment.Controllers
         {
             ViewBag.CategoryComboBox = await _ITaskRepository.CategoryComboBox();
             bool taskModel = await _ITaskRepository.GetRecordById(model);
-            return View("~/Views/Task/TaskRecords.cshtml", taskModel);
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> DeleteTask(int Id)
         {
             bool taskModel = await _ITaskRepository.DeleteTask(Id);
-            return View("~/Views/Task/TaskRecords.cshtml", taskModel);
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> AddTask(TaskModel model)
         {
             ViewBag.CategoryComboBox = await _ITaskRepository.CategoryComboBox();
             bool taskModel = await _ITaskRepository.AddTask(model);
-            return View("~/Views/Task/TaskRecords.cshtml", taskModel);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

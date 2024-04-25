@@ -12,11 +12,11 @@
             <div class="card-body border-0">
                 <div class="row d-flex">
                     <div class="col-md-6 col-sm-12 d-flex">
-                        <a class="btn border text-black shadow-none justify-content-end" data-bs-toggle="modal" data-bs-target="#AddEditTask" asp-route-id="@Model.TaskId" asp-action="AddTask" asp-controller="Task" style="background-color:#7CA28D">+ Add Business</a>
+                        <a class="btn border text-black shadow-none justify-content-end" data-bs-toggle="modal" data-bs-target="#AddEditTask" style="background-color:#7CA28D">+ Add Task</a>
                     </div>
                     <div class="search col-md-6 justify-content-end">
                         <div class="search col-md-3 col-sm-6 col-xs-12 mb-1 justify-content-end">
-                            <input onkeypress="SearchInput()" id="SearchInput" type="text" class="form-control" placeholder="Search Vendors">
+                            <input onkeypress="SearchInput()" id="SearchInput" type="text" class="form-control" placeholder="Search">
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-group-divider" id="taskbody">
-                            @foreach (var item in Model.TaskList)
+                            @foreach (var (item, index) in Model.TaskList.Select((item, index) => (item, index)))
                             {
                                 <tr>
                                     <td scope="row">
@@ -49,14 +49,13 @@
                                     <td>@item.CategoryName</td>
                                     <td>@item.City</td>
                                     <td>
-                                        <a class="btn border text-black shadow-none justify-content-end" asp-controller="Task" asp-action="EditTask" asp-route-Id="@Model.TaskId" style="background-color:#7CA28D">
+                                        <a class="btn border text-black shadow-none justify-content-end" onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#EditTask" style="background-color:#7CA28D">
                                             Edit
                                         </a>
-                                        <button class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start deletebtn mb-2">
+                                        <a class="btn btn-danger mx-3 shadow-none flow-start deletebtn mb-2" asp-controller="Task" asp-action="DeleteTask" asp-route-Id="@item.TaskId">
                                             Delete
-                                        </button>
-                                        <form id="deletepartnerform" asp-controller="Task" asp-action="DeleteTask" asp-route-Id="@Model.TaskId">
-                                        </form>
+                                        </a>
+                                       
                                     </td>
                                 </tr>
                            }
@@ -121,6 +120,15 @@
     </div>
 </div>
 <script>
+    function modal_Case(id) {
+        var modeldata = @Html.Raw(Json.Serialize(Model))
+            document.getElementById("TaskId_EditTask").value = modeldata.list[id].taskId;
+        document.getElementById("TaskName_EditTask").value = modeldata.list[id].taskName;
+        document.getElementById("Assignee_EditTask").value = modeldata.list[id].assignee;
+        document.getElementById("Description_EditTask").value = modeldata.list[id].description;
+        document.getElementById("DueDate_EditTask").value = modeldata.list[id].dueDate;
+        document.getElementById("City_EditTask").value = modeldata.list[id].city;
+    }
    function setpagenumber(e) {
         if (e == 'previous') {
             var cp = @Model.CurrentPage-1;
@@ -137,5 +145,5 @@
 
         console.log("Hello pagination");
         }
-
+    
 </script>

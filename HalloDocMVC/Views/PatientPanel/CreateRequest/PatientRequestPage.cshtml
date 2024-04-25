@@ -128,12 +128,14 @@
                 <div class="col-12 border rounded ">
                     <div class="d-flex justify-content-between">
                         <span id="choosenfile" class="p-3">No file choosen</span>
-                        <a class="btn bg-info btn btn-lg" onclick="document.getElementById('files').click()">
-                            <span for="files" class="btn text-white">
+                        <a class="btn bg-info btn btn-lg" onclick="document.getElementById('files').click()" >
+                            <span for="files" class="btn text-white" >
                                 <i class="fa fa-cloud-upload"></i>Upload
                             </span>
                         </a>
                         <input asp-for="UploadFile" id="files" type="file" class="d-none">
+                        <input type="hidden" id="fileFormat" name="fileFormat">
+                        <input type="hidden" id="fileSize" name="fileSize">
                     </div>
                 </div>
             </div>
@@ -142,13 +144,32 @@
     <br />
     <div class="row ">
         <div class="d-flex justify-content-end mb-3">
-            <input type="submit" class="btn bg-info border border-info text-white ">
+            <input type="submit" class="btn bg-info border border-info text-white " id="validateButton">
             <a asp-controller="CreateRequest" asp-action="Index" class="btn border border-info ms-1 text-info">Cancel</a>
         </div>
     </div>
 </form>
 @*</div>*@
 <script type="text/javascript">
+    const fileInput = document.getElementById('files');
+    const fileFormatInput = document.getElementById('fileFormat');
+    const choosenFileSpan = document.getElementById('choosenfile');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileType = file.type;
+
+        if (fileType !== 'image/png') {
+            alert(`Invalid file format. Only PNG files are allowed.`);
+            fileInput.value = '';
+            fileFormatInput.value = '';
+            choosenFileSpan.textContent = 'No file chosen';
+            return;
+        }
+        fileFormatInput.value = fileType;
+        choosenFileSpan.textContent = fileName;
+    });
     $(function () {
         $("#email").focusout(function () {
             var email = $("#email").val();
@@ -174,7 +195,9 @@
             });
         });
     });
-
+    var today = new Date();
+    var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    document.getElementById("dob").setAttribute("max", maxDate);
 </script>
 <script>
     window.onload = function (e) {
@@ -191,40 +214,5 @@
             });
         }
     }
-    $("#files").change(function () {
-        filename = this.files[0].name;
-        console.log(filename);
-        $("#choosenfile").text(filename);
-    });
-    function fileValidation() {
-        var fileInput =
-            document.getElementById('file');
-
-        var filePath = fileInput.value;
-
-        // Allowing file type
-        var allowedExtensions =
-            /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
-        if (!allowedExtensions.exec(filePath)) {
-            alert('Invalid file type');
-            fileInput.value = '';
-            return false;
-        }
-        else {
-
-            // Image preview
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById(
-                        'imagePreview').innerHTML =
-                        '<img src="' + e.target.result
-                        + '"/>';
-                };
-
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
-    }
+    
 </script>

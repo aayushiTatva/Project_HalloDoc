@@ -29,7 +29,7 @@
                     Check here for any files that you or the doctors of your subsequents requestors have attached for you for review.
                 </small>
 
-                <form id="UploadFile" method="post" asp-controller="PatientDashboard" asp-action="UploadDoc" enctype="multipart/form-data" asp-route-id="@Model.RequestId">
+                <form id="myForm" method="post" asp-controller="PatientDashboard" asp-action="UploadDoc" enctype="multipart/form-data" asp-route-id="@Model.RequestId">
                     <div class="d-flex justify-content-between bg-light border border-secondary rounded mt-3">
                         <button type="button" id="chooseFiles" class="col btn text-start text-secondary" onclick="document.getElementById('files').click()">
                             <span id="fileNames">Select Files</span>
@@ -185,22 +185,6 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    modeldata = @Html.Raw(Json.Serialize(Model))
-
-        $('.filename').each(function () {
-            var fileName = $(this).text().trim();
-            if (fileName.endsWith('.pdf')) {
-                $(this).prepend('<i class="fa-solid fa-file-pdf" style="color: #be2323;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-                $(this).prepend('<i class="fa-solid fa-file-doc" style="color: #74C0FC;font-size:1rem"></i> ');
-            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png') || fileName.endsWith('.gif') || fileName.endsWith('.svg')) {
-                $(this).prepend('<i class="fa-solid fa-images" style="color: #B197FC;font-size:1rem"></i> ');
-            } else {
-                $(this).prepend(' <i class="fa-solid fa-file" > </i>');
-            }
-
-        });
-
     $("#fileUploadBtn").click(function (e) {
         e.preventDefault();
         if ($('#files')[0].files[0] == undefined) {
@@ -215,10 +199,40 @@
             })
             return;
         } else {
-            $('#UploadFile').submit();
+            $('#myForm').submit();
         }
     });
+    const fileInput = document.getElementById('files');
+    const fileFormatInput = document.getElementById('fileFormat');
 
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileType = file.type;
+
+        if (file.type === 'image/png') {
+            filename = fileInput.files[0].name;
+            console.log(filename);
+            $("#chooseFiles").text(filename);
+        }
+        else {
+            if (fileType !== 'image/png') {
+                alert(`Invalid file format. Only PNG files are allowed.`);
+                fileInput.value = '';
+                fileFormatInput.value = '';
+                return;
+            }
+        }
+        fileFormatInput.value = fileType;
+    });
+
+    const form = document.getElementById('myForm');
+    form.addEventListener('submit', (event) => {
+        if (fileFormatInput.value === '') {
+            event.preventDefault();
+            alert(`Please select a valid file before submitting the form.`);
+        }
+    });
     $('#downloadAll').click(function () {
         $('tbody tr').each(function () {
             if ($(this).find('.form-check-input').prop('checked')) {

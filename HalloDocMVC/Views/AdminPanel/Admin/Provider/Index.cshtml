@@ -70,10 +70,10 @@
                                     <td>@Enum.GetName(typeof(OnCallStatus), item.Isnondisclosuredoc)</td>
                                     <td>@Enum.GetName(typeof(AdminStatus), item.Status)</td>
                                     <td scope="col">
-                                        <a asp-action="PhysicianProfile" asp-controller="Providers" asp-route-id="@item.PhysicianId" class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start">
+                                        <a asp-action="PhysicianProfile" asp-controller="Providers" asp-route-id="@item.PhysicianId" class="btn relogin mx-3 shadow-none flow-start mb-3">
                                                 Edit
                                         </a>
-                                        <button data-bs-toggle="modal" data-bs-target="#ContactYourProvider" onclick="AssignContact('@item.Email','@item.PhoneNumber')" asp-route-id="@item.Email" class="btn relogin d-none d-sm-block mx-3 shadow-none flow-start">
+                                        <button data-bs-toggle="modal" data-bs-target="#ContactYourProvider" onclick="AssignContact('@item.Email','@item.PhoneNumber')" asp-route-id="@item.Email" class="btn relogin mx-3 shadow-none flow-start">
                                             Contact
                                         </button>
                                     </td>

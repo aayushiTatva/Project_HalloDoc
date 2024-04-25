@@ -20,6 +20,7 @@ namespace Assignment.Controllers
 
         public async Task<IActionResult> Index(TaskModel model)
         {
+            ViewBag.CategoryComboBox = await _ITaskRepository.CategoryComboBox();
             TaskModel taskModel = _ITaskRepository.GetRecords(model);
             return View("~/Views/Task/TaskRecords.cshtml", taskModel);
         }

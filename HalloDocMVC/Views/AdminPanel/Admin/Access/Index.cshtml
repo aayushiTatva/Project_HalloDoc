@@ -16,16 +16,18 @@
     <div class="row ">
         <div class="card shadow">
             <div class="card-body border-0">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 ms-auto d-flex">
+                <div class="row justify-content-end">
+                    <div class="col-md-6 col-sm-12 justify-content-end d-flex">
                         <div class="col-md-3">
                             <form method="post" asp-controller="Providers" asp-action="ChangeNotification" id="saveChangesForm">
                                 <input type="hidden" id="changeValue" name="changedValues" />
                                 <button class="btn relogin mx-3 shadow-none" style="display:none;" id="saveChangesButton">Save Changes</button>
                             </form>
                         </div>
-                        <a class="ms-auto pt-3" asp-controller="Access" asp-action="CreateRole"><button class="btn relogin mx-3 shadow-none ">Create Access</button></a> @*
-                        <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="contactprovider shadow-none ">Create Access</button></a>*@
+                        <div class="col-md-3 justify-content-end">
+                            <a class="btn relogin mx-3 shadow-none justify-content-end" asp-controller="Access" asp-action="CreateRole">Create Access</a> @*
+                            <a class="ms-auto pt-3" asp-controller="Providers" asp-action="PhysicianProfile"><button class="contactprovider shadow-none ">Create Access</button></a>*@
+                        </div>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -50,10 +52,10 @@
                                     <td>@item.RoleName</td>
                                     <td>@Enum.GetName(typeof(AccountType), item.AccountType)</td>
                                     <td scope="col">
-                                        <a asp-action="CreateRole" asp-controller="Access" asp-route-id="@item.RoleId" class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 float-start">
+                                        <a asp-action="CreateRole" asp-controller="Access" asp-route-id="@item.RoleId" class="btn relogin  mx-3 shadow-none mb-2 float-start">
                                                 Edit
                                         </a>
-                                        <button class="btn relogin d-none d-sm-block mx-3 shadow-none mb-2 deletebtn float-start">
+                                        <button class="btn relogin  mx-3 shadow-none mb-2 deletebtn float-start">
                                             Delete
                                         </button>
                                         <form id="deleteroleform" asp-action="DeleteRole" asp-controller="Access" asp-route-roleid="@item.RoleId">

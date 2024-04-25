@@ -120,6 +120,7 @@ namespace Assignment.Repository
                     Description = model.Description,
                     DueDate = model.DueDate,
                     City = model.City,
+                    Isdeleted = new BitArray(1)
                 };
                 _context.Tasks.Add(tm);
                 _context.SaveChanges();

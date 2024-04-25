@@ -35,7 +35,6 @@
                 <div class="col-xl-2 col-md-3 col-sm-6 col-12">
                     <div class="form-floating mb-3">
                         <input asp-for="ReceiverName" type="text" class="form-control shadow-none" id="ReceiverName" placeholder="Enter Patient Name">
-                        <input type="hidden" asp-for="Email">
                         <label for="ReceiverName">Reciever Name</label>
                     </div>
                 </div>
@@ -88,11 +87,19 @@
                             <td>@Enum.GetName(typeof(EmailAction), item.Action)</td>
                             <td>@Enum.GetName(typeof(AccountType), item.RoleId)</td>
                             <td>@item.EmailId</td>
-                            <td>@item.CreatedDate.ToString("MMM d, yyyy hh:mm tt")</td>
+                            <td>@item.CreatedDate.ToString("MMM d, yyyy")</td>
                             <td>@item.SentDate.ToString("MMM d, yyyy")</td>
                             <td>Yes</td>
-                            <td>@item.SentTries</td>
-                            <td>@item.ConfirmationNumber</td>
+                            <td>1</td>
+                            @if (item.ConfirmationNumber == null)
+                            {
+                                <td>-</td>
+                            }
+                            else
+                            {
+                                <td> @item.ConfirmationNumber </td>
+                            }
+                            
                         </tr>
                     }
                 </tbody>

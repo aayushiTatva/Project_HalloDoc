@@ -133,5 +133,9 @@
             </div>
         </div>
     </div>
-
+    <script>
+        var today = new Date();
+        var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        document.getElementById("dob").setAttribute("max", maxDate);
+    </script>
 
