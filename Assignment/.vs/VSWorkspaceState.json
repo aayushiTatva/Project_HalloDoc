@@ -11,6 +11,6 @@
     "\\Assignment\\Views\\Task\\Modals",
     "\\Assignment\\wwwroot"
   ],
-  "SelectedNode": "\\Assignment\\Controllers\\TaskController.cs",
+  "SelectedNode": "\\Assignment\\Views\\Task\\TaskRecords.cshtml",
   "PreviewInSolutionExplorer": false
 }
