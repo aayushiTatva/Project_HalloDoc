@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.ComponentModel;
+using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
@@ -107,7 +108,7 @@ namespace HalloDocMVC.Controllers.AdminController
                 requestData = _IAdminDashboard.Export(currentstatus);
             }
 
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (ExcelPackage package = new())
             {

@@ -35,10 +35,11 @@ namespace HalloDocMVC.Repositories.Patient.Repository
         #region PatientRequest
         public async Task<bool> CreatePatientRequest(ViewDataPatientRequestModel viewDataPatientRequest)
         {
-            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataPatientRequest.Email && e.Isactive != null);
-            if(data != null)
+            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataPatientRequest.Email);
+            if(data != null && data.Isactive == null)
             {
                 return false;
+                
             }
             else
             {
@@ -146,8 +147,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateFamilyRequest(ViewDataFamilyRequestModel viewDataFamilyRequest)
         {
-            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataFamilyRequest.Email && e.Isactive != null);
-            if (data != null)
+            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataFamilyRequest.Email );
+            if (data != null && data.Isactive == null)
             {
                 return false;
             }
@@ -225,8 +226,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateConciergeRequest(ViewDataConciergeRequestModel viewDataConciergeRequest)
         {
-            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataConciergeRequest.Email && e.Isactive != null);
-            if (data == null)
+            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataConciergeRequest.Email );
+            if (data != null && data.Isactive == null)
             {
                 return false;
             }
@@ -302,8 +303,8 @@ namespace HalloDocMVC.Repositories.Patient.Repository
 
         public async Task<bool> CreateBusinessRequest(ViewDataBusinessRequestModel viewDataBusinessRequest)
         {
-            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataBusinessRequest.Email && e.Isactive != null);
-            if (data == null)
+            var data = _context.Blockrequests.FirstOrDefault(e => e.Email == viewDataBusinessRequest.Email );
+            if (data != null && data.Isactive == null)
             {
                 return false;
             }

@@ -25,9 +25,9 @@
         <div class="d-flex align-self-center">
             <h4><strong>Search Records</strong></h4>
         </div>
-        <a asp-controller="Dashboard" asp-action="Index" class="btn provideracc m-1 align-self-center shadow-none">
+        <a onclick="Export('1,2,3,4,5,6,7,8,9,10,11')" class="btn provideracc m-1 align-self-center shadow-none">
             <i class="fa-solid fa-share-from-square"></i>
-            <span class="d-none d-sm-inline">Export Data To Excel</span>
+            <span class="d-none d-sm-inline" >Export Data To Excel</span>
         </a>
     </div>
 
@@ -193,7 +193,7 @@
                             <td>
                                 <form class="DeleteForm" asp-controller="Records" asp-action="DeleteRequest">
                                     <input type="hidden" name="RequestId" value="@item.RequestId" />
-                                    <button type="button" class="btn btn-sm border-info text-info shadow-none mx-1 mb-2 Delete">
+                                    <button type="button" class="btn relogin d-none d-sm-block shadow-none float-start mx-1 mb-2 Delete">
                                         Delete
                                     </button>
                                 </form>
@@ -495,5 +495,31 @@
         $("#paginationform").submit();
 
         console.log("Hello pagination");
+    }
+
+    function Export(status) {
+        location.reload();
+        console.log(status);
+        $.ajax({
+            method: "POST",
+            url: "/Dashboard/Export",
+            data: { status: status },
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (result) {
+                var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'RequestData.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(link.href);
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
     }
 </script>

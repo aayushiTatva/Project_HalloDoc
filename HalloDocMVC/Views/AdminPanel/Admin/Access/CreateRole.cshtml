@@ -27,6 +27,7 @@
             <h5><strong>Details</strong></h5>
         </div>
         <form asp-action="PostRoleMenu" asp-controller="Access" id="resetpass" class="row g-3 mx-2 mb-3 ">
+            <input asp-for="RoleId" type="hidden" id="roleid" />
             <div class="col-xl-12">
                 <div class="row pb-4">
                     <div class="col-md-6 pb-3">
@@ -43,7 +44,7 @@
                         </div>
                     </div>
                     <input name="Menusid" type="hidden" id="menusid" />
-                    <input asp-for="RoleId" type="hidden" id="roleid" />
+                    
                     <div class="col-md-12">
                         <div id="menu" class="d-flex row">
                         </div>
