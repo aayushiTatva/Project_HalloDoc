@@ -3,14 +3,14 @@
     "",
     "\\HalloDocMVC",
     "\\HalloDocMVC.Repositeries",
-    "\\HalloDocMVC\\Controllers",
-    "\\HalloDocMVC\\Controllers\\AdminController",
+    "\\HalloDocMVC.Repositeries\\Repository",
+    "\\HalloDocMVC.Repositeries\\Repository\\Interface",
     "\\HalloDocMVC\\Views",
     "\\HalloDocMVC\\Views\\AdminPanel",
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions",
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions\\Modals",
     "\\HalloDocMVC\\Views\\AdminPanel\\Dashboard"
   ],
-  "SelectedNode": "\\HalloDocMVC\\Views\\AdminPanel\\Dashboard\\_NewRequest.cshtml",
+  "SelectedNode": "\\HalloDocMVC.Repositeries\\Repository\\Interface\\IActions.cs",
   "PreviewInSolutionExplorer": false
 }

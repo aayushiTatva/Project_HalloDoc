@@ -49,7 +49,7 @@
                                     <td>@item.CategoryName</td>
                                     <td>@item.City</td>
                                     <td>
-                                        <a class="btn border text-black shadow-none justify-content-end" onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#EditTask" style="background-color:#7CA28D">
+                                        <a class="btn border text-black shadow-none justify-content-end " onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#EditTask" style="background-color:#7CA28D">
                                             Edit
                                         </a>
                                         <a class="btn btn-danger mx-3 shadow-none flow-start deletebtn mb-2" asp-controller="Task" asp-action="DeleteTask" asp-route-Id="@item.TaskId">
