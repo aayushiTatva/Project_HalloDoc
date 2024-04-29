@@ -59,7 +59,7 @@
             <div class="row">
                 <div class="col form-floating mb-3">
                     <textarea asp-for="Symptoms" class="form-control shadow-none" id="symptoms" style="height: 100px" placeholder="Enter brief Details of Symptoms (Optional)"></textarea>
-                    <label for="symptoms">Enter brief Details of Symptoms (Optional)</label>
+                    <label class="ms-2" for="symptoms">Enter brief Details of Symptoms (Optional)</label>
                     <span asp-validation-for="Symptoms" class="text-danger"></span>
                 </div>
             </div>
@@ -94,9 +94,13 @@
                     <label class="ms-2" for="email"> Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 form-floating mb-3">
+                @*<div class="col-md-6 form-floating mb-3">
                     <input asp-for="PhoneNumber" class="form-control shadow-none input" type="tel" id="phones" placeholder="(201) 555-0123" />
                     <label class="ms-2" for="tel">Phone Number</label>
+                </div>*@
+                <div class="col-md-6 form-floating phone mb-3" >
+                    <input asp-for="PhoneNumber" type="tel" class="form-control shadow-none phone w-100 h-100 " id="" style="width: 120%;">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -191,35 +195,22 @@
     var today = new Date();
     var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     document.getElementById("dob").setAttribute("max", maxDate);
-    function fileValidation() {
-        var fileInput =
-            document.getElementById('file');
+    
+</script>
+<script>
+    window.onload = function (e) {
+        initializeIntlTelInput();
+    }
 
-        var filePath = fileInput.value;
+    function initializeIntlTelInput() {
+        const phoneInputFields = document.querySelectorAll(".phone input[type='tel']");
 
-        // Allowing file type
-        var allowedExtensions =
-            /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
-        if (!allowedExtensions.exec(filePath)) {
-            alert('Invalid file type');
-            fileInput.value = '';
-            return false;
-        }
-        else {
-
-            // Image preview
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById(
-                        'imagePreview').innerHTML =
-                        '<img src="' + e.target.result
-                        + '"/>';
-                };
-
-                reader.readAsDataURL(fileInput.files[0]);
-            }
+        for (var i = 0; i < phoneInputFields.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputFields[i], {
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.1/build/js/utils.js",
+                initialCountry: "in",
+            });
         }
     }
+
 </script>

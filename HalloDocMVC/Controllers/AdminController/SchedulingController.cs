@@ -59,10 +59,10 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             var currentDate = DateTime.Parse(date);
             List<Physician> physician = _physicianRegionRepository.GetAll().Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
-            /*if (regionid == 0)
+            if (regionid == 0)
             {
-                physician = _physicianRepository.ToList();
-            }*/
+                physician = _physicianRepository.GetAll().ToList();
+            }
 
             switch (PartialName)
             {

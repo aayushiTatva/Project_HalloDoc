@@ -8,8 +8,9 @@
                 <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
             </div>
             <form asp-controller="Task" asp-action="EditTask" method="post">
+                <input type="hidden" name="TaskId" id="TaskId_EditTask" asp-for="TaskId" value="@Model.TaskId" />
                 <div class="modal-body">
-                    <input type="hidden" name="taskid" id="TaskId_EditTask" asp-for="TaskId"/>
+                    
                     <div class="row">
                         <div class="col form-floating mb-3 ">
                             <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="TaskName_EditTask" />
@@ -36,7 +37,7 @@
                             <label for="City_EditTask">City</label>
                         </div>
                         <div class="col form-floating mb-3">
-                            <select class="form-select input" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))">
+                            <select class="form-select input" id="Category_EditTask" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))">
                                 <option value="">Select Category</option>
                             </select>
                             <label for="floatingSelect" class="text-info">

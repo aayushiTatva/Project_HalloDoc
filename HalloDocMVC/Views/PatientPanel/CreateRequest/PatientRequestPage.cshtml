@@ -53,7 +53,7 @@
         <div class="card-body border-0">
             <div class="row">
                 <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="Email" type="email" class="form-control shadow-none input" id="email" placeholder="details">
+                    <input asp-for="Email" type="email" class="form-control shadow-none input" id="email" placeholder="details" >
                     <label class="ms-2" for="email"> Email</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
@@ -151,25 +151,7 @@
 </form>
 @*</div>*@
 <script type="text/javascript">
-    const fileInput = document.getElementById('files');
-    const fileFormatInput = document.getElementById('fileFormat');
-    const choosenFileSpan = document.getElementById('choosenfile');
 
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        const fileName = file.name;
-        const fileType = file.type;
-
-        if (fileType !== 'image/png') {
-            alert(`Invalid file format. Only PNG files are allowed.`);
-            fileInput.value = '';
-            fileFormatInput.value = '';
-            choosenFileSpan.textContent = 'No file chosen';
-            return;
-        }
-        fileFormatInput.value = fileType;
-        choosenFileSpan.textContent = fileName;
-    });
     $(function () {
         $("#email").focusout(function () {
             var email = $("#email").val();
@@ -195,24 +177,26 @@
             });
         });
     });
+    const fileInput = document.getElementById('files');
+    const fileFormatInput = document.getElementById('fileFormat');
+    const choosenFileSpan = document.getElementById('choosenfile');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileType = file.type;
+
+        if (fileType !== 'image/png') {
+            alert(`Invalid file format. Only PNG files are allowed.`);
+            fileInput.value = '';
+            fileFormatInput.value = '';
+            choosenFileSpan.textContent = 'No file chosen';
+            return;
+        }
+        fileFormatInput.value = fileType;
+        choosenFileSpan.textContent = fileName;
+    });
     var today = new Date();
     var maxDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     document.getElementById("dob").setAttribute("max", maxDate);
-</script>
-<script>
-    window.onload = function (e) {
-        initializeIntlTelInput();
-    }
-
-    function initializeIntlTelInput() {
-        const phoneInputFields = document.querySelectorAll(".phone input[type='tel']");
-
-        for (var i = 0; i < phoneInputFields.length; i++) {
-            const phoneInput = window.intlTelInput(phoneInputFields[i], {
-                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.1/build/js/utils.js",
-                initialCountry: "in",
-            });
-        }
-    }
-    
 </script>

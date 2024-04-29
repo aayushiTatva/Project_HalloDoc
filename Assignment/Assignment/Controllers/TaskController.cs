@@ -34,5 +34,22 @@ namespace Assignment.Controllers
             bool taskModel = await _ITaskRepository.AddTask(model);
             return RedirectToAction("Index", "Home");
         }
+
+        public TaskModel ViewTask(int taskid)
+        {
+            TaskModel modal = new();
+            var task = _context.Tasks.FirstOrDefault(u => u.Id == taskid);
+
+            modal.TaskName = task.TaskName;
+            modal.Assignee = task.Assignee;
+            modal.Description = task.Description;
+            modal.DueDate = (DateTime)task.DueDate;
+            modal.CategoryName = task.Category;
+            modal.CategoryId = (int)task.CategoryId;
+            modal.City = task.City;
+            modal.TaskId = taskid;
+            return modal;
+        }
+
     }
 }

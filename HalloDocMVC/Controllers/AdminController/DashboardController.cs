@@ -107,7 +107,7 @@ namespace HalloDocMVC.Controllers.AdminController
                 requestData = _IAdminDashboardService.Export(currentstatus);
             }
 
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (ExcelPackage package = new())
             {
@@ -147,5 +147,11 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion Export
 
+        #region CreateRequest
+        public IActionResult CreateRequest()
+        {
+            return View("~/Views/PatientPanel/CreateRequest/SubmitRequestPage.cshtml");
+        }
+        #endregion
     }
 }

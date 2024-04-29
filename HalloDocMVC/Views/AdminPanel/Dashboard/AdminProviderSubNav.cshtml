@@ -16,16 +16,17 @@
                         </a>
                     </li>
                 }
-                @if (CV.role() == "Provider")
+                @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
                 {
-                    @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
-                    {
                         <li class="nav-item">
                             <a asp-controller="" asp-action="" class="nav-link px-3 text-dark">
                                 <small>Invoicing</small>
                             </a>
                         </li>
-                    }
+                }
+                @if (CV.role() == "Provider")
+                {
+
                     @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "MySchedule"))
                     {
                         <li class="nav-item">

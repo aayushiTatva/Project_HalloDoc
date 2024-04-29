@@ -179,7 +179,7 @@ namespace HalloDocMVC.Services
                         DataForChange.Address2 = adminProfile.Address2;
                         DataForChange.City = adminProfile.City;
                         DataForChange.State = adminProfile.State;
-                        DataForChange.Mobile = adminProfile.PhoneNumber;
+                        DataForChange.Altphone = adminProfile.AltPhoneNumber;
                         _adminRepository.Update(DataForChange);
 
                         return true;

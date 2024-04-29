@@ -5,6 +5,7 @@ using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Encodings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,8 +50,6 @@ namespace HalloDocMVC.Services
         #region PatientRequest
         public async Task<bool> CreatePatientRequest(ViewDataPatientRequestModel viewDataPatientRequest)
         {
-            /*if(ModelState.IsValid) 
-            {*/
             var Aspnetuser = new Aspnetuser();
             var User = new User();
             var Request = new Request();
@@ -140,8 +139,8 @@ namespace HalloDocMVC.Services
                 };
                 _requestWiseFileRepository.Add(requestwisefile);
             }
-            /* }*/
-            return true; /*View("../Request/SubmitRequestPage");*/ /*which page is to be returned after saving the details in DB*/
+           
+            return true; 
         }
         #endregion
 
@@ -158,7 +157,7 @@ namespace HalloDocMVC.Services
             }
             var Request = new Request
             {
-                Requesttypeid = 3, /* these details are added to requestclient table to refer to patient*/
+                Requesttypeid = 3, 
                 Status = 1,
                 Firstname = viewDataFamilyRequest.FF_FirstName,
                 Lastname = viewDataFamilyRequest.FF_LastName,
@@ -174,7 +173,7 @@ namespace HalloDocMVC.Services
 
             var Requestclient = new Requestclient
             {
-                Request = Request, /* these details are added to requestclient table*/
+                Request = Request, 
                 Requestid = Request.Requestid,
                 Notes = viewDataFamilyRequest.Symptoms,
                 Firstname = viewDataFamilyRequest.FirstName,
@@ -221,7 +220,7 @@ namespace HalloDocMVC.Services
             if (aspnetuser == null)
             {
                 var Subject = "Create Account";
-                var agreementUrl = "localhost:5171/AdminPanel/Login/CreateAccount";
+                var agreementUrl = "localhost:5171/Login/CreateAccount";
                 _emailConfiguration.SendMail(viewDataConciergeRequest.Email, Subject, $"<a href='{agreementUrl}'>Create Account</a>");
             }
             var Concierge = new Concierge();
@@ -267,6 +266,7 @@ namespace HalloDocMVC.Services
             Requestclient.State = viewDataConciergeRequest.CON_State;
             Requestclient.Zipcode = viewDataConciergeRequest.CON_Zipcode;
             Requestclient.Address = viewDataConciergeRequest.CON_Street + " " + viewDataConciergeRequest.CON_City + " " + viewDataConciergeRequest.CON_State + " " + viewDataConciergeRequest.CON_Zipcode;
+            Requestclient.Regionid = 1;
             _requestClientRepository.Add(Requestclient);
 
             Requestconcierge.Requestid = id2;
@@ -286,7 +286,7 @@ namespace HalloDocMVC.Services
             if (aspnetuser == null)
             {
                 var Subject = "Create Account";
-                var agreementUrl = "localhost:5171/AdminPanel/Login/CreateAccount";
+                var agreementUrl = "localhost:5171/Login/CreateAccount.cshtml";
                 _emailConfiguration.SendMail(viewDataBusinessRequest.Email, Subject, $"<a href='{agreementUrl}'>Create Account</a>");
             }
             var Request = new Request
@@ -337,6 +337,14 @@ namespace HalloDocMVC.Services
 
             };
             _requestClientRepository.Add(Requestclient);
+
+            var RequestBusiness = new Requestbusiness
+            {
+                Requestid = Request.Requestid,
+                Businessid = Business.Businessid,
+            };
+            _requestBusinessRepository.Add(RequestBusiness);
+
             return true;
         }
         #endregion

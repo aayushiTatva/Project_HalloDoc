@@ -14,6 +14,7 @@ namespace HalloDocMVC.Services
 {
     public class AccessService : IAccessService
     {
+        #region Configuration
         private readonly IGenericRepository<Role> _roleRepository;
         private readonly IGenericRepository<Menu> _menuRepository;
         private readonly IGenericRepository<Rolemenu> _roleMenuRepository;
@@ -32,7 +33,7 @@ namespace HalloDocMVC.Services
             _adminRepository = adminRepository;
             _physicianRepository = physicianRepository;
         }
-
+        #endregion
 
 
         #region GetRoleAccessDetails

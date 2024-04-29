@@ -1,7 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using ViewAsPdf = Rotativa.AspNetCore.ViewAsPdf;

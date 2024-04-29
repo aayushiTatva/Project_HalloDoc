@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QbIbvJrPAmVeEYMv1BDZMet62WT4nbqWr9JC4QzEA04=",
+  "Hash": "T8hSIepGKGfIos1rCUvWGo/7As2yXzSjwC/xit+TWzM=",
   "Source": "HalloDocMVC",
   "BasePath": "_content/HalloDocMVC",
   "Mode": "Default",
@@ -4012,6 +4012,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\127\\Fig8. Admin dashboard in To Close state-20240326033722.jpg"
     },
     {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\131\\Fig56. Patient site 1-20240429042113.png",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/131/Fig56. Patient site 1-20240429042113.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\131\\Fig56. Patient site 1-20240429042113.png"
+    },
+    {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\133\\Fig56. Patient site 1-20240425050955.png",
       "SourceId": "HalloDocMVC",
       "SourceType": "Discovered",
@@ -4044,6 +4061,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\133\\Fig56. Patient site 1-20240425051104.png"
+    },
+    {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\133\\Fig56. Patient site 1-20240429043000.png",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/133/Fig56. Patient site 1-20240429043000.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\133\\Fig56. Patient site 1-20240429043000.png"
     },
     {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\133\\Fig66.Submit Information me-20240418033227.jpg",

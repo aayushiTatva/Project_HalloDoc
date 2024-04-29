@@ -7,46 +7,58 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Task Form</h5>
                 <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
             </div>
-            <form asp-controller="Task" asp-action="AddTask" method="post">
+            <form asp-controller="Task" asp-action="AddTask" method="post" class="needs-validation" novalidate>
                 <div class="modal-body">
-                    <input type="hidden" name="taskid" id="TaskId_EditTask" value="" />
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input asp-for="TaskName" type="text" class="form-control shadow-none " placeholder="Task Name" id="TaskName" />
+                            <input asp-for="TaskName" type="text" class="form-control shadow-none" required id="TaskName" />
                             <label for="TaskName">Task Name</label>
-                            <span asp-validation-for="TaskName" class="text-danger"></span>
+                            <div class="invalid-feedback">
+                                Please enter TaskName!
+                            </div>
                         </div>
                         <div class="col form-floating mb-3">
-                            <input asp-for="Assignee" type="text" class="form-control shadow-none " placeholder="Task Name" id="Assignee" />
+                            <input asp-for="Assignee" type="text" class="form-control shadow-none" required id="Assignee" />
                             <label for="Assignee">Assignee</label>
-                            <span asp-validation-for="Assignee" class="text-danger"></span>
+                            <div class="invalid-feedback">
+                                Please enter Assignee!
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input type="text" class="form-control shadow-none " placeholder="Task Name" id="Description" asp-for="Description" />
+                            <input type="text" class="form-control shadow-none" required placeholder="Task Name" id="Description" asp-for="Description" />
                             <label for="Description">Description</label>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="invalid-feedback">
+                                Please enter Description!
+                            </div>
                         </div>
                         <div class="col form-floating mb-3">
-                            <input type="date" class="form-control shadow-none " placeholder="Task Name" id="DueDate" asp-for="DueDate" />
+                            <input type="date" class="form-control shadow-none" required placeholder="Task Name" id="DueDate" asp-for="DueDate" />
                             <label for="DueDate">DueDate</label>
-                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                            <div class="invalid-feedback">
+                                Please enter DueDate!
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input type="text" class="form-control shadow-none " placeholder="Task Name" id="City" asp-for="City" />
+                            <input type="text" class="form-control shadow-none" required placeholder="Task Name" id="City" asp-for="City" />
                             <label for="City">City</label>
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <div class="invalid-feedback">
+                                Please enter City!
+                            </div>
                         </div>
                         <div class="col form-floating mb-3">
-                            <select asp-for="CategoryId" class="form-select" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))" >
+                            <select asp-for="CategoryId" class="form-select" required data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))">
                                 <option value="">Select Category</option>
                             </select>
                             <label for="floatingSelect" class="text-info">
                                 Category
                             </label>
+                            <div class="invalid-feedback">
+                                Please enter Category!
+                            </div>
                         </div>
                     </div>
                 </div>@*

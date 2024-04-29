@@ -61,13 +61,13 @@
                                 <select class="form-select shadow-none" required asp-for="Status" id="Status" asp-items="@(new SelectList(enumData, "ID", "Name"))" style="height: 60px" disabled>
                                     <option>Active</option>
                                 </select>
-                                <label for="Status">Status</label>
+                                <label class="ms-2" for="Status">Status</label>
                             </div>
                             <div class="col-md-6 form-floating mb-3">
                                 <select asp-for="RoleId" class="form-select form-control shadow-none" id="Role" asp-items="@(new SelectList(ViewBag.ComboBoxUserRole, "RoleId", "RoleName"))" disabled>
                                     <option>Master Admin</option>
                                 </select>
-                                <label for="Role">Role</label>
+                                <label class="ms-2" for="Role">Role</label>
                             </div>
                         </div>
                         <div class="row">

@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DataModels;
+using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
@@ -14,10 +15,13 @@ namespace HalloDocMVC.Controllers.PatientController
         private readonly ICreateRequestService _ICreateRequestService;
         private readonly INotyfService _INotyfService;
         private readonly IGenericRepository<Aspnetuser> _aspNetUserRepository;
-        public CreateRequestController(ICreateRequestService iCreateRequestService, INotyfService iNotyfService)
+        private readonly HalloDocContext _context;
+        public CreateRequestController(ICreateRequestService iCreateRequestService, INotyfService iNotyfService, IGenericRepository<Aspnetuser> aspNetUserRepository, HalloDocContext context)
         {
             _ICreateRequestService = iCreateRequestService;
             _INotyfService = iNotyfService;
+            _aspNetUserRepository = aspNetUserRepository;
+            _context = context;
         }
         #endregion Configuration
 
@@ -31,10 +35,10 @@ namespace HalloDocMVC.Controllers.PatientController
         #region CheckEmail
 
         [HttpPost]
-        public async Task<IActionResult> CheckEmailAsync(string email)
+        public async Task<IActionResult> CheckEmail(string email)
         {
             string message;
-            var aspnetuser = await _aspNetUserRepository.GetAll().FirstOrDefaultAsync(m => m.Email == email);
+            var aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == email);
             if (aspnetuser == null)
             {
                 message = "False";

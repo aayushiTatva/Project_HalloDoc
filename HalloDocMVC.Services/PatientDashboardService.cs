@@ -18,6 +18,7 @@ namespace HalloDocMVC.Services
 {
     public class PatientDashboardService : IPatientDashboardService
     {
+        #region Configuration
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Request> _requestRepository;
         private readonly IGenericRepository<Requestclient> _requestClientRepository;
@@ -30,7 +31,7 @@ namespace HalloDocMVC.Services
             _requestClientRepository = requestClientRepository;
             _requestWiseFileRepository = requestWiseFileRepository;
         }
-
+        #endregion
         public PatientDashboardModel GetPatientData(string id, PatientDashboardModel model)
         {
             List<PatientDashboardModel> allData = _requestRepository.GetAll().Include(x => x.Requestwisefiles)

@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "SubmitCreateRequest";
     Layout = "~/Views/Shared/Patient/_LayoutCreateRequest.cshtml";
+    string path = Context.Request.Path;
 }
 <div class="row">
     <div class="d-none d-lg-block col-4">
@@ -24,6 +25,14 @@
         </div>
     </div>
     <div class="col-6 col-lg-4 back">
-        <a asp-controller="home" asp-action="Index"><button class="btn relogin d-none d-sm-block mx-3 shadow-none">< Back</button></a>
+        @if (path.StartsWith("/CreateRequest"))
+        {
+            <a asp-controller="home" asp-action="Index"><button class="btn relogin d-none d-sm-block mx-3 shadow-none"> Back</button></a>
+        }
+        @if (path.StartsWith("/Dashboard"))
+        {
+            <a asp-controller="Dashboard" asp-action="Index"><button class="btn relogin d-none d-sm-block mx-3 shadow-none"> Back</button></a>
+        }
+        
     </div>
 </div>

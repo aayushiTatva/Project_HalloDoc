@@ -14,8 +14,8 @@
                     <div class="col-md-6 col-sm-12 d-flex">
                         <a class="btn border text-black shadow-none justify-content-end" data-bs-toggle="modal" data-bs-target="#AddEditTask" style="background-color:#7CA28D">+ Add Task</a>
                     </div>
-                    <div class="search col-md-6 justify-content-end">
-                        <div class="search col-md-3 col-sm-6 col-xs-12 mb-1 justify-content-end">
+                    <div class="search col-md-6 ">
+                        <div class="search col-md-6 mb-1 float-end">
                             <input onkeypress="SearchInput()" id="SearchInput" type="text" class="form-control" placeholder="Search">
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                     <td>@item.CategoryName</td>
                                     <td>@item.City</td>
                                     <td>
-                                        <a class="btn border text-black shadow-none justify-content-end " onclick="modal_Case(@index)" data-bs-toggle="modal" data-bs-target="#EditTask" style="background-color:#7CA28D">
+                                        <a class="btn border text-black shadow-none justify-content-end taskModal" id="@item.TaskId" data-bs-toggle="modal" data-bs-target="#EditTask" style="background-color:#7CA28D">
                                             Edit
                                         </a>
                                         <a class="btn btn-danger mx-3 shadow-none flow-start deletebtn mb-2" asp-controller="Task" asp-action="DeleteTask" asp-route-Id="@item.TaskId">
@@ -120,15 +120,27 @@
     </div>
 </div>
 <script>
-    function modal_Case(id) {
-        var modeldata = @Html.Raw(Json.Serialize(Model))
-            document.getElementById("TaskId_EditTask").value = modeldata.list[id].taskId;
-        document.getElementById("TaskName_EditTask").value = modeldata.list[id].taskName;
-        document.getElementById("Assignee_EditTask").value = modeldata.list[id].assignee;
-        document.getElementById("Description_EditTask").value = modeldata.list[id].description;
-        document.getElementById("DueDate_EditTask").value = modeldata.list[id].dueDate;
-        document.getElementById("City_EditTask").value = modeldata.list[id].city;
-    }
+    $(document).ready(function () {
+        $('.taskModal').on('click', function () {
+            var taskid = $(this).attr('id');
+            $.ajax({
+                url: '/Task/ViewTask',
+                data: { taskid: taskid },
+                success: function (response) {
+                    $('#TaskName_EditTask').val(response.taskName);
+                    $('#Assignee_EditTask').val(response.assignee);
+                    $('#Description_EditTask').val(response.description);
+                    $('#DueDate_EditTask').val(response.dueDate);
+                    $('#City_EditTask').val(response.city);
+                    $('#Category_EditTask').val(response.categoryId);
+                    $('#TaskId_EditTask').val(response.taskId);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
    function setpagenumber(e) {
         if (e == 'previous') {
             var cp = @Model.CurrentPage-1;

@@ -59,11 +59,11 @@ namespace HalloDocMVC.Services
                                            from rng in reqNotesGroup.DefaultIfEmpty()
                                            where r.Isdeleted == new BitArray(1) &&
                                            (model.Status == null || model.Status == -1 || model.Status == 0 || r.Status == model.Status) &&
-                                           (model.FirstName == null || r.Firstname.Contains(model.FirstName)) &&
+                                           (model.FirstName == null || r.Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
                                            (model.RequestType == null || model.RequestType == 0 || r.Requesttypeid == model.RequestType) &&
                                            (model.StartDate == null || r.Createddate.Date == model.StartDate) &&
-                                           (model.PhysicianName == null || rpg.Firstname.Contains(model.PhysicianName)) &&
-                                           (model.Email == null || rcg.Email.Contains(model.Email)) &&
+                                           (model.PhysicianName == null || rpg.Firstname.ToLower().Contains(model.PhysicianName.ToLower())) &&
+                                           (model.Email == null || rcg.Email.ToLower().Contains(model.Email.ToLower())) &&
                                            (model.PhoneNumber == null || r.Phonenumber.Contains(model.PhoneNumber))
 
                                            select new SearchRecordsModel
@@ -126,9 +126,9 @@ namespace HalloDocMVC.Services
                                            join rc in _requestClientRepository.GetAll()
                                            on r.Requestid equals rc.Requestid into reqClientGroup
                                            from rcg in reqClientGroup.DefaultIfEmpty()
-                                           where r.Isdeleted == new BitArray(1) && (model.FirstName == null || rcg.Firstname.Contains(model.FirstName)) &&
-                                           (model.Email == null || rcg.Email.Contains(model.Email)) &&
-                                           (model.LastName == null || rcg.Lastname.Contains(model.LastName)) &&
+                                           where r.Isdeleted == new BitArray(1) && (model.FirstName == null || rcg.Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
+                                           (model.Email == null || rcg.Email.ToLower().Contains(model.Email.ToLower())) &&
+                                           (model.LastName == null || rcg.Lastname.ToLower().Contains(model.LastName.ToLower())) &&
                                            (model.PhoneNumber == null || rcg.Phonenumber.Contains(model.PhoneNumber))
                                            select new SearchRecordsModel
                                            {
@@ -197,10 +197,10 @@ namespace HalloDocMVC.Services
         {
             List<EmailLogModel> em = await (from req in _emailLogRepository.GetAll()
                                             where req.Emailid != null && (model.AccountType == null || model.AccountType == 0 || req.Roleid == model.AccountType) &&
-                                           (model.ReceiverName == null || _requestClientRepository.GetAll().FirstOrDefault(e => e.Email == req.Emailid).Firstname.Contains(model.ReceiverName)) &&
+                                           (model.ReceiverName == null || _requestClientRepository.GetAll().FirstOrDefault(e => e.Email == req.Emailid).Firstname.ToLower().Contains(model.FirstName.ToLower())) &&
                                            (model.StartDate == null || req.Createdate.Date == model.StartDate) &&
                                            (model.SentDate == null || req.Sentdate.Value.Date == model.SentDate) &&
-                                           (model.Email == null || req.Emailid.Contains(model.Email))
+                                           (model.Email == null || req.Emailid.ToLower().Contains(model.Email.ToLower()))
                                             select new EmailLogModel
                                             {
                                                 RequestId = req.Requestid,
@@ -231,7 +231,7 @@ namespace HalloDocMVC.Services
         {
             List<SMSLogsModel> sm = await (from req in _smslogRepository.GetAll()
                                            where (model.AccountType == null || model.AccountType == -1 || req.Roleid == model.AccountType) &&
-                                           (model.ReceiverName == null || _requestClientRepository.GetAll().FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Firstname.Contains(model.ReceiverName)) &&
+                                           (model.ReceiverName == null || _requestClientRepository.GetAll().FirstOrDefault(e => e.Phonenumber == req.Mobilenumber).Firstname.ToLower().Contains(model.ReceiverName.ToLower())) &&
                                            (model.StartDate == null || req.Createdate.Date == model.StartDate &&
                                            (model.SentDate == null || req.Sentdate.Value.Date == model.SentDate) &&
                                            (model.PhoneNumber == null || req.Mobilenumber.Contains(model.PhoneNumber)))

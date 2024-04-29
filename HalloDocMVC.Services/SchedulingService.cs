@@ -14,6 +14,7 @@ namespace HalloDocMVC.Services
 {
     public class SchedulingService : ISchedulingService
     {
+        #region Configuration
         private readonly IGenericRepository<Shift> _shiftRepository;
         private readonly IGenericRepository<Shiftdetail> _shiftDetailRepository;
         private readonly IGenericRepository<Shiftdetailregion> _shiftDetailRegionRepository;
@@ -30,7 +31,7 @@ namespace HalloDocMVC.Services
             _physicianRegionRepository = physicianRegionRepository;
             _regionRepository = regionRepository;
         }
-
+        #endregion
 
         #region AddShift
         public void AddShift(SchedulingModel model, List<string?>? chk, string adminId)
@@ -176,23 +177,19 @@ namespace HalloDocMVC.Services
         public void ViewShift(int shiftdetailid)
         {
             SchedulingModel modal = new();
-            var shiftdetail = _shiftDetailRepository.GetAll().FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
+            var shiftdetail = _shiftDetailRepository.GetAll()
+                                .Include(sd => sd.Shift.Physician)
+                                .FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
 
-            /*if (shiftdetail != null)
+            if (shiftdetail != null)
             {
-                _shiftDetailRepository.Entry(shiftdetail)
-                    .Reference(s => s.Shift)
-                    .Query()
-                    .Include(s => s.Physician)
-                    .Load();
-            }*/
-
-            modal.RegionId = (int)shiftdetail.Regionid;
-            modal.PhysicianName = shiftdetail.Shift.Physician.Firstname + " " + shiftdetail.Shift.Physician.Lastname;
-            modal.ModalDate = shiftdetail.Shiftdate.ToString("yyyy-MM-dd");
-            modal.StartTime = shiftdetail.Starttime;
-            modal.EndTime = shiftdetail.Endtime;
-            modal.ShiftDetailId = shiftdetailid;
+                modal.RegionId = (int)shiftdetail.Regionid;
+                modal.PhysicianName = shiftdetail.Shift.Physician.Firstname + " " + shiftdetail.Shift.Physician.Lastname;
+                modal.ModalDate = shiftdetail.Shiftdate.ToString("yyyy-MM-dd");
+                modal.StartTime = shiftdetail.Starttime;
+                modal.EndTime = shiftdetail.Endtime;
+                modal.ShiftDetailId = shiftdetailid;
+            }
         }
         #endregion ViewShift
 
