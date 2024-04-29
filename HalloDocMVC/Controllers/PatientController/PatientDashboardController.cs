@@ -1,10 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
-using HalloDocMVC.Repositories.Patient.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDocMVC.Controllers.PatientController
@@ -12,23 +10,21 @@ namespace HalloDocMVC.Controllers.PatientController
     public class PatientDashboardController : Controller
     {
         #region Configuration
-        private readonly HalloDocContext _context;
-        private readonly IPatientDashboard _IPatientDashboard;
+        private readonly IPatientDashboardService _IPatientDashboardService;
         private readonly INotyfService _INotyfService;
-        private readonly IActions _IActions;
-        public PatientDashboardController(HalloDocContext context, IPatientDashboard iPatientDashboard, INotyfService iNotyfService, IActions iAction)
+        private readonly IActionService _IActionService;
+        public PatientDashboardController(IPatientDashboardService iPatientDashboardService, INotyfService iNotyfService, IActionService iActionService)
         {
-            _context = context;
-            _IPatientDashboard = iPatientDashboard;
+            _IPatientDashboardService = iPatientDashboardService;
             _INotyfService = iNotyfService;
-            _IActions = iAction;
+            _IActionService = iActionService;
         }
         #endregion Configuration
 
         #region Dashboard
         public async Task<IActionResult> Index(PatientDashboardModel model)
         {
-            PatientDashboardModel data = _IPatientDashboard.GetPatientData(CV.UserID(), model);
+            PatientDashboardModel data = _IPatientDashboardService.GetPatientData(CV.UserID(), model);
             return View("~/Views/PatientPanel/Dashboard/PatientDashboard.cshtml", data);
         }
         #endregion Dashboard
@@ -36,7 +32,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region ViewDocuments
         public async Task<IActionResult> ViewDocuments(int? id, ViewUploadModel model)
         {
-            ViewUploadModel vm = await _IActions.GetDocument(id, model);
+            ViewUploadModel vm = await _IActionService.GetDocument(id, model);
             return View("~/Views/PatientPanel/Dashboard/ViewDocuments.cshtml", vm);
         }
         #endregion ViewDocuments
@@ -48,7 +44,7 @@ namespace HalloDocMVC.Controllers.PatientController
             {
                 foreach (var file in files)
                 {
-                    if (_IActions.UploadDocuments(RequestId, file))
+                    if (_IActionService.UploadDocuments(RequestId, file))
                     {
                         _INotyfService.Success("File Uploaded Successfully.");
                     }
@@ -70,7 +66,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region RequestForMe
         public IActionResult RequestForMe()
         {
-            ViewDataPatientRequestModel model = _IPatientDashboard.RequestForMe();
+            ViewDataPatientRequestModel model = _IPatientDashboardService.RequestForMe();
             return View("~/Views/PatientPanel/Dashboard/RequestForMe.cshtml", model);
         }
         #endregion RequestForMe
@@ -78,7 +74,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region CreateRequestForMe
         public async Task<IActionResult> PostMe(ViewDataPatientRequestModel model)
         {
-            if (await _IPatientDashboard.PostMe(model))
+            if (await _IPatientDashboardService.PostMe(model))
             {
                 _INotyfService.Success("Request has been created successfully");
             }
@@ -100,7 +96,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region CreateRequestForSomeoneElse
         public async Task<IActionResult> PostSomeoneElse(ViewDataPatientRequestModel model)
         {
-            if (await _IPatientDashboard.PostSomeoneElse(model))
+            if (await _IPatientDashboardService.PostSomeoneElse(model))
             {
                 _INotyfService.Success("Request has been created successfully");
             }

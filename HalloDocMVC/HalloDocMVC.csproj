@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HalloDocMVC.Repositeries\HalloDocMVC.Repositories.Admin.csproj" />
-    <ProjectReference Include="..\HalloDocMVC.Repositories.Patient\HalloDocMVC.Repositories.Patient.csproj" />
+    <ProjectReference Include="..\HalloDocMVC.Repositeries\HalloDocMVC.Repositories.csproj" />
+    <ProjectReference Include="..\HalloDocMVC.Services\HalloDocMVC.Services.csproj" />
   </ItemGroup>
 
 </Project>

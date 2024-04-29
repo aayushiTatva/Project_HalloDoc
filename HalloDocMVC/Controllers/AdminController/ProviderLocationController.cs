@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared;
 
@@ -8,14 +9,14 @@ namespace HalloDocMVC.Controllers.AdminController
     public class ProviderLocationController : Controller
     {
         #region Constructor
-        private readonly IContactYourProvider _IContactYourProvider;
+        private readonly IProviderService _IProviderService;
         private readonly INotyfService _INotyfService;
         private readonly ILogger<ActionsController> _logger;
 
-        public ProviderLocationController(ILogger<ActionsController> logger, IContactYourProvider iProvider, INotyfService iNotyfService)
+        public ProviderLocationController(ILogger<ActionsController> logger, IProviderService iProviderService, INotyfService iNotyfService)
         {
             _INotyfService = iNotyfService;
-            _IContactYourProvider = iProvider;
+            _IProviderService = iProviderService;
             _logger = logger;
         }
         #endregion
@@ -23,7 +24,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Index
         public async Task<IActionResult> Index()
         {
-            ViewBag.Log = await _IContactYourProvider.FindPhysicianLocation();
+            ViewBag.Log = await _IProviderService.FindPhysicianLocation();
             return View("~/Views/AdminPanel/Admin/ProviderLocation/Index.cshtml");
         }
         #endregion

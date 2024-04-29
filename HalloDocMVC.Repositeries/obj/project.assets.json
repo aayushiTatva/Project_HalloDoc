@@ -3391,9 +3391,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
-      "projectName": "HalloDocMVC.Repositories.Admin",
-      "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
+      "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj",
+      "projectName": "HalloDocMVC.Repositories",
+      "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj",
       "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\obj\\",
       "projectStyle": "PackageReference",

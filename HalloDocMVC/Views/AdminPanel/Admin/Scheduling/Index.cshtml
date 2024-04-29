@@ -3,8 +3,8 @@
 *@
 @using HalloDocMVC.DBEntity.ViewModels;
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.SchedulingModel
-@using HalloDocMVC.Repositories.Admin.Repository.Interface;
-@inject ILogin _ILogin;
+@using HalloDocMVC.Services.Interface;
+@inject ILoginService _ILoginService;
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
     ViewData["Title"] = "Scheduling";

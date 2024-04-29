@@ -1,4 +1,4 @@
-﻿using HalloDocMVC.Repositories.Admin.Repository.Interface;
+﻿using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.IdentityModel.Tokens.Jwt;

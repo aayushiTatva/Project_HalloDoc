@@ -1,0 +1,17 @@
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.Services.deps.json
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.Services.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.Services.pdb
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.DBEntity.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.DBEntity.pdb
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.csproj.AssemblyReference.cache
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.AssemblyInfoInputs.cache
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.AssemblyInfo.cs
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.csproj.CoreCompileInputs.cache
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.csproj.CopyComplete
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\refint\HalloDocMVC.Services.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\HalloDocMVC.Services.pdb
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\obj\Debug\net7.0\ref\HalloDocMVC.Services.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.Repositories.dll
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC.Services\bin\Debug\net7.0\HalloDocMVC.Repositories.pdb

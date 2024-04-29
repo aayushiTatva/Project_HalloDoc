@@ -1,7 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -10,32 +9,29 @@ using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using HalloDocMVC.Services.Interface;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
     public class LoginController : Controller
     {
         #region Configuration
-        private readonly IActions _IActions;
-        private readonly IComboBox _IComboBox;
+        private readonly IActionService _IActionService;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly INotyfService _INotyfService;
         private readonly ILogger<ActionsController> _logger;
-        private readonly ILogin _ILogin;
+        private readonly ILoginService _ILoginService;
         private readonly IJwtService _IJwtService;
         private readonly EmailConfiguration _emailConfiguration;
 
-        public LoginController(ILogger<ActionsController> logger,
-                                      IComboBox ComboBox,
-                                      IActions Actions,
-                                      INotyfService NotyfService,
-                                      ILogin Login,
-                                      IJwtService JwtService, EmailConfiguration emailConfiguration)
+        public LoginController(ILogger<ActionsController> logger, IComboBoxService ComboBoxService, IActionService ActionService, INotyfService NotyfService,
+        ILoginService LoginService, IJwtService JwtService, EmailConfiguration emailConfiguration)
         {
-            _IComboBox = ComboBox;
-            _IActions = Actions;
+            _IComboBoxService = ComboBoxService;
+            _IActionService = ActionService;
             _INotyfService = NotyfService;
             _logger = logger;
-            _ILogin = Login;
+            _ILoginService = LoginService;
             _IJwtService = JwtService;
             _emailConfiguration = emailConfiguration;
         }
@@ -58,7 +54,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Validate(Aspnetuser aspNetUser)
         {
-            UserInformation u = await _ILogin.CheckAccessLogin(aspNetUser);
+            UserInformation u = await _ILoginService.CheckAccessLogin(aspNetUser);
 
             if (u != null)
             {
@@ -70,7 +66,7 @@ namespace HalloDocMVC.Controllers.AdminController
                 {
                     return RedirectToAction("Index", "PatientDashboard");
                 }
-                if(u.Role == "Provider")
+                if (u.Role == "Provider")
                 {
                     return Redirect("~/Provider/Dashboard");
                 }
@@ -104,7 +100,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMailResetPassword(string Email)
         {
-            if (await _ILogin.CheckRegisterEmail(Email))
+            if (await _ILoginService.CheckRegisterEmail(Email))
             {
                 var Subject = "Change Your Password";
                 var agreementUrl = "localhost:5171/Login/ResetPassword?Datetime=" + _emailConfiguration.Encode(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")) + "&email=" + _emailConfiguration.Encode(Email);
@@ -121,12 +117,12 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region ResetPassword
-        public async Task<IActionResult> ResetPassword(string? Datetime,string? email)
+        public async Task<IActionResult> ResetPassword(string? Datetime, string? email)
         {
             string Decode = _emailConfiguration.Decode(email);
             DateTime s = DateTime.ParseExact(_emailConfiguration.Decode(Datetime), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
             TimeSpan dif = s - DateTime.Now;
-            if(dif.Hours < 24)
+            if (dif.Hours < 24)
             {
                 ViewBag.email = Decode;
                 return View("~/Views/AdminPanel/Dashboard/ResetPassword.cshtml");
@@ -142,21 +138,21 @@ namespace HalloDocMVC.Controllers.AdminController
         #region SavePassword
         public async Task<IActionResult> SavePassword(string ConfirmPassword, string Password, string Email)
         {
-            if(Password != null)
+            if (Password != null)
             {
-                if(ConfirmPassword != Password)
+                if (ConfirmPassword != Password)
                 {
                     return View("ResetPassword");
                 }
                 try
                 {
-                    if(Email == null)
+                    if (Email == null)
                     {
                         _INotyfService.Error("Password remained unchanged");
                     }
                     else
                     {
-                        if(await _ILogin.SavePassword(Email, Password))
+                        if (await _ILoginService.SavePassword(Email, Password))
                         {
                             _INotyfService.Success("Password saved successfully");
                         }
@@ -166,7 +162,7 @@ namespace HalloDocMVC.Controllers.AdminController
                         }
                     }
                 }
-                catch(DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
 
                 }
@@ -185,7 +181,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region CreateNewAccountPost
         public async Task<IActionResult> CreatNewAccontPost(string Email, string Password)
         {
-            if (await _ILogin.CreateNewAccount(Email, Password))
+            if (await _ILoginService.CreateNewAccount(Email, Password))
             {
                 _INotyfService.Success("User Created Successfully");
             }

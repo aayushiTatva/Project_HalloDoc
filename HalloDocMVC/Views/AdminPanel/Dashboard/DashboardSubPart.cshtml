@@ -1,9 +1,9 @@
 ﻿@using HalloDocMVC.DBEntity.ViewModels;
 @using HalloDocMVC.Models;
-@using HalloDocMVC.Repositories.Admin.Repository.Interface;
+@using HalloDocMVC.Services.Interface;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel;
-@inject ILogin _ILogin;
+@inject ILoginService _ILoginService;
 <form id="filterForm" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#SearchResult"
       asp-action="SearchResult" asp-controller="Dashboard" novalidate="novalidate">
     <div class="mx-sm-1 mx-md-2 mx-xxl-4 mt-0 bg-light">

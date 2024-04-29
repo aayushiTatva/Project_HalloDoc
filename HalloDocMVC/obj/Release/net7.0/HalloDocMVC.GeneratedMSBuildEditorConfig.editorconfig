@@ -92,10 +92,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXFZpZXdOb3Rlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/ViewNotes2.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXFZpZXdOb3RlczIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/ViewUploads.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBY3Rpb25zXFZpZXdVcGxvYWRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -128,10 +124,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm9maWxlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Profile/Index1.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm9maWxlXEluZGV4MS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/ProviderLocation/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm92aWRlckxvY2F0aW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -142,10 +134,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Provider/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm92aWRlclxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Provider/Index1.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxQcm92aWRlclxJbmRleDEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Provider/Modals/_RequestToAdmin.cshtml]

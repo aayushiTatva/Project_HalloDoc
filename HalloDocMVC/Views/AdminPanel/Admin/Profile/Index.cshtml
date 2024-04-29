@@ -8,8 +8,8 @@
 @model HalloDocMVC.DBEntity.ViewModels.AdminPanel.AdminProfileModel;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant
 @using HalloDocMVC.DBEntity.ViewModels;
-@using HalloDocMVC.Repositories.Admin.Repository.Interface;
-@inject ILogin _ILogin;
+@using HalloDocMVC.Services.Interface;
+@inject ILoginService _ILoginService;
 @{
     var enumData = from AdminStatus e in Enum.GetValues(typeof(AdminStatus))
                    select new
@@ -18,7 +18,7 @@
                        Name = e.ToString()
                    };
 }
-@if (_ILogin.IsAccessGranted((int)CV.RoleID(), "MyProfile"))
+@if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "MyProfile"))
 {
     <div class="container mt-4">
         <div class="row">

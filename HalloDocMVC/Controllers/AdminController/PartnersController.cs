@@ -3,6 +3,7 @@ using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Intrinsics.Arm;
 
@@ -11,39 +12,39 @@ namespace HalloDocMVC.Controllers.AdminController
     public class PartnersController : Controller
     {
         #region Configuration
-        private readonly IComboBox _IComboBox;
-        private readonly IPartners _IPartners;
+        private readonly IComboBoxService _IComboBoxService;
+        private readonly IPartnersService _IPartnersService;
         private readonly INotyfService _INotyfService;
-        public PartnersController(IComboBox iComboBox, IPartners iPartners, INotyfService iNotyfService)
+        public PartnersController(IComboBoxService iComboBoxService, IPartnersService iPartnersService, INotyfService iNotyfService)
         {
-            _IComboBox = iComboBox;
-            _IPartners = iPartners;
-            _INotyfService= iNotyfService;
+            _IComboBoxService = iComboBoxService;
+            _IPartnersService = iPartnersService;
+            _INotyfService = iNotyfService;
         }
         #endregion
 
         #region Index
-        public async Task<IActionResult> Index(int? ProfessionId, string? SearchInput,PaginationVendor paginationVendor)
+        public async Task<IActionResult> Index(int? ProfessionId, string? SearchInput, PaginationVendor paginationVendor)
         {
-            ViewBag.VendorComboBox =  await _IComboBox.ComboBoxHealthProfessionalType();
-            PaginationVendor vm = _IPartners.GetPartners(ProfessionId, SearchInput, paginationVendor);
-            return View("../AdminPanel/Admin/Partners/Index",vm);
+            ViewBag.VendorComboBox = await _IComboBoxService.ComboBoxHealthProfessionalType();
+            PaginationVendor vm = _IPartnersService.GetPartners(ProfessionId, SearchInput, paginationVendor);
+            return View("../AdminPanel/Admin/Partners/Index", vm);
         }
         #endregion
 
         #region AddEditBusiness
         public async Task<IActionResult> AddEditBusiness(int? Id)
         {
-            ViewBag.VendorComboBox = await _IComboBox.ComboBoxHealthProfessionalType();
+            ViewBag.VendorComboBox = await _IComboBoxService.ComboBoxHealthProfessionalType();
             if (Id == null)
             {
                 ViewData["AddEditBusiness"] = "Add";
             }
-            if(Id.HasValue)
+            if (Id.HasValue)
             {
-                var vim = await _IPartners.GetPartnerById(Id);
+                var vim = await _IPartnersService.GetPartnerById(Id);
                 ViewData["AddEditBusiness"] = "Edit";
-                return View("../AdminPanel/Admin/Partners/AddEditBusiness",vim);
+                return View("../AdminPanel/Admin/Partners/AddEditBusiness", vim);
             }
             return View("../AdminPanel/Admin/Partners/AddEditBusiness");
         }
@@ -52,7 +53,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditVendorInfo
         public async Task<IActionResult> EditVendorInfo(VendorsModel vdm)
         {
-            bool data = await _IPartners.EditVendorInfo(vdm);
+            bool data = await _IPartnersService.EditVendorInfo(vdm);
             if (data)
             {
                 _INotyfService.Success("Vendor Info edited successfully");
@@ -69,8 +70,8 @@ namespace HalloDocMVC.Controllers.AdminController
         #region AddBusiness
         public async Task<IActionResult> AddBusiness(VendorsModel data)
         {
-            ViewBag.VendorComboBox = _IComboBox.ComboBoxHealthProfessionalType();
-            bool vm = await _IPartners.AddVendor(data);
+            ViewBag.VendorComboBox = _IComboBoxService.ComboBoxHealthProfessionalType();
+            bool vm = await _IPartnersService.AddVendor(data);
             if (vm)
             {
                 _INotyfService.Success("Vendor created sucessfully");
@@ -86,7 +87,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region DeleteVendor
         public async Task<IActionResult> DeleteVendor(int? VendorId)
         {
-            bool data = await _IPartners.DeleteVendor(VendorId);
+            bool data = await _IPartnersService.DeleteVendor(VendorId);
             if (data)
             {
                 _INotyfService.Success("Vendor Deleted successfully");

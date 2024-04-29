@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
-using HalloDocMVC.Repositories.Patient.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDocMVC.Controllers.PatientController
@@ -8,11 +8,11 @@ namespace HalloDocMVC.Controllers.PatientController
     public class PatientProfileController : Controller
     {
         #region Configuration
-        private readonly IPatientProfile _IPatientProfile;
+        private readonly IPatientProfileService _IPatientProfileService;
         private readonly INotyfService _INotyfService;
-        public PatientProfileController(IPatientProfile iPatientProfile, INotyfService iNotyfService)
+        public PatientProfileController(IPatientProfileService iPatientProfileService, INotyfService iNotyfService)
         {
-            _IPatientProfile = iPatientProfile;
+            _IPatientProfileService = iPatientProfileService;
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
@@ -20,7 +20,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region GetProfile
         public IActionResult Index()
         {
-            ViewDataUserProfileModel model = _IPatientProfile.GetProfile();
+            ViewDataUserProfileModel model = _IPatientProfileService.GetProfile();
             return View("~/Views/PatientPanel/Profile/Index.cshtml", model);
         }
         #endregion GetProfile
@@ -28,7 +28,7 @@ namespace HalloDocMVC.Controllers.PatientController
         #region EditProfile
         public async Task<IActionResult> EditProfile(ViewDataUserProfileModel model)
         {
-            if (await _IPatientProfile.EditProfile(model))
+            if (await _IPatientProfileService.EditProfile(model))
             {
                 _INotyfService.Success("Profile has been edited successfully.");
             }

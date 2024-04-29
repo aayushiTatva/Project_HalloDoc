@@ -2,6 +2,7 @@
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using ViewAsPdf = Rotativa.AspNetCore.ViewAsPdf;
 
@@ -10,14 +11,14 @@ namespace HalloDocMVC.Controllers.AdminController
     public class ActionsController : Controller
     {
         #region Configuration
-        private readonly IActions _IActions;
-        private readonly IComboBox _IComboBox;
+        private readonly IActionService _IActionService;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly INotyfService _INotyfService;
         private readonly ILogger<ActionsController> _logger;
-        public ActionsController(IActions iActions, IComboBox iComboBox, INotyfService iNotyfService, ILogger<ActionsController> logger)
+        public ActionsController(IActionService iActionService, IComboBoxService iComboBoxService, INotyfService iNotyfService, ILogger<ActionsController> logger)
         {
-            _IActions = iActions;
-            _IComboBox = iComboBox;
+            _IActionService = iActionService;
+            _IComboBoxService = iComboBoxService;
             _INotyfService = iNotyfService;
             _logger = logger;
         }
@@ -26,9 +27,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ViewCase
         public async Task<IActionResult> ViewCase(int Id)
         {
-            ViewBag.ComboBoxRegion = await _IComboBox.ComboBoxRegions();
-            ViewBag.ComboBoxCaseReason = await _IComboBox.ComboBoxCaseReasons();
-            ViewCaseModel vcm = _IActions.GetRequestForViewCase(Id);
+            ViewBag.ComboBoxRegion = await _IComboBoxService.ComboBoxRegions();
+            ViewBag.ComboBoxCaseReason = await _IComboBoxService.ComboBoxCaseReasons();
+            ViewCaseModel vcm = _IActionService.GetRequestForViewCase(Id);
             return View("~/Views/AdminPanel/Actions/ViewCase.cshtml", vcm);
         }
         #endregion ViewCase
@@ -36,9 +37,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditCase
         public IActionResult EditCase(ViewCaseModel vcm)
         {
-            ViewBag.ComboBoxRegion = _IComboBox.ComboBoxRegions();
-            ViewBag.ComboBoxCaseReason = _IComboBox.ComboBoxCaseReasons();
-            bool result = _IActions.EditCase(vcm);
+            ViewBag.ComboBoxRegion = _IComboBoxService.ComboBoxRegions();
+            ViewBag.ComboBoxCaseReason = _IComboBoxService.ComboBoxCaseReasons();
+            bool result = _IActionService.EditCase(vcm);
             if (result)
             {
                 _INotyfService.Success("Case Information Updated");
@@ -51,11 +52,11 @@ namespace HalloDocMVC.Controllers.AdminController
             }
         }
         #endregion EditCase
-      
+
         #region AssignProvider
         public async Task<IActionResult> AssignProvider(int requestid, int ProviderId, string Notes)
         {
-            if (await _IActions.AssignProvider(requestid, ProviderId, Notes))
+            if (await _IActionService.AssignProvider(requestid, ProviderId, Notes))
             {
                 _INotyfService.Success("Physician Assigned successfully...");
             }
@@ -70,7 +71,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ProviderbyRegion
         public IActionResult ProviderbyRegion(int? Regionid)
         {
-            var data = _IComboBox.ProviderByRegion(Regionid);
+            var data = _IComboBoxService.ProviderByRegion(Regionid);
             return Json(data);
         }
         #endregion ProviderbyRegion
@@ -78,7 +79,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region CancelCase
         public IActionResult CancelCase(int RequestID, string Note, string CaseTag)
         {
-            bool CancelCase = _IActions.CancelCase(RequestID, Note, CaseTag);
+            bool CancelCase = _IActionService.CancelCase(RequestID, Note, CaseTag);
             if (CancelCase)
             {
                 _INotyfService.Success("Case Cancelled Successfully");
@@ -96,7 +97,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region BlockCase
         public IActionResult BlockCase(int RequestID, string Note)
         {
-            bool BlockCase = _IActions.BlockCase(RequestID, Note);
+            bool BlockCase = _IActionService.BlockCase(RequestID, Note);
             if (BlockCase)
             {
                 _INotyfService.Success("Case Blocked Successfully");
@@ -112,7 +113,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ClearCase
         public IActionResult ClearCase(int RequestID)
         {
-            bool ClearCase = _IActions.ClearCase(RequestID);
+            bool ClearCase = _IActionService.ClearCase(RequestID);
             if (ClearCase)
             {
                 _INotyfService.Success("Cleared Case Successfully");
@@ -128,7 +129,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region TransferPhysician
         public async Task<IActionResult> TransferPhysician(int requestid, int ProviderId, string Notes)
         {
-            if (await _IActions.TransferPhysician(requestid, ProviderId, Notes))
+            if (await _IActionService.TransferPhysician(requestid, ProviderId, Notes))
             {
                 _INotyfService.Success("Physician Transferred Successfully.");
             }
@@ -143,7 +144,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region View_Notes
         public IActionResult ViewNotes(int id)
         {
-            ViewNotesModel vnm = _IActions.getNotes(id);
+            ViewNotesModel vnm = _IActionService.getNotes(id);
             return View("~/Views/AdminPanel/Actions/ViewNotes.cshtml", vnm);
         }
         #endregion
@@ -153,7 +154,7 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             if (adminnotes != null || physiciannotes != null)
             {
-                bool result = _IActions.EditViewNotes(adminnotes, physiciannotes, RequestID);
+                bool result = _IActionService.EditViewNotes(adminnotes, physiciannotes, RequestID);
                 if (result)
                 {
                     _INotyfService.Success("Notes Updated successfully");
@@ -177,7 +178,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ViewDocuments
         public async Task<IActionResult> ViewDocuments(int? id, ViewUploadModel model)
         {
-            ViewUploadModel vum = await _IActions.GetDocument(id, model);
+            ViewUploadModel vum = await _IActionService.GetDocument(id, model);
             return View("~/Views/AdminPanel/Actions/ViewUploads.cshtml", vum);
         }
         #endregion
@@ -185,7 +186,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region UploadDocuments
         public IActionResult UploadDocuments(int Requestid, IFormFile file)
         {
-            if (_IActions.UploadDocuments(Requestid, file))
+            if (_IActionService.UploadDocuments(Requestid, file))
             {
                 _INotyfService.Success("File Uploaded Successfully");
             }
@@ -198,9 +199,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region DeleteFile
-        public async Task<IActionResult>DeleteFile(int? id, int Requestid)
+        public async Task<IActionResult> DeleteFile(int? id, int Requestid)
         {
-            if(await _IActions.DeleteDocuments(id.ToString()))
+            if (await _IActionService.DeleteDocuments(id.ToString()))
             {
                 _INotyfService.Success("File Deleted Successfully");
             }
@@ -215,7 +216,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region DeleteAllFiles
         public async Task<IActionResult> DeleteAllFiles(string deleteids, int Requestid)
         {
-            if (await _IActions.DeleteDocuments(deleteids))
+            if (await _IActionService.DeleteDocuments(deleteids))
             {
                 _INotyfService.Success("All Files have been deleted successfully");
             }
@@ -231,7 +232,7 @@ namespace HalloDocMVC.Controllers.AdminController
 
         public async Task<IActionResult> Orders(int id)
         {
-            List<ComboBoxHealthProfessionalType> hpt = await _IComboBox.ComboBoxHealthProfessionalType();
+            List<ComboBoxHealthProfessionalType> hpt = await _IComboBoxService.ComboBoxHealthProfessionalType();
             ViewBag.ProfessionType = hpt;
             SendOrderModel data = new SendOrderModel
             {
@@ -242,20 +243,20 @@ namespace HalloDocMVC.Controllers.AdminController
 
         public Task<IActionResult> ProfessionByType(int HealthProfessionId)
         {
-            var v = _IComboBox.ProfessionByType(HealthProfessionId);
+            var v = _IComboBoxService.ProfessionByType(HealthProfessionId);
             return Task.FromResult<IActionResult>(Json(v));
         }
 
         public Task<IActionResult> SelectProfessionalById(int VendorId)
         {
-            var v = _IActions.SelectProfessionalById(VendorId);
+            var v = _IActionService.SelectProfessionalById(VendorId);
             return Task.FromResult<IActionResult>(Json(v));
         }
         public IActionResult SendOrders(SendOrderModel som)
         {
             if (ModelState.IsValid)
             {
-                bool data = _IActions.SendOrders(som);
+                bool data = _IActionService.SendOrders(som);
                 if (data)
                 {
                     _INotyfService.Success("Order Created  successfully...");
@@ -280,7 +281,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendAgreementMail(int RequestId)
         {
-            if(_IActions.SendAgreement(RequestId))
+            if (_IActionService.SendAgreement(RequestId))
             {
                 _INotyfService.Success("Mail sent successfully");
             }
@@ -291,13 +292,13 @@ namespace HalloDocMVC.Controllers.AdminController
         #region CloseCase
         public async Task<IActionResult> CloseCase_CC(int RequestID)
         {
-            CloseCaseModel ccm = _IActions.GetRequestForCloseCase(RequestID);
+            CloseCaseModel ccm = _IActionService.GetRequestForCloseCase(RequestID);
             return View("~/Views/AdminPanel/Actions/CloseCase.cshtml", ccm);
         }
         public IActionResult CloseCaseUnpaid(int Id)
         {
-            bool ccu = _IActions.CloseCase(Id);
-            if(ccu)
+            bool ccu = _IActionService.CloseCase(Id);
+            if (ccu)
             {
                 _INotyfService.Success("Closed case");
                 _INotyfService.Information("You can see closed case in unpaid state");
@@ -310,7 +311,7 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         public IActionResult EditCloseCase(CloseCaseModel ccu)
         {
-            bool result = _IActions.EditCloseCase(ccu);
+            bool result = _IActionService.EditCloseCase(ccu);
             if (result)
             {
                 _INotyfService.Success("Case Edited Successfully");
@@ -328,7 +329,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region GetEncounterData
         public IActionResult Encounter(int id)
         {
-            EncounterModel efm = _IActions.GetEncounterData(id);
+            EncounterModel efm = _IActionService.GetEncounterData(id);
             return View("~/Views/AdminPanel/Actions/EncounterForm.cshtml", efm);
         }
         #endregion
@@ -336,7 +337,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditEncounterData
         public IActionResult EditEncounterData(EncounterModel model)
         {
-            if (_IActions.EditEncounterData(model, CV.ID()))
+            if (_IActionService.EditEncounterData(model, CV.ID()))
             {
                 _INotyfService.Success("Encounter Changes Saved.");
             }
@@ -353,7 +354,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public Task<IActionResult> SendLink(string FirstName, string LastName, string Email, string PhoneNumber)
         {
-            if (_IActions.SendLink(FirstName, LastName, Email, PhoneNumber))
+            if (_IActionService.SendLink(FirstName, LastName, Email, PhoneNumber))
             {
                 _INotyfService.Success("Mail Sent Successfully.");
             }
@@ -366,7 +367,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AcceptRequest(int RequestId, string Note)
         {
-            if (await _IActions.AcceptPhysician(RequestId, Note, Convert.ToInt32(CV.UserID())))
+            if (await _IActionService.AcceptPhysician(RequestId, Note, Convert.ToInt32(CV.UserID())))
             {
                 _INotyfService.Success("Case Accepted.");
             }
@@ -383,7 +384,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TransferToAdmin(int RequestID, string Note)
         {
-            if (await _IActions.TransfertoAdmin(RequestID, Note, Convert.ToInt32(CV.UserID())))
+            if (await _IActionService.TransfertoAdmin(RequestID, Note, Convert.ToInt32(CV.UserID())))
             {
                 _INotyfService.Success("Request Successfully transferred to admin.");
             }
@@ -395,10 +396,10 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Finalize
         public IActionResult Finalize(EncounterModel model)
         {
-            bool data = _IActions.EditEncounterData(model, CV.ID());
+            bool data = _IActionService.EditEncounterData(model, CV.ID());
             if (data)
             {
-                bool final = _IActions.CaseFinalized(model);
+                bool final = _IActionService.CaseFinalized(model);
                 if (final)
                 {
                     _INotyfService.Success("Case Is Finalized...");
@@ -426,7 +427,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Housecall
         public IActionResult Housecall(int RequestId)
         {
-            if (_IActions.Housecall(RequestId))
+            if (_IActionService.Housecall(RequestId))
             {
                 _INotyfService.Success("Case Accepted...");
             }
@@ -441,7 +442,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Consult
         public IActionResult Consult(int RequestId)
         {
-            if (_IActions.Consult(RequestId))
+            if (_IActionService.Consult(RequestId))
             {
                 _INotyfService.Success("Case is in conclude state...");
             }
@@ -456,7 +457,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region GeneratePDF
         public IActionResult GeneratePDF(int id)
         {
-            var FormDetails = _IActions.GetEncounterData(id);
+            var FormDetails = _IActionService.GetEncounterData(id);
             return new ViewAsPdf("../AdminPanel/Actions/EncounterPdf", FormDetails);
         }
         #endregion
@@ -465,7 +466,7 @@ namespace HalloDocMVC.Controllers.AdminController
         public async Task<IActionResult> ConcludeCare(int? id, ViewUploadModel viewDocument)
         {
             id ??= viewDocument.RequestId;
-            ViewUploadModel v = await _IActions.GetDocument(id, viewDocument);
+            ViewUploadModel v = await _IActionService.GetDocument(id, viewDocument);
             return View("../AdminPanel/Actions/ConcludeCare", v);
         }
         #endregion ConcludeCare
@@ -473,7 +474,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region UploadDocProvider
         public IActionResult UploadDocProvider(int Requestid, IFormFile file)
         {
-            if (_IActions.UploadDocuments(Requestid, file))
+            if (_IActionService.UploadDocuments(Requestid, file))
             {
                 _INotyfService.Success("File Uploaded Successfully");
             }
@@ -488,7 +489,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ConcludeCarePost
         public IActionResult ConcludeCarePost(int RequestId, string Notes)
         {
-            if (_IActions.ConcludeCare(RequestId, Notes))
+            if (_IActionService.ConcludeCare(RequestId, Notes))
             {
                 _INotyfService.Success("Case concluded...");
             }

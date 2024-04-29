@@ -93,12 +93,12 @@
         }
       }
     },
-    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj": {
+    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
-        "projectName": "HalloDocMVC.Repositories.Admin",
-        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj",
+        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj",
+        "projectName": "HalloDocMVC.Repositories",
+        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj",
         "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\obj\\",
         "projectStyle": "PackageReference",
@@ -178,14 +178,14 @@
         }
       }
     },
-    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
+    "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\HalloDocMVC.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
-        "projectName": "HalloDocMVC.Repositories.Patient",
-        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj",
+        "projectUniqueName": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\HalloDocMVC.Services.csproj",
+        "projectName": "HalloDocMVC.Services",
+        "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\HalloDocMVC.Services.csproj",
         "packagesPath": "C:\\Users\\pce116\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\obj\\",
+        "outputPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pce116\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -204,6 +204,9 @@
             "projectReferences": {
               "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj": {
                 "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.DBEntity\\HalloDocMVC.DBEntity.csproj"
+              },
+              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj": {
+                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj"
               }
             }
           }
@@ -217,36 +220,6 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "dependencies": {
-            "AspNetCoreHero.ToastNotification": {
-              "target": "Package",
-              "version": "[1.1.0, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[7.0.16, )"
-            },
-            "Microsoft.AspNetCore.Mvc.Abstractions": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Rotativa": {
-              "target": "Package",
-              "version": "[1.7.3, )"
-            },
-            "Rotativa.AspNetCore": {
-              "target": "Package",
-              "version": "[1.3.2, )"
-            },
-            "Twilio": {
-              "target": "Package",
-              "version": "[7.0.4, )"
-            },
-            "Twilio.AspNet.Mvc": {
-              "target": "Package",
-              "version": "[7.0.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -292,11 +265,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj": {
-                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.Admin.csproj"
+              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj": {
+                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositeries\\HalloDocMVC.Repositories.csproj"
               },
-              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj": {
-                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Repositories.Patient\\HalloDocMVC.Repositories.Patient.csproj"
+              "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\HalloDocMVC.Services.csproj": {
+                "projectPath": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC.Services\\HalloDocMVC.Services.csproj"
               }
             }
           }

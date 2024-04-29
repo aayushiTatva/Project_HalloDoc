@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDocMVC.Controllers.AdminController
@@ -7,11 +8,11 @@ namespace HalloDocMVC.Controllers.AdminController
     public class SendAgreementController : Controller
     {
         #region Configuration
-        private readonly IActions _IActions;
+        private readonly IActionService _IActionService;
         private readonly INotyfService _INotyfService;
-        public SendAgreementController(IActions IActions, INotyfService INotyfService)
+        public SendAgreementController(IActionService IActionService, INotyfService INotyfService)
         {
-            _IActions = IActions;
+            _IActionService = IActionService;
             _INotyfService = INotyfService;
         }
         #endregion 
@@ -28,15 +29,15 @@ namespace HalloDocMVC.Controllers.AdminController
         #region accept
         public IActionResult accept(int RequestId)
         {
-            _IActions.SendAgreementAccept(RequestId);
+            _IActionService.SendAgreementAccept(RequestId);
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion 
 
         #region reject
-        public IActionResult reject(int RequestId,string Notes)
+        public IActionResult reject(int RequestId, string Notes)
         {
-            _IActions.SendAgreementReject(RequestId, Notes);
+            _IActionService.SendAgreementReject(RequestId, Notes);
             return RedirectToAction("Index", "Dashboard");
         }
         #endregion 

@@ -2,9 +2,7 @@
 using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Models;
-using HalloDocMVC.Repositories.Admin.Repository;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDocMVC.Controllers.AdminController
@@ -14,15 +12,15 @@ namespace HalloDocMVC.Controllers.AdminController
     {
         #region Configuration
         private readonly HalloDocContext _context;
-        private readonly IMyProfile _IMyProfile;
-        private readonly IComboBox _IComboBox;
+        private readonly IAdminProfileService _IAdminProfileService;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly INotyfService _INotyfService;
 
-        public MyProfileController(HalloDocContext context, IMyProfile iMyProfile, IComboBox iComboBox, INotyfService iNotyfService)
+        public MyProfileController(HalloDocContext context, IAdminProfileService iAdminProfileService, IComboBoxService iComboBoxService, INotyfService iNotyfService)
         {
             _context = context;
-            _IMyProfile = iMyProfile;
-            _IComboBox = iComboBox;
+            _IAdminProfileService = iAdminProfileService;
+            _IComboBoxService = iComboBoxService;
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
@@ -30,9 +28,9 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Index
         public async Task<IActionResult> Index()
         {
-            AdminProfileModel data = await _IMyProfile.GetProfile(Convert.ToInt32(CV.UserID()));
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            ViewBag.ComboBoxUserRole = await _IComboBox.ComboBoxUserRole();
+            AdminProfileModel data = await _IAdminProfileService.GetProfile(Convert.ToInt32(CV.UserID()));
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            ViewBag.ComboBoxUserRole = await _IComboBoxService.ComboBoxUserRole();
             return View("~/Views/AdminPanel/Admin/Profile/Index.cshtml", data);
         }
         #endregion
@@ -40,7 +38,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ResetPassword
         public async Task<IActionResult> ResetPassword(string Password)
         {
-            if (await _IMyProfile.ResetPassword(Password, Convert.ToInt32(CV.UserID())))
+            if (await _IAdminProfileService.ResetPassword(Password, Convert.ToInt32(CV.UserID())))
             {
                 _INotyfService.Success("Password changed Successfully.");
             }
@@ -56,7 +54,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> EditAdministratorInfo(AdminProfileModel adminProfile)
         {
-            if(await _IMyProfile.EditAdministratorInfo(adminProfile))
+            if (await _IAdminProfileService.EditAdministratorInfo(adminProfile))
             {
                 _INotyfService.Success("Edited successfully");
             }
@@ -72,7 +70,7 @@ namespace HalloDocMVC.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> EditBillingInfo(AdminProfileModel adminProfile)
         {
-            if(await _IMyProfile.EditBillingInfo(adminProfile))
+            if (await _IAdminProfileService.EditBillingInfo(adminProfile))
             {
                 _INotyfService.Success("Edited successfully");
             }
@@ -80,7 +78,7 @@ namespace HalloDocMVC.Controllers.AdminController
             {
                 _INotyfService.Error("Edit unsuccessfull");
             }
-            return RedirectToAction("Index","MyProfile");
+            return RedirectToAction("Index", "MyProfile");
         }
         #endregion
     }

@@ -1,9 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDocMVC.Controllers.AdminController;
-using HalloDocMVC.DBEntity.DataContext;
+using HalloDocMVC.DataModels;
 using HalloDocMVC.DBEntity.ViewModels.PatientPanel;
-using HalloDocMVC.Repositories.Patient;
-using HalloDocMVC.Repositories.Patient.Repository.Interface;
+using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +11,12 @@ namespace HalloDocMVC.Controllers.PatientController
     public class CreateRequestController : Controller
     {
         #region Configuration
-        private readonly HalloDocContext _context;
-        private readonly ICreateRequestRepository _ICreateRequestRepository;
+        private readonly ICreateRequestService _ICreateRequestService;
         private readonly INotyfService _INotyfService;
-        public CreateRequestController(HalloDocContext context, ICreateRequestRepository iActions, INotyfService iNotyfService)
+        private readonly IGenericRepository<Aspnetuser> _aspNetUserRepository;
+        public CreateRequestController(ICreateRequestService iCreateRequestService, INotyfService iNotyfService)
         {
-            _context = context;
-            _ICreateRequestRepository = iActions;
+            _ICreateRequestService = iCreateRequestService;
             _INotyfService = iNotyfService;
         }
         #endregion Configuration
@@ -36,7 +34,7 @@ namespace HalloDocMVC.Controllers.PatientController
         public async Task<IActionResult> CheckEmailAsync(string email)
         {
             string message;
-            var aspnetuser = await _context.Aspnetusers.FirstOrDefaultAsync(m => m.Email == email);
+            var aspnetuser = await _aspNetUserRepository.GetAll().FirstOrDefaultAsync(m => m.Email == email);
             if (aspnetuser == null)
             {
                 message = "False";
@@ -59,7 +57,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> PatientRequest(ViewDataPatientRequestModel model)
         {
-            if (await _ICreateRequestRepository.CreatePatientRequest(model))
+            if (await _ICreateRequestService.CreatePatientRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -78,7 +76,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> FamilyRequest(ViewDataFamilyRequestModel model)
         {
-            if (await _ICreateRequestRepository.CreateFamilyRequest(model))
+            if (await _ICreateRequestService.CreateFamilyRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -89,7 +87,6 @@ namespace HalloDocMVC.Controllers.PatientController
             return RedirectToAction("Index", "CreateRequest");
         }
         #endregion
-        
 
         #region ConciregeRequest
         public IActionResult CreateConciergeRequest()
@@ -98,7 +95,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> ConciergeRequest(ViewDataConciergeRequestModel model)
         {
-            if (await _ICreateRequestRepository.CreateConciergeRequest(model))
+            if (await _ICreateRequestService.CreateConciergeRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }
@@ -117,7 +114,7 @@ namespace HalloDocMVC.Controllers.PatientController
         }
         public async Task<IActionResult> BusinessRequest(ViewDataBusinessRequestModel model)
         {
-            if (await _ICreateRequestRepository.CreateBusinessRequest(model))
+            if (await _ICreateRequestService.CreateBusinessRequest(model))
             {
                 _INotyfService.Success("Request has been created successfully.");
             }

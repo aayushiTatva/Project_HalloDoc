@@ -3,6 +3,7 @@ using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Models;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
@@ -14,15 +15,13 @@ namespace HalloDocMVC.Controllers.AdminController
     public class DashboardController : Controller
     {
         #region Configuration
-        private readonly HalloDocContext _context;
-        private readonly IAdminDashboard _IAdminDashboard;
-        private readonly IComboBox _IComboBox;
+        private readonly IAdminDashboardService _IAdminDashboardService;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly ILogger<DashboardController> _Logger;
-        public DashboardController(HalloDocContext context,IAdminDashboard iAdminDashboard, IComboBox iComboBox)
+        public DashboardController(IAdminDashboardService iAdminDashboardService, IComboBoxService iComboBoxService)
         {
-            _context = context;
-            _IAdminDashboard = iAdminDashboard;
-            _IComboBox = iComboBox;
+            _IAdminDashboardService = iAdminDashboardService;
+            _IComboBoxService = iComboBoxService;
         }
         #endregion Configuration
         [CheckProviderAccess("Admin,Provider")]
@@ -31,12 +30,12 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Index
         public async Task<IActionResult> Index()
         {
-            ViewBag.ComboBoxRegion = await _IComboBox.ComboBoxRegions();
-            ViewBag.ComboBoxCaseReason = await _IComboBox.ComboBoxCaseReasons();
-            PaginationModel countRequest = _IAdminDashboard.CardData(-1);
+            ViewBag.ComboBoxRegion = await _IComboBoxService.ComboBoxRegions();
+            ViewBag.ComboBoxCaseReason = await _IComboBoxService.ComboBoxCaseReasons();
+            PaginationModel countRequest = _IAdminDashboardService.CardData(-1);
             if (CV.role() == "Provider")
             {
-                countRequest = _IAdminDashboard.CardData(Convert.ToInt32(CV.UserID()));
+                countRequest = _IAdminDashboardService.CardData(Convert.ToInt32(CV.UserID()));
                 return View("~/Views/AdminPanel/Dashboard/Index.cshtml", countRequest);
             }
             return View("~/Views/AdminPanel/Dashboard/Index.cshtml", countRequest);
@@ -53,10 +52,10 @@ namespace HalloDocMVC.Controllers.AdminController
             Response.Cookies.Append("Status", Status);
             Response.Cookies.Append("Filter", Filter);
 
-            PaginationModel contacts = _IAdminDashboard.GetRequests(Status, Filter, pagination);
+            PaginationModel contacts = _IAdminDashboardService.GetRequests(Status, Filter, pagination);
             if (CV.role() == "Provider")
             {
-                contacts = _IAdminDashboard.GetRequests(Status, Filter, pagination, Convert.ToInt32(CV.UserID()));
+                contacts = _IAdminDashboardService.GetRequests(Status, Filter, pagination, Convert.ToInt32(CV.UserID()));
             }
 
             switch (Status)
@@ -96,19 +95,19 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Export
         public IActionResult Export(string status)
         {
-            var requestData = _IAdminDashboard.Export(status);
+            var requestData = _IAdminDashboardService.Export(status);
             List<int> statuslist = status.Split(',').Select(int.Parse).ToList();
             if (statuslist.Count > 1)
             {
-                requestData = _IAdminDashboard.Export(status);
+                requestData = _IAdminDashboardService.Export(status);
             }
             else
             {
                 var currentstatus = CV.CurrentStatus();
-                requestData = _IAdminDashboard.Export(currentstatus);
+                requestData = _IAdminDashboardService.Export(currentstatus);
             }
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             using (ExcelPackage package = new())
             {

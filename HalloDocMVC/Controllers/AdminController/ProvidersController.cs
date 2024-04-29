@@ -3,6 +3,7 @@ using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Twilio;
@@ -14,35 +15,33 @@ namespace HalloDocMVC.Controllers.AdminController
     public class ProvidersController : Controller
     {
         #region Configuration
-        private readonly HalloDocContext _context;
-        private readonly IAdminDashboard _IAdminDashboard;
-        private readonly IContactYourProvider _IContactYourProvider;
-        private readonly IComboBox _IComboBox;
+        private readonly IAdminDashboardService _IAdminDashboardService;
+        private readonly IProviderService _IProviderService;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly INotyfService _INotyfService;
         private readonly EmailConfiguration _emailConfiguration;
-        public ProvidersController(HalloDocContext context,IAdminDashboard iAdminDashboard,IContactYourProvider iContactYourProvider, IComboBox iComboBox, INotyfService iNotyfService,EmailConfiguration emailConfiguration)
+        public ProvidersController(IAdminDashboardService iAdminDashboardService, IProviderService iProviderService, IComboBoxService iComboBoxService, INotyfService iNotyfService, EmailConfiguration emailConfiguration)
         {
-            _context = context;
-            _IAdminDashboard = iAdminDashboard;
-            _IContactYourProvider = iContactYourProvider;
-            _IComboBox = iComboBox;
+            _IAdminDashboardService = iAdminDashboardService;
+            _IProviderService = iProviderService;
+            _IComboBoxService = iComboBoxService;
             _INotyfService = iNotyfService;
             _emailConfiguration = emailConfiguration;
         }
         #endregion
 
         #region Index
-        public async Task<IActionResult> Index(int? region,PaginationProvider paginationProvider)
+        public async Task<IActionResult> Index(int? region, PaginationProvider paginationProvider)
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            PaginationProvider data = _IContactYourProvider.GetContacts(paginationProvider);
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            PaginationProvider data = _IProviderService.GetContacts(paginationProvider);
             if (region == null)
             {
-                data = _IContactYourProvider.GetContacts(paginationProvider);
+                data = _IProviderService.GetContacts(paginationProvider);
             }
             else
             {
-                data = _IContactYourProvider.PhysicianByRegion(region, paginationProvider);
+                data = _IProviderService.PhysicianByRegion(region, paginationProvider);
             }
             return View("~/Views/AdminPanel/Admin/Provider/Index.cshtml", data);
         }
@@ -52,7 +51,7 @@ namespace HalloDocMVC.Controllers.AdminController
         public async Task<IActionResult> ChangeNotification(string changedValues)
         {
             Dictionary<int, bool> changeValueDict = JsonConvert.DeserializeObject<Dictionary<int, bool>>(changedValues);
-            _IContactYourProvider.ChangeNotification(changeValueDict);
+            _IProviderService.ChangeNotification(changeValueDict);
             return RedirectToAction("Index");
         }
         #endregion
@@ -90,9 +89,9 @@ namespace HalloDocMVC.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> AddPhysician(ProviderModel Physicians)
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            ViewBag.UserRoleComboBox = await _IComboBox.PhysicianRoleComboBox();
-            if (await _IContactYourProvider.AddPhysician(Physicians, CV.ID()))
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            ViewBag.UserRoleComboBox = await _IComboBoxService.PhysicianRoleComboBox();
+            if (await _IProviderService.AddPhysician(Physicians, CV.ID()))
             {
                 _INotyfService.Success("Physician added Successfully..!");
             }
@@ -109,8 +108,8 @@ namespace HalloDocMVC.Controllers.AdminController
         #region PhysicianProfile
         public async Task<IActionResult> PhysicianProfile(int? Id)
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            ViewBag.UserRoleComboBox = await _IComboBox.PhysicianRoleComboBox();
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            ViewBag.UserRoleComboBox = await _IComboBoxService.PhysicianRoleComboBox();
             if (Id == null)
             {
                 ViewData["PhysicianAccount"] = "Add";
@@ -118,8 +117,8 @@ namespace HalloDocMVC.Controllers.AdminController
             else
             {
                 ViewData["PhysicianAccount"] = "Edit";
-                ProviderModel pvm = await _IContactYourProvider.GetPhysicianById((int) Id);
-                return View("~/Views/AdminPanel/Admin/Provider/EditPhysician.cshtml",pvm);
+                ProviderModel pvm = await _IProviderService.GetPhysicianById((int)Id);
+                return View("~/Views/AdminPanel/Admin/Provider/EditPhysician.cshtml", pvm);
             }
             return View("~/Views/AdminPanel/Admin/Provider/EditPhysician.cshtml");
         }
@@ -130,7 +129,7 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             string actionName = RouteData.Values["action"].ToString();
             string actionNameaq = ControllerContext.ActionDescriptor.ActionName; // Get the current action name
-            if (await _IContactYourProvider.EditAccountInfo(data))
+            if (await _IProviderService.EditAccountInfo(data))
             {
                 _INotyfService.Success("Account Information Changed Successfully..!");
             }
@@ -145,7 +144,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ResetPassword
         public async Task<IActionResult> ResetPassword(string password, int PhysicianId)
         {
-            if(await _IContactYourProvider.ResetPassword(password, PhysicianId))
+            if (await _IProviderService.ResetPassword(password, PhysicianId))
             {
                 _INotyfService.Success("Password Updated Successfully");
             }
@@ -160,7 +159,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditPhysicianInfo
         public async Task<IActionResult> EditPhysicianInfo(ProviderModel data)
         {
-            if (await _IContactYourProvider.EditPhysicianInfo(data))
+            if (await _IProviderService.EditPhysicianInfo(data))
             {
                 _INotyfService.Success("Administrator Information Changed Successfully..!");
                 return RedirectToAction("PhysicianProfile", new { id = data.PhysicianId });
@@ -176,7 +175,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditMailBillingInfo
         public async Task<IActionResult> EditMailingInfo(ProviderModel data)
         {
-            if (await _IContactYourProvider.EditMailBillingInfo(data, CV.ID()))
+            if (await _IProviderService.EditMailBillingInfo(data, CV.ID()))
             {
                 _INotyfService.Success("mail and billing Information Changed Successfully...");
                 return RedirectToAction("PhysicianProfile", new { id = data.PhysicianId });
@@ -192,7 +191,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditProviderProfile
         public async Task<IActionResult> EditProviderProfile(ProviderModel data)
         {
-            if (await _IContactYourProvider.EditProviderProfile(data, CV.ID()))
+            if (await _IProviderService.EditProviderProfile(data, CV.ID()))
             {
                 _INotyfService.Success("Profile Changed Successfully...");
                 return RedirectToAction("PhysicianProfile", new { id = data.PhysicianId });
@@ -208,7 +207,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditProviderOnbording
         public async Task<IActionResult> EditProviderOnboarding(ProviderModel data)
         {
-            if (await _IContactYourProvider.EditProviderOnbording(data, CV.ID()))
+            if (await _IProviderService.EditProviderOnbording(data, CV.ID()))
             {
                 _INotyfService.Success("Provider Onboarding Changed Successfully...");
                 return RedirectToAction("PhysicianProfile", new { id = data.PhysicianId });
@@ -252,7 +251,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region RequestToAdmin
         public IActionResult RequestToAdmin(string Note)
         {
-            bool Contact = _IContactYourProvider.RequestToAdmin(Convert.ToInt32(CV.UserID()), Note);
+            bool Contact = _IProviderService.RequestToAdmin(Convert.ToInt32(CV.UserID()), Note);
             if (Contact)
             {
                 _INotyfService.Success("Mail Sent Succesfully.");

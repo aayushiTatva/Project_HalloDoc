@@ -11,6 +11,6 @@
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions\\Modals",
     "\\HalloDocMVC\\Views\\AdminPanel\\Dashboard"
   ],
-  "SelectedNode": "\\HalloDocMVC.Repositeries\\Repository\\Interface\\IActions.cs",
+  "SelectedNode": "\\HalloDocMVC\\Views\\AdminPanel\\Actions\\ViewUploads.cshtml",
   "PreviewInSolutionExplorer": false
 }

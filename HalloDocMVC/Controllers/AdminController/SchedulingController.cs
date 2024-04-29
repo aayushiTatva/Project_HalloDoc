@@ -4,6 +4,7 @@ using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
+using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,23 +15,31 @@ namespace HalloDocMVC.Controllers.AdminController
 {
     public class SchedulingController : Controller
     {
-        private readonly HalloDocContext _context;
-        private readonly IComboBox _IComboBox;
+        private readonly IComboBoxService _IComboBoxService;
         private readonly INotyfService _INotyfService;
-        private readonly IScheduling _IScheduling;
-        private readonly IActions _IActions;
-        public SchedulingController(IComboBox iComboBox, HalloDocContext iContext, INotyfService iNotyfService, IScheduling iScheduling, IActions iActions)
+        private readonly ISchedulingService _ISchedulingService;
+        private readonly IActionService _IActionService;
+        private readonly IGenericRepository<Physicianregion> _physicianRegionRepository;
+        private readonly IGenericRepository<Shiftdetail> _shiftDetailRepository;
+        private readonly IGenericRepository<Physician> _physicianRepository;
+        private readonly IGenericRepository<Shiftdetailregion> _shiftDetailRegionRepository;
+        public SchedulingController(IComboBoxService iComboBoxService, INotyfService iNotyfService, ISchedulingService iSchedulingService, IActionService iActionService,
+            IGenericRepository<Physicianregion> physicianRegionRepository, IGenericRepository<Shiftdetail> shiftDetailRepository, IGenericRepository<Physician> physicianRepository
+            , IGenericRepository<Shiftdetailregion> shiftDetailRegionRepository)
         {
-            _context = iContext;
-            _IComboBox = iComboBox;
-            _IScheduling = iScheduling;
+            _IComboBoxService = iComboBoxService;
+            _ISchedulingService = iSchedulingService;
             _INotyfService = iNotyfService;
-            _IActions = iActions;
+            _IActionService = iActionService;
+            _physicianRegionRepository = physicianRegionRepository;
+            _shiftDetailRepository = shiftDetailRepository;
+            _physicianRepository = physicianRepository;
+            _shiftDetailRegionRepository = shiftDetailRegionRepository;
         }
         #region Index
         public async Task<IActionResult> Index()
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
             ViewBag.PhysiciansByRegion = new SelectList(Enumerable.Empty<SelectListItem>());
             SchedulingModel modal = new();
             return View("../AdminPanel/Admin/Scheduling/Index", modal);
@@ -40,7 +49,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region GetPhysicianByRegion
         public IActionResult GetPhysicianByRegion(int RegionId)
         {
-            var PhysiciansByRegion = _IComboBox.ProviderByRegion(RegionId);
+            var PhysiciansByRegion = _IComboBoxService.ProviderByRegion(RegionId);
             return Json(PhysiciansByRegion);
         }
         #endregion GetPhysicianByRegion
@@ -49,11 +58,11 @@ namespace HalloDocMVC.Controllers.AdminController
         public IActionResult LoadSchedulingPartial(string PartialName, string date, int regionid)
         {
             var currentDate = DateTime.Parse(date);
-            List<Physician> physician = _context.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
-            if (regionid == 0)
+            List<Physician> physician = _physicianRegionRepository.GetAll().Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
+            /*if (regionid == 0)
             {
-                physician = _context.Physicians.ToList();
-            }
+                physician = _physicianRepository.ToList();
+            }*/
 
             switch (PartialName)
             {
@@ -62,11 +71,11 @@ namespace HalloDocMVC.Controllers.AdminController
                     {
                         Date = currentDate,
                         Physicians = physician,
-                        ShiftDetail = _context.Shiftdetailregions.Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).Where(u => u.Regionid == regionid && u.Isdeleted == new BitArray(new[] { false })).Select(u => u.Shiftdetail).ToList()
+                        ShiftDetail = _shiftDetailRegionRepository.GetAll().Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).Where(u => u.Regionid == regionid && u.Isdeleted == new BitArray(new[] { false })).Select(u => u.Shiftdetail).ToList()
                     };
                     if (regionid == 0)
                     {
-                        day.ShiftDetail = _context.Shiftdetails.Include(u => u.Shift).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
+                        day.ShiftDetail = _shiftDetailRepository.GetAll().Include(u => u.Shift).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
                     }
                     return PartialView("../AdminPanel/Admin/Scheduling/_DayWise", day);
 
@@ -75,11 +84,11 @@ namespace HalloDocMVC.Controllers.AdminController
                     {
                         Date = currentDate,
                         Physicians = physician,
-                        ShiftDetail = _context.Shiftdetailregions.Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).Where(u => u.Regionid == regionid).Select(u => u.Shiftdetail).ToList()
+                        ShiftDetail = _shiftDetailRegionRepository.GetAll().Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).Where(u => u.Regionid == regionid).Select(u => u.Shiftdetail).ToList()
                     };
                     if (regionid == 0)
                     {
-                        week.ShiftDetail = _context.Shiftdetails.Include(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
+                        week.ShiftDetail = _shiftDetailRepository.GetAll().Include(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
                     }
                     return PartialView("../AdminPanel/Admin/Scheduling/_WeekWise", week);
 
@@ -87,11 +96,11 @@ namespace HalloDocMVC.Controllers.AdminController
                     MonthWiseScheduling month = new()
                     {
                         Date = currentDate,
-                        ShiftDetail = _context.Shiftdetailregions.Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).Where(u => u.Regionid == regionid).Select(u => u.Shiftdetail).ToList()
+                        ShiftDetail = _shiftDetailRegionRepository.GetAll().Include(u => u.Shiftdetail).ThenInclude(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).Where(u => u.Regionid == regionid).Select(u => u.Shiftdetail).ToList()
                     };
                     if (regionid == 0)
                     {
-                        month.ShiftDetail = _context.Shiftdetails.Include(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
+                        month.ShiftDetail = _shiftDetailRepository.GetAll().Include(u => u.Shift).ThenInclude(u => u.Physician).Where(u => u.Isdeleted == new BitArray(new[] { false })).ToList();
                     }
                     return PartialView("../AdminPanel/Admin/Scheduling/_MonthWise", month);
 
@@ -108,7 +117,7 @@ namespace HalloDocMVC.Controllers.AdminController
             MonthWiseScheduling month = new()
             {
                 Date = currentDate,
-                ShiftDetail = _context.Shiftdetails.Include(u => u.Shift).Where(u => u.Isdeleted == new BitArray(new[] { false }) && u.Shift.Physicianid == Int32.Parse(CV.UserID())).ToList()
+                ShiftDetail = _shiftDetailRepository.GetAll().Include(u => u.Shift).Where(u => u.Isdeleted == new BitArray(new[] { false }) && u.Shift.Physicianid == Int32.Parse(CV.UserID())).ToList()
             };
             return PartialView("../AdminPanel/Admin/Scheduling/_MonthWise", month);
         }
@@ -119,7 +128,7 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             string adminId = CV.ID();
             var chk = Request.Form["repeatdays"].ToList();
-            _IScheduling.AddShift(model, chk, adminId);
+            _ISchedulingService.AddShift(model, chk, adminId);
             return RedirectToAction("Index");
 
         }
@@ -129,12 +138,8 @@ namespace HalloDocMVC.Controllers.AdminController
         public SchedulingModel ViewShift(int shiftdetailid)
         {
             SchedulingModel modal = new();
-            var shiftdetail = _context.Shiftdetails.FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
+            var shiftdetail = _shiftDetailRepository.GetAll().FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
 
-            if (shiftdetail != null)
-            {
-                _context.Entry(shiftdetail).Reference(s => s.Shift).Query().Include(s => s.Physician).Load();
-            }
             modal.RegionId = (int)shiftdetail.Regionid;
             modal.PhysicianName = shiftdetail.Shift.Physician.Firstname + " " + shiftdetail.Shift.Physician.Lastname;
             modal.ModalDate = shiftdetail.Shiftdate.ToString("yyyy-MM-dd");
@@ -148,7 +153,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ViewShiftreturn
         public IActionResult ViewShiftreturn(SchedulingModel modal)
         {
-            var shiftdetail = _context.Shiftdetails.FirstOrDefault(u => u.Shiftdetailid == modal.ShiftDetailId);
+            var shiftdetail = _shiftDetailRepository.GetAll().FirstOrDefault(u => u.Shiftdetailid == modal.ShiftDetailId);
             if (shiftdetail.Status == 0)
             {
                 shiftdetail.Status = 1;
@@ -157,8 +162,7 @@ namespace HalloDocMVC.Controllers.AdminController
             {
                 shiftdetail.Status = 0;
             }
-            _context.Shiftdetails.Update(shiftdetail);
-            _context.SaveChanges();
+            _shiftDetailRepository.Update(shiftdetail);
 
             return RedirectToAction("Index");
         }
@@ -167,14 +171,14 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditShift
         public void EditShiftSave(SchedulingModel modal)
         {
-            _IScheduling.EditShiftSave(modal, CV.ID());
+            _ISchedulingService.EditShiftSave(modal, CV.ID());
         }
         #endregion
 
         #region DeleteShift
         public IActionResult ViewShiftDelete(SchedulingModel modal)
         {
-            _IScheduling.ViewShiftDelete(modal, CV.ID());
+            _ISchedulingService.ViewShiftDelete(modal, CV.ID());
             return RedirectToAction("Index");
         }
         #endregion
@@ -182,8 +186,8 @@ namespace HalloDocMVC.Controllers.AdminController
         #region ProvidersOnCall
         public async Task<IActionResult> ProvidersOnCall(int? regionId)
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            List<ProviderModel> v = await _IScheduling.ProviderOnCall(regionId);
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            List<ProviderModel> v = await _ISchedulingService.ProviderOnCall(regionId);
             if (regionId != null)
             {
                 return Json(v);
@@ -195,8 +199,8 @@ namespace HalloDocMVC.Controllers.AdminController
         #region RequestedShift
         public async Task<IActionResult> RequestedShift(int? regionId)
         {
-            ViewBag.RegionComboBox = await _IComboBox.ComboBoxRegions();
-            List<SchedulingModel> v = await _IScheduling.GetAllNotApprovedShift(regionId);
+            ViewBag.RegionComboBox = await _IComboBoxService.ComboBoxRegions();
+            List<SchedulingModel> v = await _ISchedulingService.GetAllNotApprovedShift(regionId);
 
             return View("../AdminPanel/Admin/Scheduling/ShiftsForReview", v);
         }
@@ -206,7 +210,7 @@ namespace HalloDocMVC.Controllers.AdminController
 
         public async Task<IActionResult> ApprovedShifts(string shiftids)
         {
-            if (await _IScheduling.UpdateStatusShift(shiftids, CV.ID()))
+            if (await _ISchedulingService.UpdateStatusShift(shiftids, CV.ID()))
             {
                 _INotyfService.Success("Shift Approved Successfully.");
             }
@@ -218,7 +222,7 @@ namespace HalloDocMVC.Controllers.AdminController
 
         public async Task<IActionResult> DeleteShiftsReview(string shiftids)
         {
-            if (await _IScheduling.DeleteShift(shiftids, CV.ID()))
+            if (await _ISchedulingService.DeleteShift(shiftids, CV.ID()))
             {
                 _INotyfService.Success("Shift Deleted Successfully.");
             }
