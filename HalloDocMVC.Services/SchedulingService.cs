@@ -57,7 +57,7 @@ namespace HalloDocMVC.Services
             Shift shift = new()
             {
                 Physicianid = model.PhysicianId,
-                Startdate = DateOnly.FromDateTime(model.ShiftDate),
+                Startdate = DateOnly.FromDateTime((DateTime)model.ShiftDate),
                 Repeatupto = model.RepeatCount,
                 Createddate = DateTime.Now,
                 Createdby = adminId,
@@ -76,7 +76,7 @@ namespace HalloDocMVC.Services
             }
             _shiftRepository.Add(shift);
 
-            DateTime curdate = model.ShiftDate;
+            DateTime curdate = (DateTime)model.ShiftDate;
             Shiftdetail shiftdetail = new()
             {
                 Shiftid = shift.Shiftid,
@@ -94,7 +94,7 @@ namespace HalloDocMVC.Services
                 Isdeleted = new BitArray(new[] { false })
             };
             _shiftDetailRegionRepository.Add(shiftregionnews);
-            var dayofweek = model.ShiftDate.DayOfWeek.ToString();
+            var dayofweek = model.ShiftDate?.DayOfWeek.ToString();
             int valueforweek;
             if (dayofweek == "Sunday")
             {
@@ -145,7 +145,7 @@ namespace HalloDocMVC.Services
                     {
                         x = 7;
                     }
-                    DateTime newcurdate = model.ShiftDate.AddDays(x);
+                    DateTime newcurdate = (DateTime)(model.ShiftDate?.AddDays(x));
                     for (int i = 0; i < model.RepeatCount; i++)
                     {
                         Shiftdetail shiftdetailnew = new()
@@ -215,7 +215,7 @@ namespace HalloDocMVC.Services
             var shiftdetail = _shiftDetailRepository.GetAll().FirstOrDefault(u => u.Shiftdetailid == modal.ShiftDetailId);
             if (shiftdetail != null)
             {
-                shiftdetail.Shiftdate = modal.ShiftDate;
+                shiftdetail.Shiftdate = (DateTime)modal.ShiftDate;
                 shiftdetail.Starttime = modal.StartTime;
                 shiftdetail.Endtime = modal.EndTime;
                 shiftdetail.Modifiedby = id;

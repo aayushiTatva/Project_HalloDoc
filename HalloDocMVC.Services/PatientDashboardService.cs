@@ -62,21 +62,21 @@ namespace HalloDocMVC.Services
         }
 
         #region UploadDoc
-        public async Task<bool> UploadDoc(int RequestId, IFormFile? UploadFile)
-        {
-            if (UploadFile != null)
-            {
-                string upload = SaveFileModel.UploadDocument(UploadFile, RequestId);
-                var requestwisefile = new Requestwisefile
-                {
-                    Requestid = RequestId,
-                    Filename = upload,
-                    Createddate = DateTime.Now,
-                };
-                _requestWiseFileRepository.Add(requestwisefile);
-            }
-            return true;
-        }
+        //public async Task<bool> UploadDoc(int RequestId, IFormFile? UploadFile)
+        //{
+        //    if (UploadFile != null)
+        //    {
+        //        string upload = SaveFileModel.UploadDocument(UploadFile, RequestId);
+        //        var requestwisefile = new Requestwisefile
+        //        {
+        //            Requestid = RequestId,
+        //            Filename = upload,
+        //            Createddate = DateTime.Now,
+        //        };
+        //        _requestWiseFileRepository.Add(requestwisefile);
+        //    }
+        //    return true;
+        //}
         #endregion
 
         #region RequestForMe (RequestByPatient)
@@ -167,19 +167,24 @@ namespace HalloDocMVC.Services
             _requestClientRepository.Add(Requestclient);
 
 
-            if (viewpatientrequestforelse.UploadFile != null)
-            {
-                string upload = SaveFileModel.UploadDocument(viewpatientrequestforelse.UploadFile, Request.Requestid);
+            //if (viewpatientrequestforelse.UploadFile != null)
+            //{
+            //    string upload = SaveFileModel.UploadDocument(viewpatientrequestforelse.UploadFile, Request.Requestid);
 
-                var requestwisefile = new Requestwisefile
-                {
-                    Requestid = Request.Requestid,
-                    Filename = upload,
-                    Createddate = DateTime.Now,
-                };
-                _requestWiseFileRepository.Add(requestwisefile);
-            }
+            //    var requestwisefile = new Requestwisefile
+            //    {
+            //        Requestid = Request.Requestid,
+            //        Filename = upload,
+            //        Createddate = DateTime.Now,
+            //    };
+            //    _requestWiseFileRepository.Add(requestwisefile);
+            //}
             return true;
+        }
+
+        public Task<bool> UploadDoc(int RequestId, IFormFile? UploadFile)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

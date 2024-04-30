@@ -1,13 +1,8 @@
-﻿using HalloDocMVC.DBEntity.DataContext;
-using HalloDocMVC.DBEntity.ViewModels;
+﻿using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Models;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using System.ComponentModel;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace HalloDocMVC.Controllers.AdminController

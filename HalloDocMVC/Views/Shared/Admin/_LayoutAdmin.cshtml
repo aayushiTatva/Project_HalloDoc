@@ -33,7 +33,7 @@
                 <a class="text-decoration-none align-self-center" id="offCanvasIcon" data-bs-toggle="offcanvas" href="#offcanvasExample">
                     <i class="fa-solid fa-bars text-info border rounded border-info my-3 p-2"></i>
                 </a>
-                <img id="halloDocLogo" class="img-fluid img-responsive mt-1 ms-1" src="~/images/Patient site 1.png" />
+                <a asp-controller="home" asp-action="Index"><img id="halloDocLogo" class="img-fluid img-responsive mt-1 ms-1" src="~/images/Patient site 1.png" /></a>
             </div>
             <div class="d-inline-flex align-items-center p-3">
                 <label class="d-none d-sm-block">Welcome <strong>@CV.UserName()</strong></label>
@@ -41,8 +41,8 @@
                     <i class="d-block d-sm-none fa-solid fa-arrow-right-from-bracket text-info border rounded border-info mx-3 mx-xs-2 my-3 p-2"></i>
                 </a>@*
                 <a asp-controller="Home" asp-action="Logout"class=" btn d-none d-sm-block relogin mx-3  mx-xs-2">Logout</a>*@
-                <a class="btn relogin d-none d-sm-block mx-3 shadow-none bg-white " asp-controller="Login" asp-action="Logout">Logout</a>
-                <a class="btn relogin d-none d-sm-block  shadow-none bg-white " asp-controller="" asp-action=""><i class="fas fa-moon "></i></a>
+                <a class="btn relogin d-none d-sm-block mx-3 shadow-none bg-white " asp-controller="Login" asp-action="Logout">Logout</a>@*
+                <a class="btn relogin d-none d-sm-block  shadow-none bg-white " asp-controller="" asp-action=""><i class="fas fa-moon "></i></a>*@
                 @*<a href="" class="btn relogin"><i class="fas fa-moon "></i></a>*@
             </div>
         </div>

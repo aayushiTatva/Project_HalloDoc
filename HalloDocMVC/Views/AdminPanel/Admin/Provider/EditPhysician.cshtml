@@ -40,7 +40,7 @@
             }
             @if (path.StartsWith("/Provider"))
             {<div class="col-6 ms-auto">
-                <a class="btn relogin mx-3 shadow-none" asp-controller="Provider" asp-action="Index" >Back</a>
+                <a class="btn relogin mx-3 shadow-none" asp-controller="Providers" asp-action="Index" >Back</a>
                 </div>
             }
         }
@@ -220,12 +220,13 @@
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 form-floating mb-3">
-                            <select class="form-select shadow-none input2 ProviderInput" asp-for="State" id="floatingSelectGrid" style="height: 60px" placeholder="State">
+                            @*<select class="form-select shadow-none input2 ProviderInput" asp-for="State" id="floatingSelectGrid" style="height: 60px" placeholder="State">
                                 <option selected class="text-secondary">State</option>
                                 <option value="1">Virginia</option>
-                            </select>
-                           @* <input asp-for="State" type="text" class="form-control shadow-none input2 ProviderInput" id="state" placeholder="State">
-                            <label class="ms-2" for="state">State</label>*@
+                            </select>*@
+                            <input asp-for="State" type="text" class="form-control shadow-none input2 ProviderInput" id="state" placeholder="State">
+                            <label class="ms-2" for="state">State</label>
+                            <span asp-validation-for="State" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">

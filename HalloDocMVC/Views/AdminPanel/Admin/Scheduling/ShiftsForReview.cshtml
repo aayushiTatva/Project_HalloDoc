@@ -82,7 +82,7 @@
                                         </div>
                                     </td>
                                     <td scope="row"> @item.PhysicianName</td>
-                                    <td scope="row"> @item.ShiftDate.ToString("MMM d, yyyy")</td>
+                                    <td scope="row"> @item.ShiftDate?.ToString("MMM dd, yyyy")</td>
                                     <td scope="row">  @item.StartTime - @item.EndTime</td>
                                     <td scope="row"> @item.RegionName</td>
                                 </tr>

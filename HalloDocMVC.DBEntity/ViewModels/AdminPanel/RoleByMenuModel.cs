@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
     public class RoleByMenuModel
     {
         public int RoleId { get; set; }
+        [Required(ErrorMessage = "RoleName is required")]
         public string RoleName { get; set; }
         public short AccountType { get; set; }
         public  string CreatedBy { get; set; }

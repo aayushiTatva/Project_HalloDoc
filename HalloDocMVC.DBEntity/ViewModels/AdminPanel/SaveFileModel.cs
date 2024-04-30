@@ -12,7 +12,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public static string UploadDocument(IFormFile UploadFile, int Requestid)
         {
             string upload_path = null;
-            if(UploadFile != null)
+            if (UploadFile != null)
             {
                 string FilePath = "wwwroot\\Upload\\" + Requestid;
                 string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
@@ -30,5 +30,30 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
             }
             return upload_path;
         }
+
+        //public static IFormFile UploadDocument(IFormFile UploadFile, int Requestid)
+        //{
+        //    if (UploadFile != null)
+        //    {
+        //        string FilePath = "wwwroot\\Upload\\" + Requestid;
+        //        string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
+        //        if (!Directory.Exists(path))
+        //        {
+        //            Directory.CreateDirectory(path);
+        //        }
+        //        string newfilename = $"{Path.GetFileNameWithoutExtension(UploadFile.FileName)}-{DateTime.Now.ToString("yyyyMMddhhmmss")}.{Path.GetExtension(UploadFile.FileName).Trim('.')}";
+        //        string filenamewithpath = Path.Combine(path, newfilename);
+
+        //        using (var stream = new FileStream(filenamewithpath, FileMode.Create))
+        //        {
+        //            UploadFile.CopyTo(stream);
+        //        }
+
+        //        // Return the uploaded file
+        //        return UploadFile;
+        //    }
+
+        //    return null;
+        //}
     }
 }

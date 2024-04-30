@@ -1,8 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -103,8 +101,8 @@ namespace HalloDocMVC.Controllers.AdminController
         }
         #endregion
 
-        [Route("Provider/Profile")]
-        [Route("Admin/Profile")]
+        /*[Route("Provider/Profile")]
+        [Route("Admin/Profile")]*/
         #region PhysicianProfile
         public async Task<IActionResult> PhysicianProfile(int? Id)
         {

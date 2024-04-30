@@ -12,7 +12,6 @@
 }
 
 .logOut {
-    margin: 5px;
     border-radius: 10px;
     color: aqua;
     border-color: aqua;
@@ -20,7 +19,6 @@
 
 .relogin {
     float: right;
-    margin-top: 20px;
     border-radius: 5px;
     border-color: aqua;/*
     color: aqua;*/

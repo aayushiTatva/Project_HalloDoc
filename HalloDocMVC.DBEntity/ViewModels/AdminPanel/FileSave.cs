@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +13,10 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
     public class FileSave
     {
         #region UploadFile
-        public static string UploadDoc(IFormFile UploadFile,int RequestId)
+        public static string UploadDoc(IFormFile UploadFile, int RequestId)
         {
             string uploadPath = null;
-            if(UploadFile != null)
+            if (UploadFile != null)
             {
                 string FilePath = "wwwroot\\Upload\\" + RequestId;
                 string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);

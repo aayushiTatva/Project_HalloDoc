@@ -5,6 +5,8 @@
     "\\HalloDocMVC.Repositeries",
     "\\HalloDocMVC.Repositeries\\Repository",
     "\\HalloDocMVC.Repositeries\\Repository\\Interface",
+    "\\HalloDocMVC\\Controllers",
+    "\\HalloDocMVC\\Controllers\\PatientController",
     "\\HalloDocMVC\\Views",
     "\\HalloDocMVC\\Views\\AdminPanel",
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions",

@@ -151,7 +151,20 @@
 </form>
 @*</div>*@
 <script type="text/javascript">
+    window.onload = function (e) {
+        initializeIntlTelInput();
+    }
 
+    function initializeIntlTelInput() {
+        const phoneInputFields = document.querySelectorAll(".phone input[type='tel']");
+
+        for (var i = 0; i < phoneInputFields.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputFields[i], {
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.1/build/js/utils.js",
+                initialCountry: "in",
+            });
+        }
+    }
     $(function () {
         $("#email").focusout(function () {
             var email = $("#email").val();

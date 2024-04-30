@@ -3,11 +3,6 @@ using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using System.Data;
-using System.Net.Mail;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Globalization;
 using HalloDocMVC.Services.Interface;
 

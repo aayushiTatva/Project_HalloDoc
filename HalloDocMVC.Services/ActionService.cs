@@ -5,13 +5,8 @@ using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.ViewUploadModel;
 
 namespace HalloDocMVC.Services
@@ -64,26 +59,33 @@ namespace HalloDocMVC.Services
         #region GetRequestForViewCase
         public ViewCaseModel GetRequestForViewCase(int id)
         {
-            var n = _requestRepository.GetAll().FirstOrDefault(E => E.Requestid == id);
-            var l = _requestClientRepository.GetAll().FirstOrDefault(E => E.Requestid == id);
-            var region = _regionRepository.GetAll().FirstOrDefault(E => E.Regionid == l.Regionid);
-            ViewCaseModel requestforviewcase = new()
+            try
             {
-                UserId = (int)_requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id).Userid,
-                RequestId = id,
-                Region = region.Name,
-                RequestTypeId = n.Requesttypeid,
-                FirstName = l.Firstname,
-                LastName = l.Lastname,
-                ConfirmationNumber = n.Confirmationnumber,
-                PhoneNumber = l.Phonenumber,
-                Email = l.Email,
-                Address = l.Street + "," + l.City + "," + l.State,
-                Notes = l.Notes,
-                Room = l.Address,
-                DateOfBirth = new DateTime((int)l.Intyear, DateTime.ParseExact(l.Strmonth, "MMMM", new CultureInfo("en-us")).Month, (int)l.Intdate),
-            };
-            return requestforviewcase;
+                var n = _requestRepository.GetAll().FirstOrDefault(E => E.Requestid == id);
+                var l = _requestClientRepository.GetAll().FirstOrDefault(E => E.Requestid == id);
+                var region = _regionRepository.GetAll().FirstOrDefault(E => E.Regionid == l.Regionid);
+                ViewCaseModel requestforviewcase = new()
+                {
+                    UserId = (int)_requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id).Userid,
+                    RequestId = id,
+                    Region = region.Name,
+                    RequestTypeId = n.Requesttypeid,
+                    FirstName = l.Firstname,
+                    LastName = l.Lastname,
+                    ConfirmationNumber = n.Confirmationnumber,
+                    PhoneNumber = l.Phonenumber,
+                    Email = l.Email,
+                    Address = l.Street + "," + l.City + "," + l.State,
+                    Notes = l.Notes,
+                    Room = l.Address,
+                    DateOfBirth = new DateTime((int)l.Intyear, DateTime.ParseExact(l.Strmonth, "MMMM", new CultureInfo("en-us")).Month, (int)l.Intdate),
+                };
+                return requestforviewcase;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -131,24 +133,30 @@ namespace HalloDocMVC.Services
         #region AssignProvider
         public async Task<bool> AssignProvider(int RequestId, int ProviderId, string notes)
         {
-
-            var request = await _requestRepository.GetAll().FirstOrDefaultAsync(req => req.Requestid == RequestId);
-            request.Physicianid = ProviderId;
-            request.Status = 1;
-            _requestRepository.Update(request);
-            /*_context.SaveChanges();*/
-
-            Requeststatuslog rsl = new()
+            try
             {
-                Requestid = RequestId,
-                Physicianid = ProviderId,
-                Status = 1,
-                Createddate = DateTime.Now,
-            };
-            _requestStatusLogRepository.Update(rsl);
-            /*_context.SaveChanges();*/
+                var request = await _requestRepository.GetAll().FirstOrDefaultAsync(req => req.Requestid == RequestId);
+                request.Physicianid = ProviderId;
+                request.Status = 1;
+                _requestRepository.Update(request);
+                /*_context.SaveChanges();*/
 
-            return true;
+                Requeststatuslog rsl = new()
+                {
+                    Requestid = RequestId,
+                    Physicianid = ProviderId,
+                    Status = 1,
+                    Createddate = DateTime.Now,
+                };
+                _requestStatusLogRepository.Update(rsl);
+                /*_context.SaveChanges();*/
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         #endregion
 
@@ -269,25 +277,32 @@ namespace HalloDocMVC.Services
         #region TransferPhysician
         public async Task<bool> TransferPhysician(int RequestId, int ProviderId, string Note)
         {
-            var request = await _requestRepository.GetAll().FirstOrDefaultAsync(req => req.Requestid == RequestId);
-
-            Requeststatuslog rsl = new()
+            try
             {
-                Requestid = RequestId,
-                Status = 2,
-                Physicianid = request.Physicianid,
-                Transtophysicianid = ProviderId,
-                Notes = Note,
-                Createddate = DateTime.Now
-            };
-            _requestStatusLogRepository.Update(rsl);
-            /*_context.SaveChanges();*/
+                var request = await _requestRepository.GetAll().FirstOrDefaultAsync(req => req.Requestid == RequestId);
 
-            request.Physicianid = ProviderId;
-            request.Status = 2;
-            _requestRepository.Update(request);
-            /*_context.SaveChanges();*/
-            return true;
+                Requeststatuslog rsl = new()
+                {
+                    Requestid = RequestId,
+                    Status = 2,
+                    Physicianid = request.Physicianid,
+                    Transtophysicianid = ProviderId,
+                    Notes = Note,
+                    Createddate = DateTime.Now
+                };
+                _requestStatusLogRepository.Update(rsl);
+                /*_context.SaveChanges();*/
+
+                request.Physicianid = ProviderId;
+                request.Status = 2;
+                _requestRepository.Update(request);
+                /*_context.SaveChanges();*/
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         #endregion TransferPhysician
@@ -295,103 +310,110 @@ namespace HalloDocMVC.Services
         #region getNotes
         public ViewNotesModel getNotes(int id)
         {
-            var request = _requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
-            var symptoms = _requestClientRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
-            var transfer = (from rs in _requestStatusLogRepository.GetAll()
-                            join py in _physicianRepository.GetAll() on rs.Physicianid equals py.Physicianid into pyGroup
-                            from py in pyGroup.DefaultIfEmpty()
-                            join p in _physicianRepository.GetAll() on rs.Transtophysicianid equals p.Physicianid into pGroup
-                            from p in pGroup.DefaultIfEmpty()
-                            join a in _adminRepository.GetAll() on rs.Adminid equals a.Adminid into aGroup
-                            from a in aGroup.DefaultIfEmpty()
-                            where rs.Requestid == id && rs.Status == 2
-                            select new TransferNotesModel
-                            {
-                                TransToPhysician = p.Firstname,
-                                Admin = a.Firstname,
-                                Physician = py.Firstname,
-                                RequestId = rs.Requestid,
-                                Notes = rs.Notes,
-                                Status = rs.Status,
-                                PhysicianId = rs.Physicianid,
-                                CreatedDate = rs.Createddate,
-                                RequestStatusLogId = rs.Requeststatuslogid,
-                                TransToAdmin = rs.Transtoadmin,
-                                TransToPhysicianId = rs.Transtophysicianid
-                            }).ToList();
-            var cancelbyprovider = _requestStatusLogRepository.GetAll().Where(e => e.Requestid == id && (e.Transtoadmin != null));
-            var cancelbyadmin = _requestStatusLogRepository.GetAll().Where(e => e.Requestid == id && (e.Status == 7 || e.Status == 3));
-            var model = _requestNotesRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
-            ViewNotesModel vn = new ViewNotesModel();
-            vn.RequestId = id;
-            vn.PatientNotes = symptoms.Notes;
-            if (model == null)
+            try
             {
-                vn.PhysicianNotes = "-";
-                vn.AdminNotes = "-";
-            }
-            else
-            {
-                vn.Status = request.Status;
-                vn.RequestNotesId = model.Requestnotesid;
-                vn.PhysicianNotes = model.Physiciannotes ?? "-";
-                vn.AdminNotes = model.Adminnotes ?? "-";
-            }
-
-            List<TransferNotesModel> transnotes = new List<TransferNotesModel>();
-            foreach (var item in transfer)
-            {
-                transfer.Add(new TransferNotesModel
+                var request = _requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
+                var symptoms = _requestClientRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
+                var transfer = (from rs in _requestStatusLogRepository.GetAll()
+                                join py in _physicianRepository.GetAll() on rs.Physicianid equals py.Physicianid into pyGroup
+                                from py in pyGroup.DefaultIfEmpty()
+                                join p in _physicianRepository.GetAll() on rs.Transtophysicianid equals p.Physicianid into pGroup
+                                from p in pGroup.DefaultIfEmpty()
+                                join a in _adminRepository.GetAll() on rs.Adminid equals a.Adminid into aGroup
+                                from a in aGroup.DefaultIfEmpty()
+                                where rs.Requestid == id && rs.Status == 2
+                                select new TransferNotesModel
+                                {
+                                    TransToPhysician = p.Firstname,
+                                    Admin = a.Firstname,
+                                    Physician = py.Firstname,
+                                    RequestId = rs.Requestid,
+                                    Notes = rs.Notes,
+                                    Status = rs.Status,
+                                    PhysicianId = rs.Physicianid,
+                                    CreatedDate = rs.Createddate,
+                                    RequestStatusLogId = rs.Requeststatuslogid,
+                                    TransToAdmin = rs.Transtoadmin,
+                                    TransToPhysicianId = rs.Transtophysicianid
+                                }).ToList();
+                var cancelbyprovider = _requestStatusLogRepository.GetAll().Where(e => e.Requestid == id && (e.Transtoadmin != null));
+                var cancelbyadmin = _requestStatusLogRepository.GetAll().Where(e => e.Requestid == id && (e.Status == 7 || e.Status == 3));
+                var model = _requestNotesRepository.GetAll().FirstOrDefault(e => e.Requestid == id);
+                ViewNotesModel vn = new ViewNotesModel();
+                vn.RequestId = id;
+                vn.PatientNotes = symptoms.Notes;
+                if (model == null)
                 {
-                    TransToPhysician = item.TransToPhysician,
-                    Admin = item.Admin,
-                    Physician = item.Physician,
-                    RequestId = item.RequestId,
-                    Notes = item.Notes ?? "-",
-                    Status = item.Status,
-                    PhysicianId = item.PhysicianId,
-                    CreatedDate = item.CreatedDate,
-                    RequestStatusLogId = item.RequestStatusLogId,
-                    TransToAdmin = item.TransToAdmin,
-                    TransToPhysicianId = item.TransToPhysicianId
-                });
-            }
-            vn.transfernotes = transfer;
-            List<TransferNotesModel> cancelbyphysician = new List<TransferNotesModel>();
-            foreach (var item in cancelbyprovider)
-            {
-                cancelbyphysician.Add(new TransferNotesModel
+                    vn.PhysicianNotes = "-";
+                    vn.AdminNotes = "-";
+                }
+                else
                 {
-                    RequestId = item.Requestid,
-                    Notes = item.Notes ?? "-",
-                    Status = item.Status,
-                    PhysicianId = item.Physicianid,
-                    CreatedDate = item.Createddate,
-                    RequestStatusLogId = item.Requeststatuslogid,
-                    TransToAdmin = item.Transtoadmin,
-                    TransToPhysicianId = item.Transtophysicianid
-                });
-            }
-            vn.cancelbyphysician = cancelbyphysician;
+                    vn.Status = request.Status;
+                    vn.RequestNotesId = model.Requestnotesid;
+                    vn.PhysicianNotes = model.Physiciannotes ?? "-";
+                    vn.AdminNotes = model.Adminnotes ?? "-";
+                }
 
-            List<TransferNotesModel> cancelrq = new List<TransferNotesModel>();
-            foreach (var item in cancelbyadmin)
-            {
-                cancelrq.Add(new TransferNotesModel
+                List<TransferNotesModel> transnotes = new List<TransferNotesModel>();
+                foreach (var item in transfer)
                 {
-                    RequestId = item.Requestid,
-                    Notes = item.Notes ?? "-",
-                    Status = item.Status,
-                    PhysicianId = item.Physicianid,
-                    CreatedDate = item.Createddate,
-                    RequestStatusLogId = item.Requeststatuslogid,
-                    TransToAdmin = item.Transtoadmin,
-                    TransToPhysicianId = item.Transtophysicianid
-                });
-            }
-            vn.cancel = cancelrq;
+                    transfer.Add(new TransferNotesModel
+                    {
+                        TransToPhysician = item.TransToPhysician,
+                        Admin = item.Admin,
+                        Physician = item.Physician,
+                        RequestId = item.RequestId,
+                        Notes = item.Notes ?? "-",
+                        Status = item.Status,
+                        PhysicianId = item.PhysicianId,
+                        CreatedDate = item.CreatedDate,
+                        RequestStatusLogId = item.RequestStatusLogId,
+                        TransToAdmin = item.TransToAdmin,
+                        TransToPhysicianId = item.TransToPhysicianId
+                    });
+                }
+                vn.transfernotes = transfer;
+                List<TransferNotesModel> cancelbyphysician = new List<TransferNotesModel>();
+                foreach (var item in cancelbyprovider)
+                {
+                    cancelbyphysician.Add(new TransferNotesModel
+                    {
+                        RequestId = item.Requestid,
+                        Notes = item.Notes ?? "-",
+                        Status = item.Status,
+                        PhysicianId = item.Physicianid,
+                        CreatedDate = item.Createddate,
+                        RequestStatusLogId = item.Requeststatuslogid,
+                        TransToAdmin = item.Transtoadmin,
+                        TransToPhysicianId = item.Transtophysicianid
+                    });
+                }
+                vn.cancelbyphysician = cancelbyphysician;
 
-            return vn;
+                List<TransferNotesModel> cancelrq = new List<TransferNotesModel>();
+                foreach (var item in cancelbyadmin)
+                {
+                    cancelrq.Add(new TransferNotesModel
+                    {
+                        RequestId = item.Requestid,
+                        Notes = item.Notes ?? "-",
+                        Status = item.Status,
+                        PhysicianId = item.Physicianid,
+                        CreatedDate = item.Createddate,
+                        RequestStatusLogId = item.Requeststatuslogid,
+                        TransToAdmin = item.Transtoadmin,
+                        TransToPhysicianId = item.Transtophysicianid
+                    });
+                }
+                vn.cancel = cancelrq;
+
+                return vn;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -460,60 +482,74 @@ namespace HalloDocMVC.Services
         #region GetDocuments
         public async Task<ViewUploadModel> GetDocument(int? id, ViewUploadModel model)
         {
-            var requests = _requestRepository.GetAll().FirstOrDefault(req => req.Requestid == id);
-            var requestClient = _requestClientRepository.GetAll().FirstOrDefault(reqclient => reqclient.Requestid == id);
-            List<Documents> result = (from requestWiseFile in _requestWiseFileRepository.GetAll()
-                                      join request in _requestRepository.GetAll() on requestWiseFile.Requestid equals request.Requestid
-                                      join physician in _physicianRepository.GetAll() on request.Physicianid equals physician.Physicianid into physicianGroup
-                                      from phys in physicianGroup.DefaultIfEmpty()
-                                      join admin in _adminRepository.GetAll() on requestWiseFile.Adminid equals admin.Adminid into adminGroup
-                                      from adm in adminGroup.DefaultIfEmpty()
-                                      where request.Requestid == id && requestWiseFile.Isdeleted == new BitArray(1)
-                                      select new Documents
-                                      {
-
-                                          Uploader = requestWiseFile.Physicianid != null ? phys.Firstname : (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
-                                          isDeleted = requestWiseFile.Isdeleted.ToString(),
-                                          RequestwisefileId = requestWiseFile.Requestwisefileid,
-                                          Status = requestWiseFile.Doctype,
-                                          CreatedDate = requestWiseFile.Createddate,
-                                          filename = requestWiseFile.Filename,
-                                      }).ToList();
-            int totalItemCount = result.Count;
-            int totalPages = (int)Math.Ceiling(totalItemCount / (double)model.PageSize);
-            List<Documents> list1 = result.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
-
-            ViewUploadModel upload = new()
+            try
             {
-                UserId = (int)_requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id).Userid,
-                ConfirmationNumber = requests.Confirmationnumber,
-                RequestId = requests.Requestid,
-                FirstName = requestClient.Firstname,
-                LastName = requestClient.Lastname,
-                documents = list1,
-                CurrentPage = model.CurrentPage,
-                PageSize = model.PageSize,
-                TotalItemCount = totalItemCount,
-                TotalPages = totalPages
-            };
-            return upload;
+                var requests = _requestRepository.GetAll().FirstOrDefault(req => req.Requestid == id);
+                var requestClient = _requestClientRepository.GetAll().FirstOrDefault(reqclient => reqclient.Requestid == id);
+                List<Documents> result = (from requestWiseFile in _requestWiseFileRepository.GetAll()
+                                          join request in _requestRepository.GetAll() on requestWiseFile.Requestid equals request.Requestid
+                                          join physician in _physicianRepository.GetAll() on request.Physicianid equals physician.Physicianid into physicianGroup
+                                          from phys in physicianGroup.DefaultIfEmpty()
+                                          join admin in _adminRepository.GetAll() on requestWiseFile.Adminid equals admin.Adminid into adminGroup
+                                          from adm in adminGroup.DefaultIfEmpty()
+                                          where request.Requestid == id && requestWiseFile.Isdeleted == new BitArray(1)
+                                          select new Documents
+                                          {
+
+                                              Uploader = requestWiseFile.Physicianid != null ? phys.Firstname : (requestWiseFile.Adminid != null ? adm.Firstname : request.Firstname),
+                                              isDeleted = requestWiseFile.Isdeleted.ToString(),
+                                              RequestwisefileId = requestWiseFile.Requestwisefileid,
+                                              Status = requestWiseFile.Doctype,
+                                              CreatedDate = requestWiseFile.Createddate,
+                                              filename = requestWiseFile.Filename,
+                                          }).ToList();
+                int totalItemCount = result.Count;
+                int totalPages = (int)Math.Ceiling(totalItemCount / (double)model.PageSize);
+                List<Documents> list1 = result.Skip((model.CurrentPage - 1) * model.PageSize).Take(model.PageSize).ToList();
+
+                ViewUploadModel upload = new()
+                {
+                    UserId = (int)_requestRepository.GetAll().FirstOrDefault(e => e.Requestid == id).Userid,
+                    ConfirmationNumber = requests.Confirmationnumber,
+                    RequestId = requests.Requestid,
+                    FirstName = requestClient.Firstname,
+                    LastName = requestClient.Lastname,
+                    documents = list1,
+                    CurrentPage = model.CurrentPage,
+                    PageSize = model.PageSize,
+                    TotalItemCount = totalItemCount,
+                    TotalPages = totalPages
+                };
+                return upload;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
 
         #region UploadDocuments
         public Boolean UploadDocuments(int Requestid, IFormFile file)
         {
-            string upload = SaveFileModel.UploadDocument(file, Requestid);
-            var requestwisefile = new Requestwisefile
+            try
             {
-                Requestid = Requestid,
-                Filename = upload,
-                Isdeleted = new BitArray(1),
-                Adminid = 10,
-                Createddate = DateTime.Now
-            };
-            _requestWiseFileRepository.Add(requestwisefile);
-            return true;
+                var upload = SaveFileModel.UploadDocument(file, Requestid);
+                var requestwisefile = new Requestwisefile
+                {
+                    Requestid = Requestid,
+                    Filename = upload.ToString(),
+                    Isdeleted = new BitArray(1),
+                    Adminid = 10,
+                    Createddate = DateTime.Now
+                };
+                _requestWiseFileRepository.Add(requestwisefile);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         #endregion
 

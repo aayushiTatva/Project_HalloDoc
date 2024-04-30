@@ -1,5 +1,4 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDocMVC.DBEntity.DataContext;
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
@@ -138,7 +136,9 @@ namespace HalloDocMVC.Controllers.AdminController
         public SchedulingModel ViewShift(int shiftdetailid)
         {
             SchedulingModel modal = new();
-            var shiftdetail = _shiftDetailRepository.GetAll().FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
+            var shiftdetail = _shiftDetailRepository.GetAll()
+                                .Include(sd => sd.Shift.Physician)
+                                .FirstOrDefault(u => u.Shiftdetailid == shiftdetailid);
 
             modal.RegionId = (int)shiftdetail.Regionid;
             modal.PhysicianName = shiftdetail.Shift.Physician.Firstname + " " + shiftdetail.Shift.Physician.Lastname;

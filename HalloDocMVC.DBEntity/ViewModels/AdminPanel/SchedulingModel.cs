@@ -11,7 +11,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
     {
         public int RegionId { get; set; }
         public int PhysicianId { get; set; }
-        public DateTime ShiftDate { get; set; }
+        public DateTime? ShiftDate { get; set; }
         public TimeOnly StartTime { get; set; }
         public TimeOnly EndTime { get; set; }
         public int RepeatCount { get; set; }

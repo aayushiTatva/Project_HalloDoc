@@ -38,7 +38,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public string? Address2 { get; set; }
         [Required(ErrorMessage = "City is required")]
         public string? City { get; set; }
-        /*[Required(ErrorMessage = "State is required")]*/
+        [Required(ErrorMessage = "State is required")]
         public string? State { get; set; }
         [Required(ErrorMessage = "Zipcode is required")]
         public string? ZipCode { get; set; }
