@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="justify-content-end">
+            <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Index">Back</a>
+        </div>
+    </div>
+    <div class="table-responsive mt-3">
+        <table class="w-100">
+            <thead class="border-bottom border-dark mb-3">
+                <tr>
+                    <th class="col-2">
+                        Date
+                    </th>
+                    <th class="col">
+                        On-call hours
+                    </th>
+                    <th class="col-2">
+                        Total hours
+                    </th>
+                    <th class="col">
+                        Weekend/Holiday
+                    </th>
+                    <th class="col-2 px-2">
+                        Number of housecalls
+                    </th>
+                    <th class="col-2 px-2">
+                        Number of phonecalls
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white mt-3">
+                <tr>
+                    <th scope="col">03/03/2024</th>
+                    <th>0</th>
+                    <th class="px-2">
+                        <input type="text" class="form-control shadow-none" id="uname" placeholder="" >
+                    </th>
+                    <th><input class="form-check-input form-check-inputs" type="checkbox" onclick="return false;" value=""></th>
+                    <th class="px-2"> <input type="text" class="form-control shadow-none" id="noofhousecall"></th>
+                    <th class="px-2"><input type="text" class="form-control shadow-none" id="noofconsult"></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

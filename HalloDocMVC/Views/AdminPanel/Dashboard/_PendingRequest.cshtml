@@ -136,7 +136,7 @@
                                 </a>
                             </li>
                             <li>
-                                <button onclick="model_Pending(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransToAdmin" data-bs-requestid="@item.RequestId">
+                                <button onclick="modal_Case(@index)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransToAdmin" data-bs-requestid="@item.RequestId">
                                     <i class="fa-regular fa-rectangle-list me-1"></i>
                                     Transfer
                                 </button>
@@ -352,6 +352,7 @@
         document.getElementById("RequestId_SendAgreement").value = modeldata.list[id].requestId;
         document.getElementById("PhoneNumber_SendAgreement").value = modeldata.list[id].patientPhoneNumber;
         document.getElementById("Email_SendAgreement").value = modeldata.list[id].email;
+        document.getElementById("RequestID_Input_ModelTranstoadminCase").value = modeldata.list[id].requestId;
     }
 
     function pagination(i) {

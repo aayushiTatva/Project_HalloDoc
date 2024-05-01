@@ -187,6 +187,9 @@
                     @if (CV.role() == "Admin")
                     {
                         <div class="row">
+                            <div class="justify-content-end">
+                                <button class="btn btn-info text-white" asp-controller="Invoicing" asp-action="Payrate" asp-route-Id="@Model.PhysicianId">Enter Payrate</button>
+                            </div>
                             <div class="d-flex justify-content-end mt-1">
                                 <input type="button" value="Edit" id="edit1" class="btn btn-info text-white" onclick="toggleFormElements1()" />
                                 <input type="submit" value="Save" id="save1" class="btn btn-info text-white" asp-controller="@(path.StartsWith("/Providers") ? "Providers" : "Access")" asp-action="EditPhysicianInfo" />

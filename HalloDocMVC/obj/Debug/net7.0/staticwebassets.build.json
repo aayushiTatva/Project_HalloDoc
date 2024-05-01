@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yd9VBtlvgMbW5322pJLNs4PIwv/o1hLibYk9p1YOpeM=",
+  "Hash": "ZEwgVN2f8WaWRMtd+lJqTXtsQ49OQedhw+wcb6hX2NY=",
   "Source": "HalloDocMVC",
   "BasePath": "_content/HalloDocMVC",
   "Mode": "Default",
@@ -3857,6 +3857,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\116\\Fig56. Patient site 1-20240425115605.png"
+    },
+    {
+      "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig56. Patient site 1-20240430060412.png",
+      "SourceId": "HalloDocMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\",
+      "BasePath": "_content/HalloDocMVC",
+      "RelativePath": "Upload/116/Fig56. Patient site 1-20240430060412.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\116\\Fig56. Patient site 1-20240430060412.png"
     },
     {
       "Identity": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240329032923.jpg",

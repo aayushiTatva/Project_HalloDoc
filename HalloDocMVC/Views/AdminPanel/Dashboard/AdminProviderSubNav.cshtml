@@ -19,7 +19,7 @@
                 @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
                 {
                         <li class="nav-item">
-                            <a asp-controller="" asp-action="" class="nav-link px-3 text-dark">
+                            <a asp-controller="Invoicing" asp-action="Index" class="nav-link px-3 text-dark">
                                 <small>Invoicing</small>
                             </a>
                         </li>
