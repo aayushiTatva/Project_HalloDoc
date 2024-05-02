@@ -22,10 +22,15 @@ namespace HalloDocMVC.Services
         private readonly IGenericRepository<Physicianregion> _physicianRegionRepository;
         private readonly IGenericRepository<Aspnetuser> _aspNetUserRepository;
         private readonly IGenericRepository<Aspnetuserrole> _aspNetUserRoleRepository;
+        private readonly IGenericRepository<PayrateCategory> _payrateCategoryRepository;
+        private readonly IGenericRepository<PayrateByProvider> _payrateByProviderRepository;
         private readonly IGenericRepository<Physicianlocation> _physicianLocationRepository;
         private readonly EmailConfiguration _emailConfiguration;
 
-        public ProviderService(IGenericRepository<Physician> physicianRepository, IGenericRepository<Role> roleRepository, IGenericRepository<Physiciannotification> physicianNotificationRepository, IGenericRepository<Physicianregion> physicianRegionRepository, IGenericRepository<Aspnetuser> aspNetUserRepository, IGenericRepository<Aspnetuserrole> aspNetUserRoleRepository, IGenericRepository<Physicianlocation> physicianLocationRepository, EmailConfiguration emailConfiguration)
+        public ProviderService(IGenericRepository<Physician> physicianRepository, IGenericRepository<Role> roleRepository, IGenericRepository<Physiciannotification> physicianNotificationRepository,
+            IGenericRepository<Physicianregion> physicianRegionRepository, IGenericRepository<Aspnetuser> aspNetUserRepository, IGenericRepository<Aspnetuserrole> aspNetUserRoleRepository, IGenericRepository<Physicianlocation> physicianLocationRepository, EmailConfiguration emailConfiguration,
+            IGenericRepository<PayrateByProvider> payrateByProviderRepository, IGenericRepository<PayrateCategory> payrateCategoryRepository
+            )
         {
             _physicianRepository = physicianRepository;
             _roleRepository = roleRepository;
@@ -34,6 +39,8 @@ namespace HalloDocMVC.Services
             _aspNetUserRepository = aspNetUserRepository;
             _aspNetUserRoleRepository = aspNetUserRoleRepository;
             _physicianLocationRepository = physicianLocationRepository;
+            _payrateCategoryRepository = payrateCategoryRepository;
+            _payrateByProviderRepository = payrateByProviderRepository;
             _emailConfiguration = emailConfiguration;
         }
         #endregion
@@ -312,6 +319,7 @@ namespace HalloDocMVC.Services
                         _physicianRegionRepository.Add(pr);
 
                     }
+                    
                 }
                 else
                 {
@@ -388,7 +396,7 @@ namespace HalloDocMVC.Services
         #endregion
 
         #region EditPhysicianInfo
-        public async Task<bool> EditPhysicianInfo(ProviderModel vm)
+        public async Task<bool> EditPhysicianInfo(ProviderModel vm, string AdminId)
         {
             try
             {
@@ -440,6 +448,18 @@ namespace HalloDocMVC.Services
                                 _physicianRegionRepository.Remove(pr);
 
                             }
+                        }
+                        List<PayrateCategory> df = _payrateCategoryRepository.GetAll().ToList();
+                        foreach (var item in df)
+                        {
+                            PayrateByProvider Payratebyprovider = new();
+                            Payratebyprovider.PayrateCategoryId = item.PayrateCategoryId;
+                            Payratebyprovider.PhysicianId = (int)vm.PhysicianId;
+                            Payratebyprovider.CreatedDate = DateTime.Now;
+                            Payratebyprovider.CreatedBy = AdminId;
+                            Payratebyprovider.Payrate = 0;
+                            _payrateByProviderRepository.Add(Payratebyprovider);
+
                         }
                         return true;
                     }

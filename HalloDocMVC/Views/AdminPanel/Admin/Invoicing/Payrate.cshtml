@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
 
-@model List<HalloDocMVC.DBEntity.ViewModels.AdminPanel.PayrateModel>
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PayrateModel
 @using HalloDocMVC.DBEntity.ViewModels.AdminPanel
 <div class="container">
     <div class="row">
@@ -22,28 +22,36 @@
                     <th class="col">Action</th>
                 </tr>
             </thead>
-            <form method="post" asp-controller="Invoicing" asp-action="EditPayrate">
+
             <tbody class="bg-white m-1">
-                @foreach (var pay in Model)
+                @foreach (var pay in Model.PayrateList)
                 {
-                    <tr class="border-bottom border-dark">
-                        <td>
-                            @pay.PayrateCategoryName
-                        </td>
-                        <td>
-                            <div class="form-floating col-6 m-1">
-                                <input type="text" asp-for="@pay.Payrate" class="form-control shadow-none input@(pay.PayrateCategoryId)" id="payrate_@(pay.PayrateCategoryId.ToString().ToLower().Replace(" ", "_"))" placeholder="Payrate" />
-                                <label for="payrate_@(pay.PayrateCategoryId.ToString().ToLower().Replace(" ", "_"))">Payrate</label>
-                            </div>
-                        </td>
-                        <td>
-                            <input type="button" value="Edit" id="edit@(pay.PayrateCategoryId)" class="btn btn-info text-white" onclick="toggleFormElements(@(pay.PayrateCategoryId))" />
-                            <input type="submit" value="Save" id="save@(pay.PayrateCategoryId)" class="btn btn-info text-white" asp-controller="Invoicing" asp-action="EditPayrate" asp-route-categoryId="@(pay.PayrateCategoryId)" asp-route-id="@(pay.PhysicianId)"/>
-                        </td>
-                    </tr>
+                    <form method="post" asp-controller="Invoicing" asp-action="EditPayrate">
+                        @Html.HiddenFor(m => m.PayrateCategoryId)
+                        @Html.HiddenFor(m => m.PhysicianId)
+                        @Html.HiddenFor(m => m.Payrate)
+                        <tr class="border-bottom border-dark">
+                            <td>
+                                    @pay.PayrateCategoryName
+                            </td>
+                            <td>
+                                @*<div class="form-floating col-6 m-1">
+                                    <input type="text" asp-for="@pay.Payrate" class="form-control shadow-none input@(pay.PayrateCategoryId)" id="payrate_@(pay.PayrateCategoryId.ToString().ToLower().Replace(" ", "_"))" placeholder="Payrate" />
+                                    <label for="payrate_@(pay.PayrateCategoryId.ToString().ToLower().Replace(" ", "_"))">Payrate</label>
+                                </div>*@
+                                <div class="col-md-6 form-floating mb-3">
+                                    <input asp-for="@pay.Payrate" type="text" class="form-control shadow-none input@(pay.PayrateCategoryId)" id="BusinessName" placeholder="Address 1">
+                                    <label class="ms-2" for="BusinessName"> Business Name</label>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="button" value="Edit" id="edit@(pay.PayrateCategoryId)" class="btn btn-info text-white" onclick="toggleFormElements(@(pay.PayrateCategoryId))" />
+                                <button type="submit" id="save@(pay.PayrateCategoryId)" class="btn btn-info text-white">Save</button>
+                            </td>
+                        </tr>
+                    </form>
                 }
             </tbody>
-            </form>
         </table>
     </div>
 </div>
@@ -51,7 +59,7 @@
 <script>
     window.onload = function () {
         // Call toggleFormElements function for each pay rate category
-    @foreach (var pay in Model)
+    @foreach (var pay in Model.PayrateList)
     {
         <text>toggleFormElements(@(pay.PayrateCategoryId)); </text>
     }

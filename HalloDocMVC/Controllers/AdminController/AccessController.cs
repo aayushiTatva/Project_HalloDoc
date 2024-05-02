@@ -274,7 +274,7 @@ namespace HalloDocMVC.Controllers.AdminController
         #region EditAdministratorInfo
         public async Task<IActionResult> EditPhysicianInfo(ProviderModel profile)
         {
-            bool data = await _IProviderService.EditPhysicianInfo(profile);
+            bool data = await _IProviderService.EditPhysicianInfo(profile, CV.ID());
             if (data)
             {
                 _INotyfService.Success("Physician Information Changed.");

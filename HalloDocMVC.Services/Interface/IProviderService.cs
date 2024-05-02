@@ -14,7 +14,7 @@ namespace HalloDocMVC.Services.Interface
         Task<bool> ChangeNotification(Dictionary<int, bool> changeValueDict);
         Task<ProviderModel> GetPhysicianById(int id);
         Task<bool> AddPhysician(ProviderModel physiciandata, string AdminId);
-        Task<bool> EditPhysicianInfo(ProviderModel vm);
+        Task<bool> EditPhysicianInfo(ProviderModel vm, string AdminId);
         Task<bool> EditAccountInfo(ProviderModel vm);
         Task<bool> ResetPassword(string Password, int PhysicianId);
         Task<bool> EditMailBillingInfo(ProviderModel vm, string AdminId);

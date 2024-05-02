@@ -14,6 +14,7 @@ namespace HalloDocMVC.Services.Interface
         Task<List<ComboBoxCaseReason>> ComboBoxCaseReasons();
         List<Physician> ProviderByRegion(int? regionId);
         Task<List<ComboBoxHealthProfessionalType>> ComboBoxHealthProfessionalType();
+        Task<List<ComboBoxProvider>> ComboBoxProvider();
         Task<List<ComboBoxHealthProfession>> ComboBoxHealthProfession();
         List<ComboBoxHealthProfession> ProfessionByType(int? HealthProfessionId);
         Task<List<ComboBoxUserRole>> ComboBoxUserRole();

@@ -1,4 +1,5 @@
 ﻿using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+using HalloDocMVC.Services;
 using HalloDocMVC.Services.Interface;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
@@ -11,29 +12,41 @@ namespace HalloDocMVC.Controllers.AdminController
     {
         #region Configuration
         private readonly IInvoicingService _IInvoicingService;
-        public InvoicingController (IInvoicingService invoicingService)
+        private readonly IComboBoxService _IComboBoxService;
+        public InvoicingController (IInvoicingService invoicingService, IComboBoxService iComboBoxService)
         {
             _IInvoicingService = invoicingService;
+            _IComboBoxService = iComboBoxService;
         }
         #endregion
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.ProviderComboBox = await _IComboBoxService.ComboBoxProvider();
+
             return View("../AdminPanel/Admin/Invoicing/Index");
         }
         public IActionResult Timesheets()
         {
             return View("../AdminPanel/Admin/Invoicing/Timesheets");
         }
-        public async Task<IActionResult> Payrate(int Id)
+        public async Task<IActionResult> Payrate(int Id, PayrateModel models)
         {
-            var model = await _IInvoicingService.GetPayrateByProvider(Id);
+            var model = await _IInvoicingService.GetPayrateByProvider(Id, models);
             return View("../AdminPanel/Admin/Invoicing/Payrate", model);
         }
 
-        public async Task<IActionResult> EditPayrate(PayrateModel pm,int categoryId, int id)
+        public async Task<IActionResult> EditPayrate(int payrate, int categoryId, int physicianId)
         {
-            var model = await _IInvoicingService.EditPayrate(pm, categoryId, id);
-            return View("../AdminPanel/Admin/Invoicing/Payrate", model);
+            var model = await _IInvoicingService.EditPayrate(payrate, categoryId, physicianId);
+            return RedirectToAction("Payrate", "Invoicing");
+        }
+
+        public IActionResult GetTimesheet(PendingTimeSheetModel psm)
+        {
+            int day = (int)psm.Date;
+            int month = (int)psm.Month;
+            int year = (int)psm.Year;
+            return View("../AdminPanel/Admin/Invoicing/Timesheets");
         }
     }
 }

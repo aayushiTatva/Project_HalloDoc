@@ -30,9 +30,9 @@ namespace HalloDocMVC.Services
         #endregion
 
         #region GetPayrateByProvider
-        public async Task<List<PayrateModel>> GetPayrateByProvider(int Id)
+        public async Task<PayrateModel> GetPayrateByProvider(int Id, PayrateModel model)
         {
-            List<PayrateModel> model = (from pbp in _payrateByProviderRepository.GetAll()
+            List<PayrateModel> model1 = (from pbp in _payrateByProviderRepository.GetAll()
                                         join pc in _payrateCategoryRepository.GetAll()
                                         on pbp.PayrateCategoryId equals pc.PayrateCategoryId into PayrateGroup
                                         from pg in PayrateGroup.DefaultIfEmpty()
@@ -44,20 +44,22 @@ namespace HalloDocMVC.Services
                                         {
                                             Payrate = (int)pbp.Payrate,
                                             PayrateCategoryId = pbp.PayrateCategoryId,
-                                            PayrateCategoryName = pg.CategoryName
+                                            PayrateCategoryName = pg.CategoryName,
+                                            PhysicianId = pbp.PhysicianId
                                         }).ToList();
+            List<PayrateModel> roles = model1;
             return model;
         }
         #endregion
 
         #region EditPayrate
-        public async Task<bool> EditPayrate(PayrateModel pm,int categoryId, int id)
+        public async Task<bool> EditPayrate(int payrate, int categoryId, int id)
         {
             var data = _payrateByProviderRepository.GetAll().FirstOrDefault(e => e.PhysicianId == id && e.PayrateCategoryId == categoryId);
             if(data != null)
             {
                 data.PayrateCategoryId = categoryId;
-                data.Payrate = pm.Payrate;
+                data.Payrate = payrate;
                 _payrateByProviderRepository.Update(data);
                 return true;
             }

@@ -88,6 +88,16 @@ namespace HalloDocMVC.Services
         }
         #endregion ComboBoxHealthProfessionalType
 
+        #region ComboBoxProvider
+        public async Task<List<ComboBoxProvider>> ComboBoxProvider()
+        {
+            return await _physicianRepository.GetAll().Select(hpt => new ComboBoxProvider()
+            {
+                ProviderId = hpt.Physicianid,
+                ProviderName = "Dr." + hpt.Firstname +" " + hpt.Lastname
+            }).ToListAsync();
+        }
+        #endregion
         #region ComboBoxHealthProfession
         public async Task<List<ComboBoxHealthProfession>> ComboBoxHealthProfession()
         {

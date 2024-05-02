@@ -4,6 +4,7 @@
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PendingTimeSheetModel
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -16,16 +17,39 @@
     <div class="row min-vh-100">
         <div class="card shadow-none">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 form-floating mb-3">
-                        <select id="date_period" name="date_period">
-                            <option value="">Select a date period</option>
-                        </select>
+                    <div class="row justify-content-between">
+
+                        @using (Html.BeginForm("GetTimesheet", "Invoicing", FormMethod.Post, new { id = "myForm" }))
+                        {
+                            @Html.HiddenFor(m => m.Date)
+                            @Html.HiddenFor(m => m.Month)
+                            @Html.HiddenFor(m => m.Year)
+                            @if (CV.role() == "Admin")
+                            {
+                                <div class="col-md-3 form-floating mb-3">
+                                    <select onchange="getdatabyprovider()" asp-items="@(new SelectList(ViewBag.ProviderComboBox, "ProviderId", "ProviderName"))" id="providerdropdown" class="form-select shadow-none text-secondary" data-allow-clear="true" tabindex="-1">
+                                        <option value="-1" class="mb-1">All Providers</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 form-floating mb-3">
+                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary">
+                                        <option value="">Select a date period</option>
+                                    </select>
+                                </div>
+                            }
+                            @if (CV.role() == "Provider")
+                            {
+                                <div class="col-md-3 form-floating ">
+                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary" >
+                                        <option value="">Select a date period</option>
+                                    </select>
+                                </div>
+                            }
+                            <div class="col form-floating justify-content-end">
+                                <button class="btn relogin mx-3 shadow-none " id="saveChangesButton" onclick="passDateToController()">Finalize Timesheet</button>
+                            </div>
+                        }
                     </div>
-                    <div class="col-md-6 form-floating mb-3">
-                        <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Timesheets">Finalize Timesheet</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -48,5 +72,22 @@
 
         datePeriodDropdown.add(option1);
         datePeriodDropdown.add(option2);
+    }
+
+    function passDateToController() {
+        let x = document.getElementById("date_period").value;
+        let dateComponents = x.split('-');
+        let month = parseInt(dateComponents[0]);
+        let day = parseInt(dateComponents[1]);
+        let year = parseInt(dateComponents[3]);
+
+        // Set model properties
+        document.getElementById("Date").value = day;
+        document.getElementById("Month").value = month;
+        document.getElementById("Year").value = year;
+        console.log(document.getElementById("Date").value);
+
+        // Submit the form
+        document.getElementById("myForm").submit();
     }
 </script>
