@@ -29,15 +29,15 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             return View("../AdminPanel/Admin/Invoicing/Timesheets");
         }
-        public async Task<IActionResult> Payrate(int Id, PayrateModel models)
+        public IActionResult Payrate(int Id, PayrateModel models)
         {
-            var model = await _IInvoicingService.GetPayrateByProvider(Id, models);
+            var model = _IInvoicingService.GetPayrateByProvider(Id, models);
             return View("../AdminPanel/Admin/Invoicing/Payrate", model);
         }
 
-        public async Task<IActionResult> EditPayrate(int payrate, int categoryId, int physicianId)
+        public async Task<IActionResult> EditPayrate(PayrateModel pm, int categoryId, int physicianId)
         {
-            var model = await _IInvoicingService.EditPayrate(payrate, categoryId, physicianId);
+            var model = await _IInvoicingService.EditPayrate(pm, categoryId, physicianId);
             return RedirectToAction("Payrate", "Invoicing");
         }
 
@@ -47,6 +47,11 @@ namespace HalloDocMVC.Controllers.AdminController
             int month = (int)psm.Month;
             int year = (int)psm.Year;
             return View("../AdminPanel/Admin/Invoicing/Timesheets");
+        }
+
+        public IActionResult Add()
+        {
+            return View("../AdminPanel/Admin/Invoicing/AddReceipts");
         }
     }
 }

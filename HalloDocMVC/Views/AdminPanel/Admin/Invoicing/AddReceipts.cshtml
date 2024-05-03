@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="justify-content-end">
+            <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Index">Back</a>
+        </div>
+    </div>
+    <div class="table-responsive mt-3">
+        <table class="w-100">
+            <thead class="border-bottom border-dark mb-3">
+                <tr>
+                    <th scope="col">
+                        Date
+                    </th>
+                    <th scope="col">
+                        Item
+                    </th>
+                    <th scope="col">
+                        Amount
+                    </th>
+                    <th scope="col">
+                        Bill
+                    </th>
+                    <th scope="col">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white mt-3">
+                <tr>
+                    <th scope="col">03/03/2024</th>
+                    <th><input type="text" class="form-control shadow-none" id="noofhousecall"></th>
+                    <th class="px-2">
+                        <input type="text" class="form-control shadow-none" id="noofhousecall">
+                    </th>
+                    <th>
+                        <button type="button" id="choosenfile" class="col btn text-start text-secondary" onclick="document.getElementById('files').click()">
+                            Select File
+                        </button>
+                        <input id="files" type="file" class="d-none form-control doc_uploder" name="file">
+                       @* <input type="hidden" name="Requestid" value="@Model.RequestId" />*@
+                        <button type="button" class="btn btn-info text-white py-2" id="fileUploadBtn" value="Upload">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span class="d-none d-sm-inline">Upload</span>
+                        </button>
+                    </th>
+                    <th class="px-2">
+                        <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Add">View</a>
+                        <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Add">Delete</a>
+                        <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Add">Edit</a>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

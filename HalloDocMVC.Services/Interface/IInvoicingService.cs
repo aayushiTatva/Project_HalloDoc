@@ -9,7 +9,7 @@ namespace HalloDocMVC.Services.Interface
 {
     public interface IInvoicingService
     {
-        public Task<PayrateModel> GetPayrateByProvider(int Id, PayrateModel model);
-        public Task<bool> EditPayrate(int payrate, int categoryId, int id);
+        public List<PayrateModel> GetPayrateByProvider(int Id, PayrateModel model);
+        public Task<bool> EditPayrate(PayrateModel pm, int categoryId, int id);
     }
 }

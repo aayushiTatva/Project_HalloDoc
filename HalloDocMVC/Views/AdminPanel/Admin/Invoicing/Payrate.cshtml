@@ -2,8 +2,8 @@
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
 
-@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PayrateModel
-@using HalloDocMVC.DBEntity.ViewModels.AdminPanel
+@model List<HalloDocMVC.DBEntity.ViewModels.AdminPanel.PayrateModel>
+@using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.PayrateModel
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -24,12 +24,9 @@
             </thead>
 
             <tbody class="bg-white m-1">
-                @foreach (var pay in Model.PayrateList)
+                @foreach (var pay in Model)
                 {
                     <form method="post" asp-controller="Invoicing" asp-action="EditPayrate">
-                        @Html.HiddenFor(m => m.PayrateCategoryId)
-                        @Html.HiddenFor(m => m.PhysicianId)
-                        @Html.HiddenFor(m => m.Payrate)
                         <tr class="border-bottom border-dark">
                             <td>
                                     @pay.PayrateCategoryName
@@ -46,7 +43,7 @@
                             </td>
                             <td>
                                 <input type="button" value="Edit" id="edit@(pay.PayrateCategoryId)" class="btn btn-info text-white" onclick="toggleFormElements(@(pay.PayrateCategoryId))" />
-                                <button type="submit" id="save@(pay.PayrateCategoryId)" class="btn btn-info text-white">Save</button>
+                                <button type="submit" id="save@(pay.PayrateCategoryId)" class="btn btn-info text-white" asp-route-categoryId="@pay.PayrateCategoryId" asp-route-physicianId="@pay.PhysicianId">Save</button>
                             </td>
                         </tr>
                     </form>
@@ -59,7 +56,7 @@
 <script>
     window.onload = function () {
         // Call toggleFormElements function for each pay rate category
-    @foreach (var pay in Model.PayrateList)
+    @foreach (var pay in Model)
     {
         <text>toggleFormElements(@(pay.PayrateCategoryId)); </text>
     }
