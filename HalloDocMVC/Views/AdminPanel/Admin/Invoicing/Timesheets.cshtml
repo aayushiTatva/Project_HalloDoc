@@ -4,6 +4,7 @@
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.TimeSheetModel
 <div class="container">
     <div class="row">
         <div class="justify-content-end">
@@ -35,16 +36,20 @@
                 </tr>
             </thead>
             <tbody class="bg-white mt-3">
-                <tr>
-                    <th scope="col">03/03/2024</th>
-                    <th>0</th>
-                    <th class="px-2">
-                        <input type="text" class="form-control shadow-none" id="uname" placeholder="" >
-                    </th>
-                    <th><input class="form-check-input form-check-inputs" type="checkbox" onclick="return false;" value=""></th>
-                    <th class="px-2"> <input type="text" class="form-control shadow-none" id="noofhousecall"></th>
-                    <th class="px-2"><input type="text" class="form-control shadow-none" id="noofconsult"></th>
-                </tr>
+                @foreach(var item in Model.DateList)
+                {
+
+                    <tr class="border-bottom">
+                        <td class="col m-2">@item.Date.ToString("MM/dd/yyyy")</td>
+                        <td class="m-2">0</td>
+                        <td class="px-2">
+                            <input type="text" class="form-control shadow-none m-2" id="uname" placeholder="">
+                        </td>
+                        <td class="justify-content-center"><input class="form-check-input form-check-inputs m-2" type="checkbox" onclick="return false;" value=""></td>
+                        <td class="px-2"> <input type="text" class="form-control shadow-none m-2" id="noofhousecall"></td>
+                        <td class="px-2"><input type="text" class="form-control shadow-none m-2" id="noofconsult"></td>
+                    </tr>
+                }
             </tbody>
         </table>
         @*<button class="btn btn-info text-white" asp-controller="Invoicing" asp-action="AddReceipts">Add Receipts</button>*@

@@ -21,6 +21,7 @@ namespace Assignment.DBEntity.ViewModels
         public string Description { get; set; }
         [Required(ErrorMessage = "DueDate is required.")]
         public DateTime DueDate { get; set; }
+        public string? ModalDate { get; set; }
         [Required(ErrorMessage = "City is required.")]
         public string City { get; set; }
         public int TotalPages { get; set; } = 1;

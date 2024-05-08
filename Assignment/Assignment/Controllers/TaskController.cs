@@ -2,6 +2,7 @@
 using Assignment.DBEntity.ViewModels;
 using Assignment.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Assignment.Controllers
 {
@@ -43,7 +44,7 @@ namespace Assignment.Controllers
             modal.TaskName = task.TaskName;
             modal.Assignee = task.Assignee;
             modal.Description = task.Description;
-            modal.DueDate = (DateTime)task.DueDate;
+            modal.ModalDate = task.DueDate?.ToString("yyyy-MM-dd");
             modal.CategoryName = task.Category;
             modal.CategoryId = (int)task.CategoryId;
             modal.City = task.City;

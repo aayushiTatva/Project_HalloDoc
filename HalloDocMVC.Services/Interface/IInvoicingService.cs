@@ -1,4 +1,5 @@
 ﻿using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace HalloDocMVC.Services.Interface
     {
         public List<PayrateModel> GetPayrateByProvider(int Id, PayrateModel model);
         public Task<bool> EditPayrate(PayrateModel pm, int categoryId, int id);
+        public Task<TimeSheetModel> GetTimesheet(TimeSheetModel psm);
     }
 }

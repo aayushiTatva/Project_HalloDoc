@@ -9,11 +9,11 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HalloDocMVC
 build_property.RootNamespace = HalloDocMVC
-build_property.ProjectDir = C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\
+build_property.ProjectDir = C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\pce116\source\repos\aayushiTatva\Project_HalloDoc\HalloDocMVC
+build_property.MSBuildProjectDirectory = C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC
 build_property._RazorSourceGeneratorDebug = 
 
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Actions/CloseCase.cshtml]

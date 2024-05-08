@@ -1,4 +1,9 @@
-﻿using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.Bibliography;
+using HalloDocMVC.DataModels;
+using HalloDocMVC.DBEntity.DataModels;
+using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services;
 using HalloDocMVC.Services.Interface;
 using Humanizer;
@@ -13,10 +18,14 @@ namespace HalloDocMVC.Controllers.AdminController
         #region Configuration
         private readonly IInvoicingService _IInvoicingService;
         private readonly IComboBoxService _IComboBoxService;
-        public InvoicingController (IInvoicingService invoicingService, IComboBoxService iComboBoxService)
+        private readonly INotyfService _INotyfService;
+        private readonly IGenericRepository<TimesheetDetail> _timesheetDetailRepository;
+        public InvoicingController (IInvoicingService invoicingService, IComboBoxService iComboBoxService, INotyfService iNotyfService, IGenericRepository<TimesheetDetail> itimesheetDetailRepository)
         {
             _IInvoicingService = invoicingService;
             _IComboBoxService = iComboBoxService;
+            _INotyfService = iNotyfService;
+            _timesheetDetailRepository = itimesheetDetailRepository;
         }
         #endregion
         public async Task<IActionResult> Index()
@@ -35,23 +44,43 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("../AdminPanel/Admin/Invoicing/Payrate", model);
         }
 
-        public async Task<IActionResult> EditPayrate(PayrateModel pm, int categoryId, int physicianId)
+        public async Task<IActionResult> EditPayrateMethod(PayrateModel pm, int CategoryId, int physicianId)
         {
-            var model = await _IInvoicingService.EditPayrate(pm, categoryId, physicianId);
-            return RedirectToAction("Payrate", "Invoicing");
+            var model = await _IInvoicingService.EditPayrate(pm, CategoryId, physicianId);
+            if (model == true)
+            {
+                _INotyfService.Success("Payrate Updated Successfully");
+            }
+            else
+            {
+                _INotyfService.Error("Payrate Not Updated");
+            }
+            return RedirectToAction("Payrate", "Invoicing", new { id = pm.PhysicianId });
         }
 
-        public IActionResult GetTimesheet(PendingTimeSheetModel psm)
+        public async Task<IActionResult> GetTimesheet(TimeSheetModel psm)
         {
-            int day = (int)psm.Date;
-            int month = (int)psm.Month;
-            int year = (int)psm.Year;
-            return View("../AdminPanel/Admin/Invoicing/Timesheets");
+            var model1 = await _IInvoicingService.GetTimesheet(psm);
+            return View("../AdminPanel/Admin/Invoicing/Timesheets", model1);
         }
 
         public IActionResult Add()
         {
             return View("../AdminPanel/Admin/Invoicing/AddReceipts");
         }
+
+        //Extra//
+        //public ActionResult CheckDateMatch(List<DateTime> datesToCheck)
+        //{
+        //    using (var db = new YourDbContext())
+        //    {
+        //        // Check if any date in the list matches a date in the PayrateByProvider table
+        //        bool anyDateMatch = datesToCheck.Any(date =>
+        //            db.PayrateByProvider.Any(p => p.Date == date.Date));
+
+        //        // Return the result
+        //        return View(new { AnyDateMatch = anyDateMatch });
+        //    }
+        //}
     }
 }

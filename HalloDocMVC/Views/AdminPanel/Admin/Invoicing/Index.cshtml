@@ -4,7 +4,7 @@
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
-@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PendingTimeSheetModel
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.TimeSheetModel
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -17,13 +17,12 @@
     <div class="row min-vh-100">
         <div class="card shadow-none">
             <div class="card-body">
-                    <div class="row justify-content-between">
+                    <div class="row d-flex">
 
-                        @using (Html.BeginForm("GetTimesheet", "Invoicing", FormMethod.Post, new { id = "myForm" }))
-                        {
-                            @Html.HiddenFor(m => m.Date)
-                            @Html.HiddenFor(m => m.Month)
-                            @Html.HiddenFor(m => m.Year)
+                        <form asp-controller="Invoicing" asp-action="GetTimesheet" method="post" id="myForm">
+                            <input type="hidden" id="Date" name="Date"/>
+                            <input type="hidden" id="Month" name="Month"/>
+                            <input type="hidden" id="Year" name="Year"/>
                             @if (CV.role() == "Admin")
                             {
                                 <div class="col-md-3 form-floating mb-3">
@@ -40,35 +39,37 @@
                             @if (CV.role() == "Provider")
                             {
                                 <div class="col-md-3 form-floating ">
-                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary" >
+                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary mb-1" >
                                         <option value="">Select a date period</option>
                                     </select>
                                 </div>
                             }
-                            <div class="col form-floating justify-content-end">
+                            <div class="col-md-3 form-floating justify-content-end">
                                 <button class="btn relogin mx-3 shadow-none " id="saveChangesButton" onclick="passDateToController()">Finalize Timesheet</button>
                             </div>
-                        }
+                        </form>
                     </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    const datePeriodDropdown = document.getElementById('date_period');
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const datePeriodDropdown = document.getElementById('date_period');
 
     for (let month = 0; month < 12; month++) {
         const year = 2024;
         const monthName = months[month];
+        const days = daysInMonth[month];
 
         const option1 = document.createElement('option');
-        option1.value = `${month + 1}-1-14-${year}`;
-        option1.text = `${monthName} 1 to 14, ${year}`;
+        option1.value = `${month + 1}-1-${days > 14 ? 14 : days}-${year}`;
+        option1.text = `${monthName} 1 to ${days > 14 ? 14 : days}, ${year}`;
 
         const option2 = document.createElement('option');
-        option2.value = `${month + 1}-15-30-${year}`;
-        option2.text = `${monthName} 15 to 30, ${year}`;
+        option2.value = `${month + 1}-${days > 14 ? 15 : days + 1}-${days}-${year}`;
+        option2.text = `${monthName} ${days > 14 ? 15 : days + 1} to ${days}, ${year}`;
 
         datePeriodDropdown.add(option1);
         datePeriodDropdown.add(option2);

@@ -8,36 +8,37 @@
                 <i class="fa-solid fa-xmark" data-bs-dismiss="modal"></i>
             </div>
             <form asp-controller="Task" asp-action="EditTask" method="post">
-                <input type="hidden" name="TaskId" id="TaskId_EditTask" asp-for="TaskId" value="@Model.TaskId" />
+                <input type="hidden" name="TaskId" id="TaskId_EditTask" />
                 <div class="modal-body">
-                    
+
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="TaskName_EditTask" />
+                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="TaskName_EditTask" asp-for="@Model.TaskName" />
                             <label for="TaskName_EditTask">Task Name</label>
                         </div>
                         <div class="col form-floating mb-3">
-                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="Assignee_EditTask" />
+                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="Assignee_EditTask" asp-for="@Model.Assignee" />
                             <label for="Assignee_EditTask">Assignee</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="Description_EditTask" />
+                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="Description_EditTask" asp-for="@Model.Description" />
                             <label for="Description_EditTask">Description</label>
                         </div>
                         <div class="col form-floating mb-3">
-                            <input type="date" class="form-control shadow-none input" placeholder="Task Name" id="DueDate_EditTask" />
+                            @* <input type="date" class="form-control shadow-none input" placeholder="Task Name" id="DueDate_EditTask" asp-for="@Model.DueDate" /> *@
+                            <input type="date" id="DueDate_EditTask" class="form-control shadow-none input" placeholder="Task Name" asp-for="@Model.DueDate" />
                             <label for="DueDate_EditTask">DueDate</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-floating mb-3 ">
-                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="City_EditTask" />
+                            <input type="text" class="form-control shadow-none input" placeholder="Task Name" id="City_EditTask" asp-for="@Model.City" />
                             <label for="City_EditTask">City</label>
                         </div>
                         <div class="col form-floating mb-3">
-                            <select class="form-select input" id="Category_EditTask" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))">
+                            <select class="form-select input" id="Category_EditTask" asp-for="CategoryId" data-allow-clear="true" tabindex="-1" asp-items="@(new SelectList(ViewBag.CategoryComboBox,"CategoryId","CategoryName"))">
                                 <option value="">Select Category</option>
                             </select>
                             <label for="floatingSelect" class="text-info">
@@ -47,8 +48,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                <a id="edit" onclick=" toggleFormElements('true')" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded ">Edit</a>
-                <input type="submit" value="Save" id="save" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded">
+                    <a id="edit" onclick=" toggleFormElements('true')" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded ">Edit</a>
+                    <input type="submit" value="Save" id="save" style=" height:2.5rem;width:4rem" class="btn btn-info text-white rounded">
                 </div>
             </form>
         </div>
@@ -76,5 +77,4 @@
     }
 
 </script>
-
 
