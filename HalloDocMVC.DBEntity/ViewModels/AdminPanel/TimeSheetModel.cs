@@ -15,5 +15,14 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
         public int? Month { get; set; }
         public int? Year { get; set; }
         public List<DateTime> DateList { get; set; }
+        public int OnCallHours { get; set; }
+        public int TotalHours { get; set; }
+        public bool IsWeekend_IsHoliday { get; set; }
+        public int NumberOfHouseCalls { get; set; }
+        public int NumberofPhoneCalls { get; set; }
+        public int TimeSheetDetailId { get; set; }
+        public int TimeSheetId { get; set; }
+        public DateTime TimeSheetDate { get; set; }
+        public List<TimeSheetModel> TimeSheetData { get; set; }
     }
 }

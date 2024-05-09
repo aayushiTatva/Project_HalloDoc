@@ -12,6 +12,7 @@ namespace HalloDocMVC.Services.Interface
     {
         public List<PayrateModel> GetPayrateByProvider(int Id, PayrateModel model);
         public Task<bool> EditPayrate(PayrateModel pm, int categoryId, int id);
-        public Task<TimeSheetModel> GetTimesheet(TimeSheetModel psm);
+        public TimeSheetModel GetTimesheet(TimeSheetModel psm);
+        public Task<bool> EditTimesheet(TimeSheetModel model, int TimesheetId, string PhysicianAspnetuserID);
     }
 }

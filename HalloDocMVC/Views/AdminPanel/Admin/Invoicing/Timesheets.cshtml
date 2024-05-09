@@ -12,47 +12,53 @@
         </div>
     </div>
     <div class="table-responsive mt-3">
-        <table class="w-100">
-            <thead class="border-bottom border-dark mb-3">
-                <tr>
-                    <th class="col-2">
-                        Date
-                    </th>
-                    <th class="col">
-                        On-call hours
-                    </th>
-                    <th class="col-2">
-                        Total hours
-                    </th>
-                    <th class="col">
-                        Weekend/Holiday
-                    </th>
-                    <th class="col-2 px-2">
-                        Number of housecalls
-                    </th>
-                    <th class="col-2 px-2">
-                        Number of phonecalls
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="bg-white mt-3">
-                @foreach(var item in Model.DateList)
-                {
-
-                    <tr class="border-bottom">
-                        <td class="col m-2">@item.Date.ToString("MM/dd/yyyy")</td>
-                        <td class="m-2">0</td>
-                        <td class="px-2">
-                            <input type="text" class="form-control shadow-none m-2" id="uname" placeholder="">
-                        </td>
-                        <td class="justify-content-center"><input class="form-check-input form-check-inputs m-2" type="checkbox" onclick="return false;" value=""></td>
-                        <td class="px-2"> <input type="text" class="form-control shadow-none m-2" id="noofhousecall"></td>
-                        <td class="px-2"><input type="text" class="form-control shadow-none m-2" id="noofconsult"></td>
+        <form asp-controller="Invoicing" asp-action="EditTimesheet" method="post" id="myForm">
+            <table class="w-100">
+                <thead class="border-bottom border-dark mb-3">
+                    <tr>
+                        <th class="col-2">
+                            Date
+                        </th>
+                        <th class="col">
+                            On-call hours
+                        </th>
+                        <th class="col-2">
+                            Total hours
+                        </th>
+                        <th class="col">
+                            Weekend/Holiday
+                        </th>
+                        <th class="col-2 px-2">
+                            Number of housecalls
+                        </th>
+                        <th class="col-2 px-2">
+                            Number of phonecalls
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        @*<button class="btn btn-info text-white" asp-controller="Invoicing" asp-action="AddReceipts">Add Receipts</button>*@
-        <a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Add">Add Receipts</a>
+                </thead>
+                <tbody class="bg-white mt-3">
+                    @foreach(var item in Model.DateList)
+                    {
+                    
+                                <input type="hidden" asp-for="@Model.StartDate"/>
+                               <input type="hidden" asp-for="@Model.TimeSheetId"/>
+                                <tr class="border-bottom">
+                                 <td class="col m-2" id="date_period">@item.Date.ToString("MM/dd/yyyy")</td>
+                                    <td class="m-2">@Model.TimeSheetId</td>
+                                    <td class="px-2">
+                                        <input type="text" class="form-control shadow-none m-2" id="uname" placeholder="" asp-for="@Model.TotalHours">
+                                    </td>
+                                    <td class="justify-content-center"><input class="form-check-input form-check-inputs m-2" type="checkbox" onclick="return false;" value="" asp-for="@Model.IsWeekend_IsHoliday"></td>
+                                    <td class="px-2"> <input type="text" class="form-control shadow-none m-2" id="noofhousecall" asp-for="@Model.NumberOfHouseCalls"></td>
+                                    <td class="px-2"><input type="text" class="form-control shadow-none m-2" id="noofconsult" asp-for="@Model.NumberofPhoneCalls"></td>
+                                </tr>
+                    
+                    }
+                </tbody>
+            </table>
+            @*<button class="btn btn-info text-white" asp-controller="Invoicing" asp-action="AddReceipts">Add Receipts</button>*@
+            @*<a class="btn relogin mx-3 shadow-none " asp-controller="Invoicing" asp-action="Add">Add Receipts</a>*@
+            <button class="btn btn-info text-white shadow-none justify-content-end" type="submit">Submit</button>
+        </form>
     </div> 
 </div>

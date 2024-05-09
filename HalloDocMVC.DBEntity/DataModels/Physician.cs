@@ -133,6 +133,9 @@ public partial class Physician
     [Column("isnondisclosuredoc")]
     public bool? Isnondisclosuredoc { get; set; }
 
+    [Column("istimesheetfinalize", TypeName = "bit(1)")]
+    public BitArray? Istimesheetfinalize { get; set; }
+
     [ForeignKey("Aspnetuserid")]
     [InverseProperty("PhysicianAspnetusers")]
     public virtual Aspnetuser? Aspnetuser { get; set; }

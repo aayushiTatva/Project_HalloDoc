@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Bibliography;
 using HalloDocMVC.DataModels;
 using HalloDocMVC.DBEntity.DataModels;
+using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using HalloDocMVC.Repositories.Admin.Repository.Interface;
 using HalloDocMVC.Services;
@@ -58,9 +59,9 @@ namespace HalloDocMVC.Controllers.AdminController
             return RedirectToAction("Payrate", "Invoicing", new { id = pm.PhysicianId });
         }
 
-        public async Task<IActionResult> GetTimesheet(TimeSheetModel psm)
+        public IActionResult GetTimesheet(TimeSheetModel psm)
         {
-            var model1 = await _IInvoicingService.GetTimesheet(psm);
+            var model1 = _IInvoicingService.GetTimesheet(psm);
             return View("../AdminPanel/Admin/Invoicing/Timesheets", model1);
         }
 
@@ -82,5 +83,21 @@ namespace HalloDocMVC.Controllers.AdminController
         //        return View(new { AnyDateMatch = anyDateMatch });
         //    }
         //}
+
+        public async Task<IActionResult> EditTimesheet(TimeSheetModel tsm, int TimesheetId)
+        {
+            /*return View("../AdminPanel/Admin/Invoicing/Timesheets");*/
+            TimeSheetModel model = new TimeSheetModel();
+            bool model1 = await _IInvoicingService.EditTimesheet(tsm, TimesheetId, CV.ID());
+            if(model1 == true)
+            {
+                //return View("../AdminPanel/Admin/Invoicing/Timesheets", model);
+                return RedirectToAction("GetTimesheet", "Invoicing", new { id = tsm.StartDate });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Invoicing");
+            }
+        }
     }
 }
