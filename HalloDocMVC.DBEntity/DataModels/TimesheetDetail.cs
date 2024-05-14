@@ -14,8 +14,7 @@ public partial class TimesheetDetail
 
     public int TimesheetId { get; set; }
 
-    [Column(TypeName = "timestamp without time zone")]
-    public DateTime TimesheetDate { get; set; }
+    public DateOnly TimesheetDate { get; set; }
 
     public decimal? TotalHours { get; set; }
 

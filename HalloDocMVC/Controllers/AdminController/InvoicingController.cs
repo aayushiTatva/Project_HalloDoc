@@ -1,103 +1,166 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using DocumentFormat.OpenXml.Bibliography;
-using HalloDocMVC.DataModels;
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
-using HalloDocMVC.Repositories.Admin.Repository.Interface;
-using HalloDocMVC.Services;
 using HalloDocMVC.Services.Interface;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Options;
-using System.Web.WebPages;
 
 namespace HalloDocMVC.Controllers.AdminController
 {
     public class InvoicingController : Controller
     {
         #region Configuration
-        private readonly IInvoicingService _IInvoicingService;
-        private readonly IComboBoxService _IComboBoxService;
+        private readonly IInvoicingService _InvoicingService;
         private readonly INotyfService _INotyfService;
-        private readonly IGenericRepository<TimesheetDetail> _timesheetDetailRepository;
-        public InvoicingController (IInvoicingService invoicingService, IComboBoxService iComboBoxService, INotyfService iNotyfService, IGenericRepository<TimesheetDetail> itimesheetDetailRepository)
+
+        public InvoicingController(IInvoicingService invoicingService, INotyfService iNotyfService)
         {
-            _IInvoicingService = invoicingService;
-            _IComboBoxService = iComboBoxService;
+            _InvoicingService = invoicingService;
             _INotyfService = iNotyfService;
-            _timesheetDetailRepository = itimesheetDetailRepository;
         }
         #endregion
-        public async Task<IActionResult> Index()
-        {
-            ViewBag.ProviderComboBox = await _IComboBoxService.ComboBoxProvider();
+        /*[CheckProviderAccess("Admin,Provider", "Invoicing")]
+        [Route("Physician/Invoicing")]*/
 
+        #region Index
+        public IActionResult Index()
+        {
             return View("../AdminPanel/Admin/Invoicing/Index");
         }
-        public IActionResult Timesheets()
+        [Route("/Admin/Invoicing")]
+        public IActionResult IndexAdmin()
         {
-            return View("../AdminPanel/Admin/Invoicing/Timesheets");
+            ViewBag.GetAllPhysicians = _InvoicingService.GetAllPhysicians();
+            return View("../AdminPanel/Admin/Invoicing/IndexAdmin");
         }
-        public IActionResult Payrate(int Id, PayrateModel models)
-        {
-            var model = _IInvoicingService.GetPayrateByProvider(Id, models);
-            return View("../AdminPanel/Admin/Invoicing/Payrate", model);
-        }
+        #endregion
 
-        public async Task<IActionResult> EditPayrateMethod(PayrateModel pm, int CategoryId, int physicianId)
+        #region IsFinalizeSheet
+
+        public IActionResult IsFinalizeSheet(int PhysicianId, DateOnly StartDate)
         {
-            var model = await _IInvoicingService.EditPayrate(pm, CategoryId, physicianId);
-            if (model == true)
+            bool x = _InvoicingService.isFinalizeTimesheet(PhysicianId, StartDate);
+            return Json(new { x });
+        }
+        public IActionResult IsApproveSheet(int PhysicianId, DateOnly StartDate)
+        {
+            var x = _InvoicingService.GetPendingTimesheet(PhysicianId, StartDate);
+            if (x.Count() == 0)
             {
-                _INotyfService.Success("Payrate Updated Successfully");
+                return Json(new { x = true });
+            }
+            return PartialView("../AdminPanel/Admin/Invoicing/_PendingApproved", x);
+        }
+        #endregion
+
+        #region TimeSheetDetailsAddEdit_PageData
+
+        public async Task<IActionResult> Timesheet(int PhysicianId, DateOnly StartDate)
+        {
+            if (CV.role() == "Provider" && _InvoicingService.isFinalizeTimesheet(PhysicianId, StartDate))
+            {
+                _INotyfService.Error("Sheet Is Already Finalized");
+                return RedirectToAction("Index");
+            }
+            int AfterDays = StartDate.Day == 1 ? 14 : DateTime.DaysInMonth(StartDate.Year, StartDate.Month) - 14; ;
+            var TimeSheetDetails = _InvoicingService.PostTimesheetDetails(PhysicianId, StartDate, AfterDays, CV.ID());
+            List<TimesheetdetailreimbursementModel> h = await _InvoicingService.GetTimesheetBills(TimeSheetDetails);
+            var Timesheet = _InvoicingService.GetTimesheetDetails(TimeSheetDetails, h, PhysicianId);
+            Timesheet.PhysicianId = PhysicianId;
+            return View("../AdminPanel/Admin/Invoicing/TimeSheet", Timesheet);
+        }
+        #endregion
+
+        #region GetTimesheetDetailData
+        public async Task<IActionResult> GetTimesheetDetailsData(int PhysicianId, DateOnly StartDate)
+        {
+            var Timesheet = new TimeSheetModel();
+            if (StartDate == DateOnly.MinValue)
+            {
+                Timesheet.TimesheetdetailsList = new List<TimesheetdetailModel> { };
+                Timesheet.TimesheetdetailreimbursementList = new List<TimesheetdetailreimbursementModel> { };
             }
             else
             {
-                _INotyfService.Error("Payrate Not Updated");
+                List<TimesheetDetail> x = _InvoicingService.PostTimesheetDetails(PhysicianId, StartDate, 0, CV.ID());
+                List<TimesheetdetailreimbursementModel> h = await _InvoicingService.GetTimesheetBills(x);
+                Timesheet = _InvoicingService.GetTimesheetDetails(x, h, PhysicianId);
             }
-            return RedirectToAction("Payrate", "Invoicing", new { id = pm.PhysicianId });
-        }
-
-        public IActionResult GetTimesheet(TimeSheetModel psm)
-        {
-            var model1 = _IInvoicingService.GetTimesheet(psm);
-            return View("../AdminPanel/Admin/Invoicing/Timesheets", model1);
-        }
-
-        public IActionResult Add()
-        {
-            return View("../AdminPanel/Admin/Invoicing/AddReceipts");
-        }
-
-        //Extra//
-        //public ActionResult CheckDateMatch(List<DateTime> datesToCheck)
-        //{
-        //    using (var db = new YourDbContext())
-        //    {
-        //        // Check if any date in the list matches a date in the PayrateByProvider table
-        //        bool anyDateMatch = datesToCheck.Any(date =>
-        //            db.PayrateByProvider.Any(p => p.Date == date.Date));
-
-        //        // Return the result
-        //        return View(new { AnyDateMatch = anyDateMatch });
-        //    }
-        //}
-
-        public async Task<IActionResult> EditTimesheet(TimeSheetModel tsm, int TimesheetId)
-        {
-            /*return View("../AdminPanel/Admin/Invoicing/Timesheets");*/
-            TimeSheetModel model = new TimeSheetModel();
-            bool model1 = await _IInvoicingService.EditTimesheet(tsm, TimesheetId, CV.ID());
-            if(model1 == true)
+            if (Timesheet == null)
             {
-                //return View("../AdminPanel/Admin/Invoicing/Timesheets", model);
-                return RedirectToAction("GetTimesheet", "Invoicing", new { id = tsm.StartDate });
+                var Timesheets = new TimeSheetModel();
+                Timesheets.TimesheetdetailsList = new List<TimesheetdetailModel> { };
+                Timesheets.TimesheetdetailreimbursementList = new List<TimesheetdetailreimbursementModel> { };
+                return PartialView("../AdminPanel/Admin/Invoicing/_TimeSheetTable", Timesheets);
             }
-            else
+
+
+            return PartialView("../AdminPanel/Admin/Invoicing/_TimeSheetTable", Timesheet);
+        }
+        #endregion
+
+        #region TimeSheetDetailsEdit
+        public IActionResult TimeSheetDetailsEdit(TimeSheetModel viewTimeSheet, int PhysicianId)
+        {
+            if (_InvoicingService.PutTimesheetDetails(viewTimeSheet.TimesheetdetailsList, CV.ID()))
             {
-                return RedirectToAction("Index", "Invoicing");
+                _INotyfService.Success("TimeSheet Edited Successfully..!");
             }
+
+            return RedirectToAction("Timesheet", new { PhysicianId, StartDate = viewTimeSheet.TimesheetdetailsList[0].Timesheetdate });
+        }
+        #endregion
+
+        #region TimeSheetBillAddEdit
+        public IActionResult TimeSheetBillAddEdit(int? Trid, DateOnly Timesheetdate, IFormFile file, int Timesheetdetailid, int Amount, string Item, int PhysicianId, DateOnly StartDate)
+        {
+            TimesheetdetailreimbursementModel timesheetdetailreimbursement = new TimesheetdetailreimbursementModel();
+            timesheetdetailreimbursement.Timesheetdetailid = Timesheetdetailid;
+            timesheetdetailreimbursement.Timesheetdetailreimbursementid = Trid;
+            timesheetdetailreimbursement.Amount = Amount;
+            timesheetdetailreimbursement.Billfile = file;
+            timesheetdetailreimbursement.Itemname = Item;
+            if (_InvoicingService.TimeSheetBillAddEdit(timesheetdetailreimbursement, CV.ID()))
+            {
+                _INotyfService.Success("Bill Change Successfully..!");
+            }
+            return RedirectToAction("Timesheet", new { PhysicianId = PhysicianId, StartDate = StartDate });
+        }
+        #endregion
+
+        #region TimeSheetBill_Delete
+        public IActionResult TimeSheetBillRemove(int? Trid, int PhysicianId, DateOnly StartDate)
+        {
+            TimesheetdetailreimbursementModel timesheetdetailreimbursement = new TimesheetdetailreimbursementModel();
+            timesheetdetailreimbursement.Timesheetdetailreimbursementid = Trid;
+            if (_InvoicingService.TimeSheetBillRemove(timesheetdetailreimbursement, CV.ID()))
+            {
+                _INotyfService.Success("Bill deleted Successfully..!");
+            }
+            return RedirectToAction("Timesheet", new { PhysicianId = PhysicianId, StartDate = StartDate });
+        }
+        #endregion
+
+        #region SetToFinalize
+        public IActionResult SetToFinalize(int timesheetid)
+        {
+            if (_InvoicingService.SetToFinalize(timesheetid, CV.ID()))
+            {
+                _INotyfService.Success("Sheet Finalized Successfully..!");
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region SetToApprove
+        public async Task<IActionResult> SetToApprove(TimeSheetModel ts)
+        {
+            if (await _InvoicingService.SetToApprove(ts, CV.ID()))
+            {
+                _INotyfService.Success("Sheet Approved Successfully..!");
+            }
+            return RedirectToAction("IndexAdmin");
+        }
+        #endregion
         }
     }
-}

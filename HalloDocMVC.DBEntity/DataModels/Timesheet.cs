@@ -14,11 +14,9 @@ public partial class Timesheet
 
     public int PhysicianId { get; set; }
 
-    [Column(TypeName = "timestamp without time zone")]
-    public DateTime StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
 
-    [Column(TypeName = "timestamp without time zone")]
-    public DateTime EndDate { get; set; }
+    public DateOnly EndDate { get; set; }
 
     public bool? IsFinalize { get; set; }
 

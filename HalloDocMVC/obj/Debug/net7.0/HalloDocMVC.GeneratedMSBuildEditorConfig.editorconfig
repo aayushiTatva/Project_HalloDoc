@@ -112,20 +112,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxBY2Nlc3NcVXNlckFjY2Vzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/AddReceipts.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcQWRkUmVjZWlwdHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/IndexAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcSW5kZXhBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/Payrate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcUGF5cmF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/Timesheets.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcVGltZXNoZWV0cy5jc2h0bWw=
+[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/TimeSheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcVGltZVNoZWV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/_PendingApproved.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcX1BlbmRpbmdBcHByb3ZlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Invoicing/_TimeSheetTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZG1pblxJbnZvaWNpbmdcX1RpbWVTaGVldFRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pce116/Source/Repos/aayushiTatva/Project_HalloDoc/HalloDocMVC/Views/AdminPanel/Admin/Partners/AddEditBusiness.cshtml]

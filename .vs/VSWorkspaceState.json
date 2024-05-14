@@ -9,6 +9,8 @@
     "\\HalloDocMVC\\Views\\AdminPanel",
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions",
     "\\HalloDocMVC\\Views\\AdminPanel\\Actions\\Modals",
+    "\\HalloDocMVC\\Views\\AdminPanel\\Admin",
+    "\\HalloDocMVC\\Views\\AdminPanel\\Admin\\Invoicing",
     "\\HalloDocMVC\\Views\\AdminPanel\\Dashboard"
   ],
   "SelectedNode": "\\HalloDocMVC\\HalloDocMVC.sln",

@@ -54,27 +54,6 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav">
-                    @*<li class="nav-item mt-2 @(path.StartsWith("/") ? "activeNavItemOffcanvas" : "")">
-                        <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="ProviderLocation" asp-action="Index">Provider Location</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="Profile" asp-action="Index">My Profile</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="Provider" asp-action="Index">Providers</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="Partners" asp-action="Index">Parteners</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="Access" asp-action="Index">Access</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a asp-controller="Records" asp-action="Index">Records</a>
-                    </li>*@
                     @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Dashboard"))
                     {
                         <li class="nav-item">
@@ -88,7 +67,7 @@
                         @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
                         {
                             <li class="nav-item">
-                                <a asp-controller="" asp-action="" class="nav-link text-dark">
+                                <a asp-controller="Invoicing" asp-action="Index" class="nav-link text-dark">
                                     <small>Invoicing</small>
                                 </a>
                             </li>
@@ -163,7 +142,7 @@
                                     @if (_ILoginService.IsAccessGranted((int)CV.RoleID(), "Invoicing"))
                                     {
                                         <li>
-                                            <a asp-controller="" asp-action="" class="dropdown-item">
+                                            <a asp-controller="Invoicing" asp-action="Index" class="dropdown-item">
                                                 Invoicing
                                             </a>
                                         </li>

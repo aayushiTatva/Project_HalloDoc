@@ -1,94 +1,172 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
 }
-@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.TimeSheetModel
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Invoicing</h3>
-        </div>
-        <div class="col-md-6 judtify-content-end">
-            <a class="btn relogin mx-3 shadow-none " asp-controller="Dashboard" asp-action="Index">Back</a>
-        </div>
+<section class="container-fluid w-75 my-5">
+
+    <div class=" d-flex flex-row-reverse justify-content-between form-admin mb-3">
+        <a onclick="history.back()" class="text-decoration-none text-info ">
+            <span class="btn relogin  mx-3 shadow-none mb-2">
+                <i class="fa fa-solid fa-angle-left"></i> Back
+            </span>
+        </a>
+        <h3>Timesheets</h3>
     </div>
-    <div class="row min-vh-100">
-        <div class="card shadow-none">
-            <div class="card-body">
-                    <div class="row d-flex">
-
-                        <form asp-controller="Invoicing" asp-action="GetTimesheet" method="post" id="myForm">
-                            <input type="hidden" id="Date" name="Date"/>
-                            <input type="hidden" id="Month" name="Month"/>
-                            <input type="hidden" id="Year" name="Year"/>
-                            @if (CV.role() == "Admin")
-                            {
-                                <div class="col-md-3 form-floating mb-3">
-                                    <select onchange="getdatabyprovider()" asp-items="@(new SelectList(ViewBag.ProviderComboBox, "ProviderId", "ProviderName"))" id="providerdropdown" class="form-select shadow-none text-secondary" data-allow-clear="true" tabindex="-1">
-                                        <option value="-1" class="mb-1">All Providers</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 form-floating mb-3">
-                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary">
-                                        <option value="">Select a date period</option>
-                                    </select>
-                                </div>
-                            }
-                            @if (CV.role() == "Provider")
-                            {
-                                <div class="col-md-3 form-floating ">
-                                    <select id="date_period" name="date_period" class="form-select shadow-none text-secondary mb-1" >
-                                        <option value="">Select a date period</option>
-                                    </select>
-                                </div>
-                            }
-                            <div class="col-md-3 form-floating justify-content-end">
-                                <button class="btn relogin mx-3 shadow-none " id="saveChangesButton" onclick="passDateToController()">Finalize Timesheet</button>
-                            </div>
-                        </form>
-                    </div>
-            </div>
+    <div class="d-flex justify-content-between">
+        <div class="form-floating w-25">
+            <select class="form-select shadow-none" id="dateRangeDropdown" aria-label="Floating label select example">
+                <option selected value="@DateOnly.MinValue">Select</option>
+            </select>
+            <label for="floatingSelect">Search by timesheet period </label>
         </div>
+        <a id="finalizeBtn" class="btn relogin  mx-3 shadow-none mb-2" style="display:none">
+
+            Finalize Timesheet
+
+        </a>
     </div>
-</div>
-<script>
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    const datePeriodDropdown = document.getElementById('date_period');
+    <div id="Timesheet"></div>
+</section>
 
-    for (let month = 0; month < 12; month++) {
-        const year = 2024;
-        const monthName = months[month];
-        const days = daysInMonth[month];
 
-        const option1 = document.createElement('option');
-        option1.value = `${month + 1}-1-${days > 14 ? 14 : days}-${year}`;
-        option1.text = `${monthName} 1 to ${days > 14 ? 14 : days}, ${year}`;
+@section Scripts {
 
-        const option2 = document.createElement('option');
-        option2.value = `${month + 1}-${days > 14 ? 15 : days + 1}-${days}-${year}`;
-        option2.text = `${monthName} ${days > 14 ? 15 : days + 1} to ${days}, ${year}`;
+    <script>
+        var loginId = @CV.UserID();
+        function generateDateOptions() {
+            var options = [];
+            var today = new Date();
+            var currentDay = today.getDate();
+            var currentMonth = today.getMonth() + 2; 
+            var currentYear = today.getFullYear();
 
-        datePeriodDropdown.add(option1);
-        datePeriodDropdown.add(option2);
-    }
+            var startDate1, endDate1, startDate2, endDate2;
 
-    function passDateToController() {
-        let x = document.getElementById("date_period").value;
-        let dateComponents = x.split('-');
-        let month = parseInt(dateComponents[0]);
-        let day = parseInt(dateComponents[1]);
-        let year = parseInt(dateComponents[3]);
+            if (currentDay <= 14) {
+                // First option: 1-14 of the previous month
+                startDate1 = 1;
+                endDate1 = 14;
+                options.push({
+                    value: formatDate(startDate1, currentMonth - 1, currentYear),
+                    text: formatDate(startDate1, currentMonth - 1, currentYear) + " - " + formatDate(endDate1, currentMonth - 1, currentYear)
+                });
 
-        // Set model properties
-        document.getElementById("Date").value = day;
-        document.getElementById("Month").value = month;
-        document.getElementById("Year").value = year;
-        console.log(document.getElementById("Date").value);
+                // Second option: 15-end of the previous month
+                startDate2 = 15;
+                endDate2 = new Date(currentYear, currentMonth - 1, 0).getDate();
+                options.push({
+                    value: formatDate(startDate2, currentMonth - 1, currentYear),
+                    text: formatDate(startDate2, currentMonth - 1, currentYear) + " - " + formatDate(endDate2, currentMonth - 1, currentYear)
+                });
+            } else {
+                // First option: 15-end of the previous month
+                startDate1 = 15;
+                endDate1 = new Date(currentYear, currentMonth - 1, 0).getDate();
+                options.push({
+                    value: formatDate(startDate1, currentMonth - 1, currentYear),
+                    text: formatDate(startDate1, currentMonth - 1, currentYear) + " - " + formatDate(endDate1, currentMonth - 1, currentYear)
+                });
 
-        // Submit the form
-        document.getElementById("myForm").submit();
-    }
-</script>
+                // Second option: 1-14 of the current month
+                startDate2 = 1;
+                endDate2 = 14;
+                options.push({
+                    value: formatDate(startDate2, currentMonth, currentYear),
+                    text: formatDate(startDate2, currentMonth, currentYear) + " - " + formatDate(endDate2, currentMonth, currentYear)
+                });
+            }
+            return options;
+        }
+
+        // Function to format date as "yyyy/mm/dd"
+        function formatDate(day, month, year) {
+            var formattedMonth = month < 10 ? '0' + month : month;
+            var formattedDay = day < 10 ? '0' + day : day;
+            return year + '/' + formattedMonth + '/' + formattedDay;
+        }
+
+        // Function to populate the dropdown with date options
+        function populateDropdown() {
+            var dropdown = document.getElementById("dateRangeDropdown");
+            var dateOptions = generateDateOptions();
+
+            // Add options to the dropdown
+            dateOptions.forEach(function (option) {
+                var opt = document.createElement("option");
+                opt.value = option.value;
+                opt.text = option.text;
+                dropdown.add(opt);
+
+                // Trigger the function for the default value
+                var selectedValue = dropdown.value;
+
+                myFunction(loginId, selectedValue);
+
+            });
+        }
+        // Call the function to populate the dropdown on page load
+        populateDropdown();
+
+        function myFunction(loginId, selectedValue) {
+            console.log(selectedValue);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("IsFinalizeSheet", "Invoicing")',
+                data: { PhysicianId: loginId, StartDate: selectedValue },
+                cache: false,
+                success: function (response) {
+                    if (response.x == true) {
+                        $("#finalizeBtn").hide();
+                    }
+                    else {
+                        $("#finalizeBtn").show();
+                    }
+                },
+                error: function () {
+                    alert("Error while checking date.");
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $("#dateRangeDropdown").change(function () {
+                // Get the selected value
+                var selectedValue = $(this).val();
+                myFunction(loginId, selectedValue);
+                // myFunctionfortimesheetData(loginId, selectedValue);
+                // $("#Startdate").val(selectedValue);
+                // $("#PhysicianId").val(loginId);
+
+                var dateObj = new Date(selectedValue);
+
+                var date = dateObj.getDate();
+                var month = dateObj.getMonth() + 1; // Months are zero-based
+                var year = dateObj.getFullYear();
+                if (date == 1) {
+
+                    var url = '@Url.Action("Timesheet", "Invoicing")' + '?PhysicianId=' + loginId + '&StartDate=' + selectedValue;
+
+                } else {
+                    var daysInMonth = new Date(year, month, 0).getDate();
+
+                    var url = '@Url.Action("Timesheet", "Invoicing")' + '?PhysicianId=' + loginId + '&StartDate=' + selectedValue;
+
+                }
+
+                $('#finalizeBtn').attr('href', url).show();
+                $.ajax({
+                    method: "GET",
+                    url: "/Invoicing/GetTimesheetDetailsData",
+                    data: { StartDate: selectedValue, PhysicianId: loginId },
+                    success: function (response) {
+
+                        $("#Timesheet").html(response);
+
+                    }
+                });
+            });
+        });
+
+    </script>
+
+}
