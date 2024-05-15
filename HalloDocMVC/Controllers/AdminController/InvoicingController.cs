@@ -2,6 +2,7 @@
 using HalloDocMVC.DBEntity.DataModels;
 using HalloDocMVC.DBEntity.ViewModels;
 using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+using HalloDocMVC.Services;
 using HalloDocMVC.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 

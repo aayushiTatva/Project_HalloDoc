@@ -12,7 +12,7 @@ namespace HalloDocMVC.DBEntity.ViewModels.AdminPanel
 {
     public class ProviderModel
     {
-        public readonly int Physicianid;
+        
 
         public int? NotificationId { get; set; }
         public BitArray? Notification { get; set; }
