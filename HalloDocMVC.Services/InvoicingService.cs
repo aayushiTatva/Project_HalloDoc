@@ -27,13 +27,14 @@ namespace HalloDocMVC.Services
             private readonly IGenericRepository<Shiftdetail> _shiftDetailRepository;
             private readonly IGenericRepository<Physician> _physicianRepository;
             private readonly IGenericRepository<PayrateByProvider> _payrateByProviderRepository;
-            public InvoicingService(EmailConfiguration emailConfig, IHttpContextAccessor httpContextAccessor,IGenericRepository<TimesheetDetail> iTimeSheetDetailRepository,
+            public InvoicingService(EmailConfiguration emailConfig, IHttpContextAccessor httpContextAccessor,IGenericRepository<Emaillog> iEmailLogRepository,IGenericRepository<TimesheetDetail> iTimeSheetDetailRepository,
                 IGenericRepository<Timesheet> iTimesheetRepository, IGenericRepository<TimesheetDetailReimbursement> iTimeSheetDetailReimbursementRepository,
                 IGenericRepository<Shift> iShiftRepository, IGenericRepository<Shiftdetail> iShiftDetailRepository, IGenericRepository<Physician> iPhysicianRepository,
                 IGenericRepository<PayrateByProvider> iPayrateByProviderRepository)
             {
                 _emailConfig = emailConfig;
                 this.httpContextAccessor = httpContextAccessor;
+                _emailLogRepository = iEmailLogRepository;
                 _timeSheetDetailRepository = iTimeSheetDetailRepository;
                 _timeSheetRepository = iTimesheetRepository;
                 _timeSheetDetailReimbursementRepository = iTimeSheetDetailReimbursementRepository;
@@ -83,6 +84,7 @@ namespace HalloDocMVC.Services
                     if (data != null)
                     {
                         data.IsFinalize = true;
+                        data.IsApproved = false;
                         _timeSheetRepository.Update(data);
                         return true;
                     }

@@ -7,6 +7,7 @@ using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
 using Rotativa.AspNetCore;
 using HalloDocMVC.Services;
 using HalloDocMVC.Services.Interface;
+using HalloDocMVC.Controllers.AdminController;
 
 var builder = WebApplication.CreateBuilder(args);
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IRecordsService, RecordsService>();
 builder.Services.AddScoped<IConfirmationNumberService, ConfirmationNumberService>();
 builder.Services.AddScoped<IInvoicingService, InvoicingService>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +50,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseAuthorization();
 app.MapControllerRoute(

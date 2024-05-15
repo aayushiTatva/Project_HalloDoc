@@ -715,3 +715,4 @@ C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\HalloDocMVC.Services.pdb
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\HalloDocMVC.Repositories.dll
 C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\HalloDocMVC.Repositories.pdb
+C:\Users\pce116\Source\Repos\aayushiTatva\Project_HalloDoc\HalloDocMVC\bin\Debug\net7.0\libman.json

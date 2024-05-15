@@ -148,5 +148,10 @@ namespace HalloDocMVC.Controllers.AdminController
             return View("~/Views/PatientPanel/CreateRequest/SubmitRequestPage.cshtml");
         }
         #endregion
+
+        public IActionResult Chat()
+        {
+            return View("../AdminPanel/Admin/Chat/Index");
+        }
     }
 }

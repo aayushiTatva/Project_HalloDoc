@@ -32,50 +32,43 @@
 
     <script>
         var loginId = @CV.UserID();
+
         function generateDateOptions() {
             var options = [];
             var today = new Date();
-            var currentDay = today.getDate();
-            var currentMonth = today.getMonth() + 1; 
             var currentYear = today.getFullYear();
+            var currentMonth = today.getMonth() + 1;
+            var currentDay = today.getDate();
 
-            var startDate1, endDate1, startDate2, endDate2;
+            for (var i = 0; i < 24; i++) {
+                var startDate, endDate;
+                var month = currentMonth - Math.floor(i / 2);
+                var year = currentYear;
 
-            if (currentDay <= 14) {
-                // First option: 1-14 of the previous month
-                startDate1 = 1;
-                endDate1 = 14;
-                options.push({
-                    value: formatDate(startDate1, currentMonth - 1, currentYear),
-                    text: formatDate(startDate1, currentMonth - 1, currentYear) + " - " + formatDate(endDate1, currentMonth - 1, currentYear)
-                });
+                if (month <= 0) {
+                    month += 12;
+                    year--;
+                }
 
-                // Second option: 15-end of the previous month
-                startDate2 = 15;
-                endDate2 = new Date(currentYear, currentMonth - 1, 0).getDate();
-                options.push({
-                    value: formatDate(startDate2, currentMonth - 1, currentYear),
-                    text: formatDate(startDate2, currentMonth - 1, currentYear) + " - " + formatDate(endDate2, currentMonth - 1, currentYear)
-                });
-            } else {
-                // First option: 15-end of the previous month
-                startDate1 = 15;
-                endDate1 = new Date(currentYear, currentMonth - 1, 0).getDate();
-                options.push({
-                    value: formatDate(startDate1, currentMonth - 1, currentYear),
-                    text: formatDate(startDate1, currentMonth - 1, currentYear) + " - " + formatDate(endDate1, currentMonth - 1, currentYear)
-                });
+                if (i % 2 === 0) {
+                    // First week of the biweekly period
+                    startDate = 1;
+                    endDate = 14;
+                } else {
+                    // Second week of the biweekly period
+                    startDate = 15;
+                    endDate = new Date(year, month, 0).getDate();
+                }
 
-                // Second option: 1-14 of the current month
-                startDate2 = 1;
-                endDate2 = 14;
                 options.push({
-                    value: formatDate(startDate2, currentMonth, currentYear),
-                    text: formatDate(startDate2, currentMonth, currentYear) + " - " + formatDate(endDate2, currentMonth, currentYear)
+                    value: formatDate(startDate, month, year),
+                    text: formatDate(startDate, month, year) + " - " + formatDate(endDate, month, year)
                 });
             }
+
             return options;
         }
+
 
         // Function to format date as "yyyy/mm/dd"
         function formatDate(day, month, year) {

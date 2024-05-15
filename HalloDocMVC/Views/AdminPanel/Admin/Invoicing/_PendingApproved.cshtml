@@ -17,14 +17,20 @@
         <tbody>
             @foreach (var item in Model)
             {
+    // Assuming item.StartDate is a DateTime object
+                string formattedDate = item.StartDate.ToString("yyyy/MM/dd");
                 <tr>
                     <td>@item.StartDate</td>
                     <td>@item.EndDate</td>
                     <td>Pending</td>
                     <td>
-                        <a href="~/Invoicing/Timesheet?PhysicianId=@item.PhysicianId && StartDate=@item.StartDate.ToString().Substring(6)/@item.StartDate.ToString().Substring(3,2)/@item.StartDate.ToString().Substring(0,2)" class="btn mx-1 btn-sm btn-outline-info view-btn">
-                            Approve
-                        </a>
+                        <form action="~/Invoicing/Timesheet" method="post">
+                            <input type="hidden" name="physicianId" value="@item.PhysicianId" />
+                            <input type="hidden" name="startDate" value="@item.StartDate" />
+                            <button type="submit" class="btn mx-1 btn-sm btn-outline-info view-btn">
+                                Approve
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }
