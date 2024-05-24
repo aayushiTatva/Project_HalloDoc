@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HalloDocMVC.DBEntity.ViewModels;
 
 namespace HalloDocMVC.Services
 {
@@ -20,15 +21,20 @@ namespace HalloDocMVC.Services
         private readonly IGenericRepository<Physician> _physicianRepository;
         private readonly IGenericRepository<Region> _regionRepository;
         private readonly IGenericRepository<Encounterform> _encounterRepository;
+        private readonly IGenericRepository<Aspnetuser> _aspNetUserRepository;
+        private readonly IGenericRepository<User> _userRepository;
 
         public AdminDashboardService(IGenericRepository<Request> iRequestRepository, IGenericRepository<Requestclient> iRequestClientRepository, IGenericRepository<Physician> iPhysicianRepository,
-        IGenericRepository<Region> iRegionRepository, IGenericRepository<Encounterform> iEncounterRepository)
+        IGenericRepository<Region> iRegionRepository, IGenericRepository<Encounterform> iEncounterRepository, IGenericRepository<Aspnetuser> iAspNetUserRepository,
+        IGenericRepository<User> iUserRepository)
         {
             _requestRepository = iRequestRepository;
             _requestClientRepository = iRequestClientRepository;
             _physicianRepository = iPhysicianRepository;
             _regionRepository = iRegionRepository;
             _encounterRepository = iEncounterRepository;
+            _aspNetUserRepository = iAspNetUserRepository;
+            _userRepository = iUserRepository;
         }
         #endregion
 
@@ -95,7 +101,9 @@ namespace HalloDocMVC.Services
                                                     PatientPhoneNumber = rc.Phonenumber,
                                                     Address = rc.Address + " " + rc.Street + " " + rc.City + " " + rc.State + " " + rc.Zipcode,
                                                     Notes = rc.Notes,
-                                                    RequestorPhoneNumber = req.Phonenumber
+                                                    RequestorPhoneNumber = req.Phonenumber,
+                                                    RequestorAspId = _aspNetUserRepository.GetAll().Where(e => e.Id == CV.ID()).FirstOrDefault().Id,
+                                                    RequestAspId = _userRepository.GetAll().Where(e => e.Userid == req.Userid).FirstOrDefault().Aspnetuserid
                                                 })
                                                    .ToList();
             int totalItemCount = allData.Count;

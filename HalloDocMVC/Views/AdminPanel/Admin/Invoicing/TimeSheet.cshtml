@@ -62,6 +62,7 @@
                         }
                         <input hidden asp-for="TimesheetdetailsList[i].Timesheetdetailid">
                         <input hidden asp-for="TimesheetdetailsList[i].Timesheetdate">
+                        <input hidden asp-for="PhysicianId"/>
                         <tr>
                             <td>@Model.TimesheetdetailsList[i].Timesheetdate </td>
                             <td>@Model.TimesheetdetailsList[i].OnCallhours</td>
@@ -97,30 +98,30 @@
                         </tr>
                     }
 
-                    @*@if (CV.role() == "Admin")
+                    @if (CV.role() == "Admin")
                     {
                         <tr>
                             <td> Payrate </td>
                             <td>  </td>
-                            <td> @Model.PayrateWithProvider[1].Payrate </td>
-                            <td> @Model.PayrateWithProvider[0].Payrate </td>
-                            <td> @Model.PayrateWithProvider[6].Payrate </td>
-                            <td> @Model.PayrateWithProvider[3].Payrate </td>
+                            <td> @Model.PayrateWithProviderList[1].Payrate </td>
+                            <td> @Model.PayrateWithProviderList[0].Payrate </td>
+                            <td> @Model.PayrateWithProviderList[6].Payrate </td>
+                            <td> @Model.PayrateWithProviderList[3].Payrate </td>
                             <td></td>
                         </tr>
                         <hr />
                         <tr>
                             <td> Invoice Total </td>
                             <td>  </td>
-                            <td> @(TotalHours * (double)Model.PayrateWithProvider[1].Payrate) </td>
-                            <td> @(TotalWeekend * Model.PayrateWithProvider[0].Payrate)</td>
-                            <td> @(TotalHousecalls * (double)Model.PayrateWithProvider[6].Payrate) </td>
-                            <td> @(TotalPhone * (double)Model.PayrateWithProvider[3].Payrate) </td>
-                            <td>@(TotalHours * (double)Model.PayrateWithProvider[1].Payrate + TotalWeekend * (double)Model.PayrateWithProvider[0].Payrate + TotalHousecalls * (double)Model.PayrateWithProvider[6].Payrate + TotalPhone * (double)Model.PayrateWithProvider[3].Payrate)</td>
+                            <td> @(TotalHours * (double)Model.PayrateWithProviderList[1].Payrate) </td>
+                            <td> @(TotalWeekend * Model.PayrateWithProviderList[0].Payrate)</td>
+                            <td> @(TotalHousecalls * (double)Model.PayrateWithProviderList[6].Payrate) </td>
+                            <td> @(TotalPhone * (double)Model.PayrateWithProviderList[1].Payrate) </td>
+                            <td>@(TotalHours * (double)Model.PayrateWithProviderList[1].Payrate + TotalWeekend * (double)Model.PayrateWithProviderList[0].Payrate + TotalHousecalls * (double)Model.PayrateWithProviderList[6].Payrate + TotalPhone * (double)Model.PayrateWithProviderList[3].Payrate)</td>
 
                         </tr>
 
-                    }*@
+                    }
 
                 </tbody>
             </table>
@@ -237,7 +238,7 @@
                                         @if (CV.role() == "Provider")
                                         {
                                             <div>
-                                                <form method="post" class="myform" asp-action="TimeSheetBillAddEdit" asp-controller="ProviderSite" enctype="multipart/form-data">
+                                                <form method="post" class="myform" asp-action="TimeSheetBillAddEdit" asp-controller="Invoicing" enctype="multipart/form-data">
                                                     <input type="hidden" class="pay-item-hidden" name="Item" value="@Model.TimesheetdetailreimbursementList[j].Itemname" />
                                                     <input type="hidden" class="pay-amount-hidden" name="Amount" value="@Model.TimesheetdetailreimbursementList[j].Amount" />
                                                     <input type="hidden" name="PhysicianId" value="@Model.PhysicianId" />
@@ -249,7 +250,7 @@
                                             </div>
                                             <div class="btn mx-1 btn-sm btn_hover btn-outline-info cancel-btn d-none">Cancel</div>
                                             <div class="btn mx-1 btn-sm btn_hover btn-outline-info edit-btn">Edit</div>
-                                            <form method="post" class="myform" asp-action="TimeSheetBillRemove" asp-controller="ProviderSite" enctype="multipart/form-data">
+                                            <form method="post" class="myform" asp-action="TimeSheetBillRemove" asp-controller="Invoicing" enctype="multipart/form-data">
                                                 <button type="submit" class="btn mx-1 btn_hover btn-sm btn-outline-info delete-btn">
                                                     <input type="hidden" name="PhysicianId" value="@Model.PhysicianId" />
                                                     <input type="hidden" value="@Model.TimesheetdetailreimbursementList[j].Timesheetdetailreimbursementid" name="Trid" />
@@ -276,6 +277,7 @@
             <div class="text-end mx-3 mb-3">
                 <form asp-action="SetToApprove" class="d-flex justify-content-end" asp-controller="Invoicing">
                     <input asp-for="Timesheeid" type="hidden" />
+                    <input asp-for="PhysicianId" type="hidden" />
 
                     <div class="bg-white mx-2 form-floating ">
                         <input asp-for="Bonus" class="form-control rounded numeric-input" type="text" placeholder=Suchtext autocomplete=off>

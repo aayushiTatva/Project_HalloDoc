@@ -1,5 +1,8 @@
-﻿@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel ;
+﻿@using HalloDocMVC.DBEntity.ViewModels.AdminPanel;
+@model HalloDocMVC.DBEntity.ViewModels.AdminPanel.PaginationModel ;
 @using static HalloDocMVC.DBEntity.ViewModels.AdminPanel.Constant;
+@using HalloDocMVC.Services.Interface;
+@inject IChatService _ChatService;
 
 <!--Desktop Screen View of table-->
 <div class="table-responsive m-2 d-none d-sm-block">
@@ -54,7 +57,8 @@
             @foreach (var (item, index) in Model.list.Select((item, index) => (item, index)))
             {
                 <tr class="@Enum.GetName(typeof(RequestType), item.RequestTypeId) text-white border-bottom border-white mt-2">
-                    <td><small class="ms-2">@item.PatientName</small></td>
+                    <td><small class="ms-2" id="patientName">@item.PatientName</small></td>
+                    <td value="@item.RequestId" id="requestId">@item.RequestId</td>
                     <td>
                         <button class="btn border-white text-white mt-1">
                             <i class="fa-regular fa-envelope"></i>
@@ -93,15 +97,43 @@
                         }
                     </td>
                     <td class="mt-2"><small>@item.Address</small></td>
+                    
                     @if (CV.role() == "Admin")
                     {
                         <td><small>@item.Notes</small></td>
                         <td>
-                            <a class="btn border border-white text-white my-2" asp-controller="Dashboard" asp-action="Chat">
+                            @{
+                                var connectionidpatient = ConnectionUsersModel.activeUsers.Where(e => e.SenderAspId == item.RequestorAspId).FirstOrDefault();
+                                var connectionidDb = _ChatService.getConnectionId(item.RequestorAspId);
+                                var connectionidphysician = ConnectionUsersModel.activeUsers.Where(e => e.SenderAspId == item.PhysicianAspId).FirstOrDefault();
+                            }
+                            @if (connectionidpatient == null)
+                            {
+                                <a class="btn border border-white text-white my-2 chatButton" data-requestid="@item.RequestId" data-aspid="@item.RequestorAspId" data-name="@item.PatientName"  >
+                                    <i class="fa-solid fa-user me-1"></i>
+                                    <small>Patient</small>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a data-bs-toggle="offcanvas" data-bs-target="#chatboxmodaladmin" data-requestid="@item.RequestId" data-patientname="@item.PatientName" data-receivertype="@item.RequestTypeId" data-receiveraspid="@item.RequestAspId"class="btn border border-white text-white my-2 chatButton">
+                                    <i class="fa-solid fa-user me-1"></i>
+                                    <small>Patient</small>
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                                        <span class="visually-hidden">New alerts</span>
+                                    </span>
+                                </a>
+                            }
+                            @*<button data-bs-toggle="modal" data-bs-target="#myModal" class="btn border border-white text-white my-2">
                                 <i class="fa-solid fa-user me-1"></i>
-                                <small>Provider</small>
-                            </a>
+                                <span>Patient</span>
+                            </button>*@
                         </td>
+                            
+                        
                     }
                     <td>
                         <button class="btn border border-white text-white my-2 " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -159,8 +191,9 @@
             }
         </tbody>
     </table>
-</div>
+    
 <!--End Desktop Screen View of table-->
+
 <!--Mobile Screen View of table-->
 <div class="accordion mt-3 d-block d-sm-none" id="accordionExample">
     <div class="dBlock">
@@ -369,6 +402,43 @@
 
         console.log("Hello pagination");
     }
+
+        //const chatButton = document.querySelector('.chatButton');
+        //const receiverInput = document.getElementById('receiverInput');
+        //const modalRequestId = document.getElementById('modalRequestId');
+        //const patientname = document.getElementById('requestId').textContent;
+
+        //chatButton.addEventListener('click', function () {
+        //    receiverInput.value = '123';
+        //    modalRequestId.value = patientname;
+        //    console.log(modalRequestId);
+        //});
+
+        //chatButton.addEventListner('click', function(){
+        //    receiverInput.value = '123';
+        //    modalRequestId.value = patientname;
+        //    console.log()
+        //})
+
+        const chatButtons = document.querySelectorAll('.chatButton');
+        const receiverInput = document.getElementById('receiverInput');
+        const modalRequestId = document.getElementById('modalRequestId');
+
+        chatButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const requestid = this.dataset.requestid;
+                modalRequestId.value = requestid;
+
+                const patientName = this.dataset.receiveraspid; // Retrieve the patient name associated with the clicked request
+                receiverInput.value = patientName;// Set the patient name value in the receiverInput input field
+
+                const receiverTypeId = this.dataset.receivertype;
+                receiverType.value = receiverTypeId;
+
+                const pname = this.dataset.patientname;
+                receivername = this.dataset.pname;
+            });
+        });
 </script>
 
 

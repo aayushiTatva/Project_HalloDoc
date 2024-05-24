@@ -26,6 +26,7 @@
                         <tr>
                             <th scope="col">Created Date <i class="bi bi-arrow-down"></i></th>
                             <th scope="col">Current Status</th>
+                            <th scope="col">Chat With</th>
                             <th scope="col">Document</th>
                         </tr>
                     </thead>
@@ -37,6 +38,22 @@
                                 <td>
                                     <a asp-action="ViewDocuments" asp-controller="PatientDashboard" asp-route-id="@item.RequestId" style="text-decoration: none;">
                                         @Enum.GetName(typeof(Status), item.Status)
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn border-info text-info my-2 chatbutton" data-bs-toggle="offcanvas" data-bs-target="#chatboxmodalpatient" data-requestId="@item.RequestId" data-patientName="@item.PatientName" data-receiverTypeId="@item.RequestTypeId" data-receiverAspId="@item.RequestAspId">
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        <small>Admin</small>
+                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                    </a>
+                                    <a data-bs-toggle="offcanvas" data-bs-target="#chatboxmodaladmin" data-receiver-id="receiver123" data-request-id="request456" class="btn border-info text-info">
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        <small>Provider</small>
+                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
                                     </a>
                                 </td>
                                 <td>
@@ -105,3 +122,24 @@
         </div>
     </div>
     <!--End Mobile screen view-->
+    <script>
+        const chatbuttons = document.querySelectorAll('.chatbutton');
+        const patientInput = document.getElementById('patientReceiverInput');
+        const modalRequestId = document.getElementById('patientModalRequestId');
+
+        chatbuttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const requestid = this.dataset.requestid;
+                patientModalRequestId.value = requestid;
+
+                const patient = this.dataset.receiveraspid; // Retrieve the patient name associated with the clicked request
+                patientReceiverInput.value = patient; // Set the patient name value in the receiverInput input field
+
+                const receiverType = this.dataset.receivertypeid;
+                patientReceiverType.value = receiverType;
+
+                const pname = this.dataset.patientname;
+                patientReceivername = this.dataset.pname;
+            });
+        });
+    </script>

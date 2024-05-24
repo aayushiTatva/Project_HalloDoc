@@ -13,6 +13,9 @@ namespace HalloDocMVC.DBEntity.ViewModels.PatientPanel
         public short Status { get; set; }
         public int RequestId { get; set; }
         public int DocumentCount { get; set; }
+        public string PatientName { get; set; }
+        public int RequestTypeId { get; set; }
+        public string RequestAspId { get; set; }
         public List<PatientDashboardModel>? PatientData { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; } = 1;

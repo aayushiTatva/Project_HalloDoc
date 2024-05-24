@@ -32,6 +32,10 @@ public partial class HalloDocContext : DbContext
 
     public virtual DbSet<Casetag> Casetags { get; set; }
 
+    public virtual DbSet<ChatConnection> ChatConnections { get; set; }
+
+    public virtual DbSet<ChatMessage> ChatMessages { get; set; }
+
     public virtual DbSet<Concierge> Concierges { get; set; }
 
     public virtual DbSet<Emaillog> Emaillogs { get; set; }
@@ -158,6 +162,22 @@ public partial class HalloDocContext : DbContext
         modelBuilder.Entity<Casetag>(entity =>
         {
             entity.HasKey(e => e.Casetagid).HasName("casetag_pkey");
+        });
+
+        modelBuilder.Entity<ChatConnection>(entity =>
+        {
+            entity.HasKey(e => e.ConnectionId).HasName("ChatConnection_pkey");
+
+            entity.Property(e => e.ConnectionId).UseIdentityAlwaysColumn();
+
+            entity.HasOne(d => d.Aspnetuser).WithMany(p => p.ChatConnections).HasConstraintName("ChatConnection_Aspnetuserid_fkey");
+        });
+
+        modelBuilder.Entity<ChatMessage>(entity =>
+        {
+            entity.HasKey(e => e.MessageId).HasName("ChatMessages_pkey");
+
+            entity.Property(e => e.MessageId).UseIdentityAlwaysColumn();
         });
 
         modelBuilder.Entity<Concierge>(entity =>

@@ -43,4 +43,8 @@
     <ProjectReference Include="..\HalloDocMVC.Services\HalloDocMVC.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Upload\ChatFile\" />
+  </ItemGroup>
+
 </Project>

@@ -125,6 +125,10 @@
       "PackagePath": "staticwebassets\\Upload\\116\\Fig56. Patient site 1-20240430060412.png"
     },
     {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig56. Patient site 1-20240524035507.png",
+      "PackagePath": "staticwebassets\\Upload\\116\\Fig56. Patient site 1-20240524035507.png"
+    },
+    {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240329032923.jpg",
       "PackagePath": "staticwebassets\\Upload\\116\\Fig7. Admin dashboard in Conclude state-20240329032923.jpg"
     },
@@ -227,6 +231,10 @@
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\96\\My schedule-20240311041926.png",
       "PackagePath": "staticwebassets\\Upload\\96\\My schedule-20240311041926.png"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\ChatFile\\133",
+      "PackagePath": "staticwebassets\\Upload\\ChatFile"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\Fig65.Patient Create New Request.jpg",
@@ -365,12 +373,28 @@
       "PackagePath": "staticwebassets\\Upload\\TimeSheet\\10\\Fig7. Admin dashboard in Conclude state-20240515022837.jpg"
     },
     {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\13\\Fig68. View Documents-20240516041059.jpg",
+      "PackagePath": "staticwebassets\\Upload\\TimeSheet\\13\\Fig68. View Documents-20240516041059.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\18\\Fig7. Admin dashboard in Conclude state-20240523034520.jpg",
+      "PackagePath": "staticwebassets\\Upload\\TimeSheet\\18\\Fig7. Admin dashboard in Conclude state-20240523034520.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\19\\Fig7. Admin dashboard in Conclude state-20240523035636.jpg",
+      "PackagePath": "staticwebassets\\Upload\\TimeSheet\\19\\Fig7. Admin dashboard in Conclude state-20240523035636.jpg"
+    },
+    {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\1\\Fig7. Admin dashboard in Conclude state-20240514043014.jpg",
       "PackagePath": "staticwebassets\\Upload\\TimeSheet\\1\\Fig7. Admin dashboard in Conclude state-20240514043014.jpg"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\1\\Fig7. Admin dashboard in Conclude state-20240514043047.jpg",
       "PackagePath": "staticwebassets\\Upload\\TimeSheet\\1\\Fig7. Admin dashboard in Conclude state-20240514043047.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\22\\Fig7. Admin dashboard in Conclude state-20240523042849.jpg",
+      "PackagePath": "staticwebassets\\Upload\\TimeSheet\\22\\Fig7. Admin dashboard in Conclude state-20240523042849.jpg"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\Upload\\TimeSheet\\5\\Fig8. Admin dashboard in To Close state-20240514052406.jpg",
@@ -491,6 +515,10 @@
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\js\\adminDashboard.js",
       "PackagePath": "staticwebassets\\js\\adminDashboard.js"
+    },
+    {
+      "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\js\\chat.js",
+      "PackagePath": "staticwebassets\\js\\chat.js"
     },
     {
       "Id": "C:\\Users\\pce116\\Source\\Repos\\aayushiTatva\\Project_HalloDoc\\HalloDocMVC\\wwwroot\\js\\site.js",

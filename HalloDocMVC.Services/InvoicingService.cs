@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,6 +105,7 @@ namespace HalloDocMVC.Services
                 try
                 {
                     var data = _timeSheetRepository.GetAll().Where(e => e.TimesheetId == tsm.Timesheeid).FirstOrDefault();
+                var physician = _physicianRepository.GetAll().Where(e => e.Physicianid == tsm.PhysicianId).FirstOrDefault();
                     if (data != null)
                     {
                         data.IsApproved = true;
@@ -135,12 +137,12 @@ namespace HalloDocMVC.Services
                                 </body>
                                 </html>
                                 ";
-                    _emailConfig.SendMail("dasete8625@haislot.com", "New Order arrived", emailContent);
+                    _emailConfig.SendMail(physician.Email, "New Order arrived", emailContent);
                     Emaillog log = new()
                     {
                         Emailtemplate = emailContent,
                         Subjectname = "New Order arrived",
-                        Emailid = "dasete8625@haislot.com",
+                        Emailid = physician.Email,
                         Createdate = DateTime.Now,
                         Sentdate = DateTime.Now,
                         Physicianid = data.PhysicianId,
@@ -202,12 +204,12 @@ namespace HalloDocMVC.Services
 
             }
             #endregion
-
+           
             #region Timesheet_Edit
             public bool PutTimesheetDetails(List<TimesheetdetailModel> tds, string AdminId)
             {
                 try
-                {
+                {                  
                     foreach (var item in tds)
                     {
                         var td = _timeSheetDetailRepository.GetAll().Where(r => r.TimesheetDetailId == item.Timesheetdetailid).FirstOrDefault();
@@ -332,7 +334,6 @@ namespace HalloDocMVC.Services
 
 
             #endregion
-
             #region TimeSheet_Bill_AddEdit
             public bool TimeSheetBillAddEdit(TimesheetdetailreimbursementModel trb, string AdminId)
             {
@@ -388,7 +389,7 @@ namespace HalloDocMVC.Services
 
             }
         #endregion
-
+            
             #region GetAllPhysicians
             public List<ProviderModel> GetAllPhysicians()
             {
@@ -402,7 +403,7 @@ namespace HalloDocMVC.Services
                 return result;
             }
         #endregion
-
+       
             #region GetPendingTimesheet
         public List<Timesheet> GetPendingTimesheet(int PhysicianId, DateOnly StartDate)
         {
@@ -414,5 +415,6 @@ namespace HalloDocMVC.Services
             return result;
         }
         #endregion
+        
     }
 }

@@ -153,5 +153,10 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             return View("../AdminPanel/Admin/Chat/Index");
         }
+
+        public IActionResult ChatPartial()
+        {
+            return View("../AdminPanel/Admin/Chat/Index");
+        }
     }
 }

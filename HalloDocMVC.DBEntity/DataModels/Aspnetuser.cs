@@ -49,6 +49,9 @@ public partial class Aspnetuser
     [InverseProperty("ModifiedbyNavigation")]
     public virtual ICollection<Business> BusinessModifiedbyNavigations { get; set; } = new List<Business>();
 
+    [InverseProperty("Aspnetuser")]
+    public virtual ICollection<ChatConnection> ChatConnections { get; set; } = new List<ChatConnection>();
+
     [InverseProperty("CreatedByNavigation")]
     public virtual ICollection<PayrateByProvider> PayrateByProviderCreatedByNavigations { get; set; } = new List<PayrateByProvider>();
 

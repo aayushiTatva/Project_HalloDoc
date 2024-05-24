@@ -34,6 +34,7 @@ builder.Services.AddScoped<IPartnersService, PartnersService>();
 builder.Services.AddScoped<IRecordsService, RecordsService>();
 builder.Services.AddScoped<IConfirmationNumberService, ConfirmationNumberService>();
 builder.Services.AddScoped<IInvoicingService, InvoicingService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddSignalR();
 var app = builder.Build();

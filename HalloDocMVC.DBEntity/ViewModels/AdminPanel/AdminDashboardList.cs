@@ -21,6 +21,9 @@
         public string Status { get; set; }
         public int ProviderEncounterStatus { get; set; }
         public bool IsFinalize { get; set; }
+        public string RequestorAspId { get; set; }
+        public string? PhysicianAspId { get; set; }
+        public string RequestAspId { get; set; }
     }
 
     public class PaginationModel

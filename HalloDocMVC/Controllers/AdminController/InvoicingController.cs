@@ -28,6 +28,7 @@ namespace HalloDocMVC.Controllers.AdminController
         {
             return View("../AdminPanel/Admin/Invoicing/Index");
         }
+        
         [Route("/Admin/Invoicing")]
         public IActionResult IndexAdmin()
         {
@@ -37,7 +38,6 @@ namespace HalloDocMVC.Controllers.AdminController
         #endregion
 
         #region IsFinalizeSheet
-
         public IActionResult IsFinalizeSheet(int PhysicianId, DateOnly StartDate)
         {
             bool x = _InvoicingService.isFinalizeTimesheet(PhysicianId, StartDate);

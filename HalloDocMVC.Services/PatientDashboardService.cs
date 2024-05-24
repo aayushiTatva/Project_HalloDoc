@@ -41,7 +41,10 @@ namespace HalloDocMVC.Services
                                                                       CreatedDate = x.Createddate,
                                                                       Status = x.Status,
                                                                       RequestId = x.Requestid,
-                                                                      DocumentCount = x.Requestwisefiles.Where(x => x.Isdeleted == new BitArray(1)).Count()
+                                                                      DocumentCount = x.Requestwisefiles.Where(x => x.Isdeleted == new BitArray(1)).Count(),
+                                                                      PatientName = x.Firstname + " " + x.Lastname,
+                                                                      RequestTypeId = x.Requesttypeid,
+                                                                      RequestAspId = _userRepository.GetAll().Where(e => e.Userid == x.Userid).FirstOrDefault().Aspnetuserid
                                                                   }).ToList();
 
             int totalItemCount = allData.Count;
